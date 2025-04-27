@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Letter Guide For Rebecca</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #001530;
+            color: white;
+            background-image: url('/api/placeholder/1200/800');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        nav {
+            width: 100%;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            background-color: rgba(0, 21, 48, 0.7);
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .nav-link {
+            background-color: #5b6da3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-link:hover {
+            background-color: #7683b7;
+        }
+        
+        .nav-link.active {
+            background-color: #4a5a86;
+        }
+        
+        .white-link {
+            background-color: white;
+            color: #4a5a86;
+        }
+        
+        .book-display {
+            margin-top: 30px;
+            position: relative;
+            width: 80%;
+            max-width: 450px;
+            background-color: white;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .book-cover {
+            width: 100%;
+            border-radius: 10px;
+        }
+        
+        .book-title {
+            color: white;
+            font-size: 2.8rem;
+            text-align: center;
+            margin-top: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .book-subtitle {
+            color: white;
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .author {
+            color: white;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-top: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 5px;
+        }
+        
+        .pagination-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: white;
+            opacity: 0.5;
+        }
+        
+        .pagination-dot.active {
+            opacity: 1;
+        }
+        
+        .nav-arrows {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            left: 0;
+            padding: 0 10px;
+        }
+        
+        .arrow {
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .get-some-badge {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            width: 70px;
+            height: 70px;
+        }
+        
+        .availability {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .availability a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .book-title {
+                font-size: 2rem;
+            }
+            
+            .book-subtitle {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-links">
+            <a href="#" class="nav-link active">Home</a>
+            <a href="#" class="nav-link white-link">Quiz</a>
+            <a href="#" class="nav-link white-link">Book Sample</a>
+            <a href="#" class="nav-link white-link">Secret Fort Access</a>
+            <a href="#" class="nav-link white-link">Blog</a>
+            <a href="#" class="nav-link white-link">Where to Buy</a>
+            <a href="#" class="nav-link white-link">Contact</a>
+        </div>
+    </nav>
+    
+    <div class="content">
+        <h1 class="book-title">A Letter Guide</h1>
+        <h2 class="book-subtitle">For Rebecca</h2>
+        
+        <div class="book-display">
+            <img src="/api/placeholder/400/600" alt="A Letter Guide For Rebecca Book Cover" class="book-cover">
+            <div class="nav-arrows">
+                <div class="arrow">&#10094;</div>
+                <div class="arrow">&#10095;</div>
+            </div>
+            <img src="/api/placeholder/70/70" alt="Get Some! Badge" class="get-some-badge">
+        </div>
+        
+        <h3 class="author">By Derek Devon</h3>
+        
+        <div class="pagination">
+            <div class="pagination-dot active"></div>
+            <div class="pagination-dot"></div>
+            <div class="pagination-dot"></div>
+            <div class="pagination-dot"></div>
+            <div class="pagination-dot"></div>
+            <div class="pagination-dot"></div>
+            <div class="pagination-dot"></div>
+            <div class="pagination-dot"></div>
+        </div>
+        
+        <div class="availability">
+            <a href="#">Available in Ebook or Print</a>
+        </div>
+    </div>
+</body>
+</html>
