@@ -3,7 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Letter Guide For Rebecca</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>A Letter Guide For Rebecca | Science Fiction Novel by Derek Devon</title>
+    <meta name="description" content="Discover 'A Letter Guide For Rebecca,' a captivating science fiction novel by Derek Devon featuring an alien encounter that will change your perspective on extraterrestrial life.">
+    <meta name="keywords" content="A Letter Guide For Rebecca, Derek Devon, science fiction novel, alien, sci-fi book, extraterrestrial">
+    <meta name="author" content="Derek Devon">
+    
+    <!-- Open Graph / Social Media Tags -->
+    <meta property="og:title" content="A Letter Guide For Rebecca | Sci-Fi Novel">
+    <meta property="og:description" content="An otherworldly adventure that will take you beyond the stars. Available in ebook and print.">
+    <meta property="og:image" content="https://yourdomain.com/images/NewWebCover.jpg">
+    <meta property="og:url" content="https://yourdomain.com">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="A Letter Guide For Rebecca | Sci-Fi Novel">
+    <meta name="twitter:description" content="An otherworldly adventure that will take you beyond the stars. Available in ebook and print.">
+    <meta name="twitter:image" content="https://yourdomain.com/images/NewWebCover.jpg">
+    
+    <!-- Canonical URL -->
+    <meta rel="canonical" href="https://yourdomain.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
+    
     <style>
         * {
             margin: 0;
@@ -203,49 +228,107 @@
                 max-width: 90%;
             }
         }
+
+        /* Accessibility improvements */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #000;
+            color: white;
+            padding: 8px;
+            z-index: 100;
+        }
+        
+        .skip-link:focus {
+            top: 0;
+        }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-links">
-            <a href="#" class="nav-link active">Home</a>
-            <a href="#" class="nav-link white-link">Quiz</a>
-            <a href="#" class="nav-link white-link">Book Sample</a>
-            <a href="#" class="nav-link white-link">Secret Fort Access</a>
-            <a href="#" class="nav-link white-link">Blog</a>
-            <a href="#" class="nav-link white-link">Where to Buy</a>
-            <a href="#" class="nav-link white-link">Contact</a>
-        </div>
-    </nav>
+    <!-- Accessibility skip link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     
-    <div class="content">
-        <div class="book-container">
-            <div class="book-display">
-                <img src="./images/NewWebCover.jpg" alt="A Letter Guide For Rebecca Book Cover" class="book-cover">
-                <div class="nav-arrows">
-                    <div class="arrow">&#10094;</div>
-                    <div class="arrow">&#10095;</div>
+    <header>
+        <nav aria-label="Main navigation">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active" aria-current="page">Home</a>
+                <a href="quiz.html" class="nav-link white-link">Quiz</a>
+                <a href="book-sample.html" class="nav-link white-link">Book Sample</a>
+                <a href="secret-fort.html" class="nav-link white-link">Secret Fort Access</a>
+                <a href="blog.html" class="nav-link white-link">Blog</a>
+                <a href="where-to-buy.html" class="nav-link white-link">Where to Buy</a>
+                <a href="contact.html" class="nav-link white-link">Contact</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main id="main-content">
+        <div class="content">
+            <div class="book-container">
+                <div class="book-display">
+                    <img src="./images/NewWebCover.jpg" alt="A Letter Guide For Rebecca Book Cover featuring an alien with a glowing head" class="book-cover">
+                    <div class="nav-arrows" aria-hidden="true">
+                        <div class="arrow" role="button" aria-label="Previous image">&#10094;</div>
+                        <div class="arrow" role="button" aria-label="Next image">&#10095;</div>
+                    </div>
+                    <img src="./images/Star.png" alt="Get Some! Award Badge" class="get-some-badge">
                 </div>
-                <img src="./images/Star.png" alt="Get Some! Badge" class="get-some-badge">
-            </div>
-            
-            <h3 class="author">By Derek Devon</h3>
-            
-            <div class="pagination">
-                <div class="pagination-dot active"></div>
-                <div class="pagination-dot"></div>
-                <div class="pagination-dot"></div>
-                <div class="pagination-dot"></div>
-                <div class="pagination-dot"></div>
-                <div class="pagination-dot"></div>
-                <div class="pagination-dot"></div>
-                <div class="pagination-dot"></div>
-            </div>
-            
-            <div class="availability">
-                <a href="#">Available in Ebook or Print</a>
+                
+                <h1 class="author">By Derek Devon</h1>
+                
+                <div class="pagination" aria-hidden="true">
+                    <div class="pagination-dot active"></div>
+                    <div class="pagination-dot"></div>
+                    <div class="pagination-dot"></div>
+                    <div class="pagination-dot"></div>
+                    <div class="pagination-dot"></div>
+                    <div class="pagination-dot"></div>
+                    <div class="pagination-dot"></div>
+                    <div class="pagination-dot"></div>
+                </div>
+                
+                <div class="availability">
+                    <a href="where-to-buy.html">Available in Ebook or Print</a>
+                </div>
+                
+                <!-- Hidden but SEO-friendly content -->
+                <div style="display:none">
+                    <h2>About A Letter Guide For Rebecca</h2>
+                    <p>A captivating science fiction novel that explores the encounter between humanity and an alien intelligence. When Rebecca receives a mysterious letter, she's drawn into an adventure beyond her wildest dreams.</p>
+                    <p>This thought-provoking story combines elements of mystery, adventure, and philosophical questions about our place in the universe.</p>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
+    
+    <footer>
+        <p style="text-align: center; margin-top: 40px; font-size: 0.8rem; opacity: 0.7;">
+            &copy; <script>document.write(new Date().getFullYear())</script> Derek Devon. All rights reserved.
+        </p>
+    </footer>
+
+    <!-- Structured data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Book",
+      "name": "A Letter Guide For Rebecca",
+      "author": {
+        "@type": "Person",
+        "name": "Derek Devon"
+      },
+      "url": "https://yourdomain.com",
+      "image": "https://yourdomain.com/images/NewWebCover.jpg",
+      "description": "A captivating science fiction novel that explores the encounter between humanity and an alien intelligence.",
+      "genre": "Science Fiction",
+      "offers": {
+        "@type": "Offer",
+        "availability": "https://schema.org/InStock",
+        "price": "",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
 </body>
 </html>
