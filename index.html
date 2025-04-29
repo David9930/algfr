@@ -15,7 +15,7 @@
         body {
             background-color: #001530;
             color: white;
-            background-image: url('/api/placeholder/1200/800');
+            background-image: url('./images/BackgroundImageSpace.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -23,6 +23,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            overflow-x: hidden;
         }
         
         nav {
@@ -30,7 +31,6 @@
             padding: 20px 0;
             display: flex;
             justify-content: center;
-            background-color: rgba(0, 21, 48, 0.7);
         }
         
         .nav-links {
@@ -62,35 +62,59 @@
             color: #4a5a86;
         }
         
-        .book-display {
-            margin-top: 30px;
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+        
+        .book-container {
             position: relative;
-            width: 80%;
-            max-width: 450px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .book-display {
+            position: relative;
+            width: 100%;
             background-color: white;
             border-radius: 20px;
             padding: 20px;
-            text-align: center;
+            margin: 0 auto;
+            max-width: 492px; /* Matching the original width */
         }
         
         .book-cover {
             width: 100%;
-            border-radius: 10px;
+            max-width: 492px;
+            height: auto;
+            display: block;
+            border-radius: 5px;
+            object-fit: cover;
+            object-position: 50% 50%;
         }
         
         .book-title {
             color: white;
-            font-size: 2.8rem;
+            font-size: 3.5rem;
             text-align: center;
-            margin-top: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
         .book-subtitle {
             color: white;
-            font-size: 4rem;
+            font-size: 4.5rem;
             text-align: center;
-            margin-bottom: 30px;
+            font-weight: bold;
+            margin-bottom: 40px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
@@ -106,7 +130,7 @@
             display: flex;
             justify-content: center;
             margin-top: 20px;
-            gap: 5px;
+            gap: 8px;
         }
         
         .pagination-dot {
@@ -130,19 +154,21 @@
             transform: translateY(-50%);
             left: 0;
             padding: 0 10px;
+            pointer-events: none;
         }
         
         .arrow {
             font-size: 2rem;
             color: white;
             cursor: pointer;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            pointer-events: auto;
+            padding: 10px;
         }
         
         .get-some-badge {
             position: absolute;
-            right: 10px;
-            bottom: 10px;
+            right: 15px;
+            bottom: 15px;
             width: 70px;
             height: 70px;
         }
@@ -172,6 +198,10 @@
             .book-subtitle {
                 font-size: 3rem;
             }
+            
+            .book-display {
+                max-width: 90%;
+            }
         }
     </style>
 </head>
@@ -189,33 +219,32 @@
     </nav>
     
     <div class="content">
-        <h1 class="book-title">A Letter Guide</h1>
-        <h2 class="book-subtitle">For Rebecca</h2>
-        
-        <div class="book-display">
-            <img src="/api/placeholder/400/600" alt="A Letter Guide For Rebecca Book Cover" class="book-cover">
-            <div class="nav-arrows">
-                <div class="arrow">&#10094;</div>
-                <div class="arrow">&#10095;</div>
+        <div class="book-container">
+            <div class="book-display">
+                <img src="./images/NewWebCover.jpg" alt="A Letter Guide For Rebecca Book Cover" class="book-cover">
+                <div class="nav-arrows">
+                    <div class="arrow">&#10094;</div>
+                    <div class="arrow">&#10095;</div>
+                </div>
+                <img src="./images/Star.png" alt="Get Some! Badge" class="get-some-badge">
             </div>
-            <img src="/api/placeholder/70/70" alt="Get Some! Badge" class="get-some-badge">
-        </div>
-        
-        <h3 class="author">By Derek Devon</h3>
-        
-        <div class="pagination">
-            <div class="pagination-dot active"></div>
-            <div class="pagination-dot"></div>
-            <div class="pagination-dot"></div>
-            <div class="pagination-dot"></div>
-            <div class="pagination-dot"></div>
-            <div class="pagination-dot"></div>
-            <div class="pagination-dot"></div>
-            <div class="pagination-dot"></div>
-        </div>
-        
-        <div class="availability">
-            <a href="#">Available in Ebook or Print</a>
+            
+            <h3 class="author">By Derek Devon</h3>
+            
+            <div class="pagination">
+                <div class="pagination-dot active"></div>
+                <div class="pagination-dot"></div>
+                <div class="pagination-dot"></div>
+                <div class="pagination-dot"></div>
+                <div class="pagination-dot"></div>
+                <div class="pagination-dot"></div>
+                <div class="pagination-dot"></div>
+                <div class="pagination-dot"></div>
+            </div>
+            
+            <div class="availability">
+                <a href="#">Available in Ebook or Print</a>
+            </div>
         </div>
     </div>
 </body>
