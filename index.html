@@ -110,9 +110,17 @@
             width: 100%;
             background-color: white;
             border-radius: 20px;
-            padding: 20px;
+            padding: 0;
             margin: 0 auto;
-            max-width: 492px; /* Matching the original width */
+            max-width: 492px;
+            overflow: hidden;
+        }
+        
+        .book-inner {
+            position: relative;
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
         }
         
         .book-cover {
@@ -120,7 +128,6 @@
             max-width: 492px;
             height: auto;
             display: block;
-            border-radius: 5px;
             object-fit: cover;
             object-position: 50% 50%;
         }
@@ -141,14 +148,6 @@
             font-weight: bold;
             margin-bottom: 40px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        
-        .author {
-            color: white;
-            font-size: 1.5rem;
-            text-align: center;
-            margin-top: 20px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
         
         .pagination {
@@ -180,6 +179,7 @@
             left: 0;
             padding: 0 10px;
             pointer-events: none;
+            z-index: 10;
         }
         
         .arrow {
@@ -193,15 +193,36 @@
         .get-some-badge {
             position: absolute;
             right: 15px;
-            bottom: 15px;
+            bottom: 35px;
             width: 70px;
             height: 70px;
+            z-index: 10;
+        }
+        
+        .author-line {
+            position: absolute;
+            bottom: 55px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            z-index: 5;
+        }
+        
+        .availability-container {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            background-color: white;
+            padding: 10px 0;
+            z-index: 5;
         }
         
         /* Spinning text animation */
         .availability {
             text-align: center;
-            margin-top: 20px;
             font-size: 1.2rem;
             opacity: 0;
             transform-origin: center;
@@ -310,15 +331,21 @@
         <div class="content">
             <div class="book-container">
                 <div class="book-display">
-                    <img src="./images/NewWebCover.jpg" alt="A Letter Guide For Rebecca Book Cover featuring an alien with a glowing head" class="book-cover">
-                    <div class="nav-arrows" aria-hidden="true">
-                        <div class="arrow" role="button" aria-label="Previous image">&#10094;</div>
-                        <div class="arrow" role="button" aria-label="Next image">&#10095;</div>
+                    <div class="book-inner">
+                        <img src="./images/NewWebCover.jpg" alt="A Letter Guide For Rebecca Book Cover featuring an alien with a glowing head" class="book-cover">
+                        <div class="nav-arrows" aria-hidden="true">
+                            <div class="arrow" role="button" aria-label="Previous image">&#10094;</div>
+                            <div class="arrow" role="button" aria-label="Next image">&#10095;</div>
+                        </div>
+                        <img src="./images/Star.png" alt="Get Some! Award Badge" class="get-some-badge">
+                        <div class="author-line">By Derek Devon</div>
+                        <div class="availability-container">
+                            <div class="availability">
+                                <a href="where-to-buy.html">Available in Ebook or Print</a>
+                            </div>
+                        </div>
                     </div>
-                    <img src="./images/Star.png" alt="Get Some! Award Badge" class="get-some-badge">
                 </div>
-                
-                <h1 class="author">By Derek Devon</h1>
                 
                 <div class="pagination" aria-hidden="true">
                     <div class="pagination-dot active"></div>
@@ -329,10 +356,6 @@
                     <div class="pagination-dot"></div>
                     <div class="pagination-dot"></div>
                     <div class="pagination-dot"></div>
-                </div>
-                
-                <div class="availability">
-                    <a href="where-to-buy.html">Available in Ebook or Print</a>
                 </div>
                 
                 <!-- Hidden but SEO-friendly content -->
