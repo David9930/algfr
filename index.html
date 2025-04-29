@@ -101,7 +101,7 @@
         .book-container {
             position: relative;
             width: 100%;
-            max-width: 600px;
+            max-width: 700px; /* Increased max-width */
             margin: 0 auto;
         }
         
@@ -109,12 +109,13 @@
             position: relative;
             width: 100%;
             margin: 0 auto;
-            max-width: 500px;
+            max-width: 600px; /* Increased width */
             border-radius: 20px;
             background-color: white;
             padding: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             height: 780px; /* Fixed height for all slides */
+            aspect-ratio: 1 / 1.4; /* More rectangular aspect ratio */
         }
         
         .slideshow {
@@ -301,7 +302,8 @@
             
             .book-display {
                 max-width: 90%;
-                height: 700px;
+                height: auto;
+                aspect-ratio: 1 / 1.5;
             }
             
             .quote-text {
