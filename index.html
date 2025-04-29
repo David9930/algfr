@@ -30,6 +30,15 @@
     <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
     
     <style>
+        /* CSS Variables for layout consistency */
+        :root {
+            /* Core layout dimensions */
+            --book-display-width: 500px;
+            --book-display-mobile-width: 90%;
+            --book-container-width: 600px;
+            --content-max-width: 1200px;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -94,33 +103,39 @@
             justify-content: center;
             flex-grow: 1;
             width: 100%;
-            max-width: 1200px;
+            max-width: var(--content-max-width);
             padding: 20px;
         }
         
+        /* LOCKED DIMENSIONS: Book display container */
         .book-container {
             position: relative;
             width: 100%;
-            max-width: 600px;
+            max-width: var(--book-container-width);
             margin: 0 auto;
         }
         
+        /* LOCKED DIMENSIONS: Book display */
         .book-display {
             position: relative;
             width: 100%;
             margin: 0 auto;
-            max-width: 500px;
+            max-width: var(--book-display-width); /* Fixed width */
+            height: auto; /* Maintain aspect ratio */
             border-radius: 20px;
             background-color: white;
             padding: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
+        /* LOCKED DIMENSIONS: Book cover container */
         .book-cover-container {
             position: relative;
             width: 100%;
             border-radius: 10px;
             overflow: hidden;
+            /* Fixed height based on aspect ratio if needed */
+            /* height: calc(var(--book-display-width) * 1.5); */ /* Uncomment and adjust if needed */
         }
         
         .book-cover {
@@ -129,6 +144,7 @@
             border-radius: 5px;
         }
         
+        /* LOCKED DIMENSIONS: Badge positioning */
         .get-some-badge {
             position: absolute;
             right: 15px;
@@ -183,6 +199,7 @@
             opacity: 1;
         }
         
+        /* LOCKED DIMENSIONS: Arrow positioning */
         .nav-arrows {
             position: absolute;
             top: 50%;
@@ -254,7 +271,7 @@
             }
             
             .book-display {
-                max-width: 90%;
+                max-width: var(--book-display-mobile-width);
             }
         }
 
