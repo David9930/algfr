@@ -198,16 +198,59 @@
             height: 70px;
         }
         
+        /* Spinning text animation */
         .availability {
             text-align: center;
             margin-top: 20px;
             font-size: 1.2rem;
+            opacity: 0;
+            transform-origin: center;
+            animation: spinIn 3s ease-out 1s forwards;
+            perspective: 1000px;
         }
         
         .availability a {
             color: #3b82f6;
             text-decoration: none;
             font-weight: bold;
+            display: inline-block;
+        }
+        
+        @keyframes spinIn {
+            0% {
+                opacity: 0.3;
+                transform: rotateY(0deg);
+            }
+            20% {
+                opacity: 0.5;
+                transform: rotateY(240deg);
+            }
+            40% {
+                opacity: 0.6;
+                transform: rotateY(480deg);
+            }
+            60% {
+                opacity: 0.7;
+                transform: rotateY(720deg);
+            }
+            80% {
+                opacity: 0.8;
+                transform: rotateY(1080deg);
+            }
+            90% {
+                opacity: 0.9;
+                transform: rotateY(1800deg);
+            }
+            95% {
+                transform: rotateY(2060deg);
+            }
+            98% {
+                transform: rotateY(2150deg);
+            }
+            100% {
+                opacity: 1;
+                transform: rotateY(2160deg); /* 6 full rotations (360 × 6) */
+            }
         }
         
         @media (max-width: 768px) {
