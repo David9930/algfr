@@ -154,6 +154,58 @@
             z-index: 10;
         }
         
+        /* LOCKED DIMENSIONS: Slider setup */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 150%; /* Maintains aspect ratio */
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+        
+        .text-slide {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent background */
+            border-radius: 10px;
+        }
+        
+        .slide-content {
+            padding: 20px;
+            color: white;
+            font-size: 1.5rem;
+            line-height: 1.6;
+            width: 100%;
+        }
+        
+        .slide-text {
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
         .availability-container {
             width: 100%;
             text-align: center;
@@ -193,10 +245,16 @@
             border-radius: 50%;
             background-color: white;
             opacity: 0.5;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
         }
         
         .pagination-dot.active {
             opacity: 1;
+        }
+        
+        .pagination-dot:hover {
+            opacity: 0.8;
         }
         
         /* LOCKED DIMENSIONS: Arrow positioning */
@@ -313,14 +371,45 @@
         <div class="content">
             <div class="book-container">
                 <div class="book-display">
-                    <div class="book-cover-container">
-                        <img src="./images/NewWebCover.jpg" alt="A Letter Guide For Rebecca Book Cover featuring an alien with a glowing head" class="book-cover">
-                        <div class="nav-arrows" aria-hidden="true">
-                            <div class="arrow" role="button" aria-label="Previous image">&#10094;</div>
-                            <div class="arrow" role="button" aria-label="Next image">&#10095;</div>
+                    <!-- Slider container -->
+                    <div class="slider-container">
+                        <!-- Slide 1: Book Cover -->
+                        <div class="slide active" id="slide-1">
+                            <div class="book-cover-container">
+                                <img src="./images/NewWebCover.jpg" alt="A Letter Guide For Rebecca Book Cover featuring an alien with a glowing head" class="book-cover">
+                                <img src="./images/Star.png" alt="Get Some! Award Badge" class="get-some-badge">
+                            </div>
                         </div>
-                        <img src="./images/Star.png" alt="Get Some! Award Badge" class="get-some-badge">
+                        
+                        <!-- Slide 2: Time Travel Questions -->
+                        <div class="slide" id="slide-2">
+                            <div class="text-slide">
+                                <div class="slide-content">
+                                    <p class="slide-text">Would you try to prevent 911 ?</p>
+                                    <p class="slide-text">Save Princess Di ?</p>
+                                    <p class="slide-text">Whack a Narcissistic President ?</p>
+                                    <p class="slide-text">Or maybe bet on certain sporting events ?</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Additional slides will be added here -->
+                        <!-- Slide 3 template -->
+                        <div class="slide" id="slide-3">
+                            <div class="text-slide">
+                                <div class="slide-content">
+                                    <!-- Content for slide 3 -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Navigation arrows -->
+                        <div class="nav-arrows" aria-hidden="true">
+                            <div class="arrow prev" role="button" aria-label="Previous image" onclick="changeSlide(-1)">&#10094;</div>
+                            <div class="arrow next" role="button" aria-label="Next image" onclick="changeSlide(1)">&#10095;</div>
+                        </div>
                     </div>
+                    
                     <div class="availability-container">
                         <div class="availability">
                             <a href="where-to-buy.html">Available in Ebook or Print</a>
@@ -329,15 +418,13 @@
                 </div>
                 
                 <div class="pagination" aria-hidden="true">
-                    <div class="pagination-dot active"></div>
-                    <div class="pagination-dot"></div>
-                    <div class="pagination-dot"></div>
-                    <div class="pagination-dot"></div>
-                    <div class="pagination-dot"></div>
-                    <div class="pagination-dot"></div>
-                    <div class="pagination-dot"></div>
-                    <div class="pagination-dot"></div>
-                    <div class="pagination-dot"></div>
+                    <div class="pagination-dot active" onclick="goToSlide(1)"></div>
+                    <div class="pagination-dot" onclick="goToSlide(2)"></div>
+                    <div class="pagination-dot" onclick="goToSlide(3)"></div>
+                    <div class="pagination-dot" onclick="goToSlide(4)"></div>
+                    <div class="pagination-dot" onclick="goToSlide(5)"></div>
+                    <div class="pagination-dot" onclick="goToSlide(6)"></div>
+                    <div class="pagination-dot" onclick="goToSlide(7)"></div>
                 </div>
                 
                 <!-- Hidden but SEO-friendly content -->
@@ -377,6 +464,72 @@
         "priceCurrency": "USD"
       }
     }
+    </script>
+    
+    <!-- Slider control script -->
+    <script>
+        // Slider functionality
+        let currentSlide = 1;
+        const totalSlides = 7; // Total number of planned slides
+        
+        // Initialize the slider
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show the first slide
+            showSlide(currentSlide);
+            
+            // Add click events to arrows if not already added in HTML
+            const prevArrow = document.querySelector('.arrow.prev');
+            const nextArrow = document.querySelector('.arrow.next');
+            
+            if (prevArrow && !prevArrow.onclick) {
+                prevArrow.onclick = function() { changeSlide(-1); };
+            }
+            
+            if (nextArrow && !nextArrow.onclick) {
+                nextArrow.onclick = function() { changeSlide(1); };
+            }
+        });
+        
+        // Function to change slides
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+        
+        // Function to go to a specific slide
+        function goToSlide(slideNumber) {
+            showSlide(slideNumber);
+        }
+        
+        // Function to display the selected slide
+        function showSlide(slideNumber) {
+            // Adjust slideNumber to handle wrapping
+            if (slideNumber > totalSlides) {
+                slideNumber = 1;
+            } else if (slideNumber < 1) {
+                slideNumber = totalSlides;
+            }
+            
+            // Update current slide
+            currentSlide = slideNumber;
+            
+            // Hide all slides
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Show the current slide
+            const currentSlideElement = document.getElementById('slide-' + currentSlide);
+            if (currentSlideElement) {
+                currentSlideElement.classList.add('active');
+            }
+            
+            // Update pagination dots
+            const dots = document.querySelectorAll('.pagination-dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index + 1 === currentSlide);
+            });
+        }
     </script>
 </body>
 </html>
