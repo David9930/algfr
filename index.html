@@ -108,15 +108,15 @@
         .book-display {
             position: relative;
             width: 100%;
-            background-color: white;
-            border-radius: 20px;
-            padding: 0;
             margin: 0 auto;
-            max-width: 492px;
-            overflow: hidden;
+            max-width: 500px;
+            border-radius: 20px;
+            background-color: white;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        .book-inner {
+        .book-cover-container {
             position: relative;
             width: 100%;
             border-radius: 10px;
@@ -125,29 +125,43 @@
         
         .book-cover {
             width: 100%;
-            max-width: 492px;
-            height: auto;
             display: block;
-            object-fit: cover;
-            object-position: 50% 50%;
+            border-radius: 5px;
         }
         
-        .book-title {
-            color: white;
-            font-size: 3.5rem;
-            text-align: center;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        .get-some-badge {
+            position: absolute;
+            right: 15px;
+            bottom: 65px;
+            width: 70px;
+            height: 70px;
+            z-index: 10;
         }
         
-        .book-subtitle {
-            color: white;
-            font-size: 4.5rem;
+        .availability-container {
+            width: 100%;
             text-align: center;
+            background-color: white;
+            padding: 10px 0;
+            border-radius: 0 0 15px 15px;
+            margin-top: -5px;
+        }
+        
+        /* Spinning text animation */
+        .availability {
+            text-align: center;
+            font-size: 1.2rem;
+            opacity: 0;
+            transform-origin: center;
+            animation: spinIn 3s ease-out 1s forwards;
+            perspective: 1000px;
+        }
+        
+        .availability a {
+            color: #3b82f6;
+            text-decoration: none;
             font-weight: bold;
-            margin-bottom: 40px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            display: inline-block;
         }
         
         .pagination {
@@ -177,7 +191,7 @@
             justify-content: space-between;
             transform: translateY(-50%);
             left: 0;
-            padding: 0 10px;
+            padding: 0 15px;
             pointer-events: none;
             z-index: 10;
         }
@@ -187,54 +201,13 @@
             color: white;
             cursor: pointer;
             pointer-events: auto;
-            padding: 10px;
         }
         
-        .get-some-badge {
-            position: absolute;
-            right: 15px;
-            bottom: 35px;
-            width: 70px;
-            height: 70px;
-            z-index: 10;
-        }
-        
-        .author-line {
-            position: absolute;
-            bottom: 55px;
+        footer {
+            margin-top: 20px;
             width: 100%;
             text-align: center;
-            color: white;
-            font-size: 1.5rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-            z-index: 5;
-        }
-        
-        .availability-container {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            text-align: center;
-            background-color: white;
             padding: 10px 0;
-            z-index: 5;
-        }
-        
-        /* Spinning text animation */
-        .availability {
-            text-align: center;
-            font-size: 1.2rem;
-            opacity: 0;
-            transform-origin: center;
-            animation: spinIn 3s ease-out 1s forwards;
-            perspective: 1000px;
-        }
-        
-        .availability a {
-            color: #3b82f6;
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-block;
         }
         
         @keyframes spinIn {
@@ -280,14 +253,6 @@
                 align-items: center;
             }
             
-            .book-title {
-                font-size: 2rem;
-            }
-            
-            .book-subtitle {
-                font-size: 3rem;
-            }
-            
             .book-display {
                 max-width: 90%;
             }
@@ -331,24 +296,24 @@
         <div class="content">
             <div class="book-container">
                 <div class="book-display">
-                    <div class="book-inner">
+                    <div class="book-cover-container">
                         <img src="./images/NewWebCover.jpg" alt="A Letter Guide For Rebecca Book Cover featuring an alien with a glowing head" class="book-cover">
                         <div class="nav-arrows" aria-hidden="true">
                             <div class="arrow" role="button" aria-label="Previous image">&#10094;</div>
                             <div class="arrow" role="button" aria-label="Next image">&#10095;</div>
                         </div>
                         <img src="./images/Star.png" alt="Get Some! Award Badge" class="get-some-badge">
-                        <div class="author-line">By Derek Devon</div>
-                        <div class="availability-container">
-                            <div class="availability">
-                                <a href="where-to-buy.html">Available in Ebook or Print</a>
-                            </div>
+                    </div>
+                    <div class="availability-container">
+                        <div class="availability">
+                            <a href="where-to-buy.html">Available in Ebook or Print</a>
                         </div>
                     </div>
                 </div>
                 
                 <div class="pagination" aria-hidden="true">
                     <div class="pagination-dot active"></div>
+                    <div class="pagination-dot"></div>
                     <div class="pagination-dot"></div>
                     <div class="pagination-dot"></div>
                     <div class="pagination-dot"></div>
@@ -369,7 +334,7 @@
     </main>
     
     <footer>
-        <p style="text-align: center; margin-top: 40px; font-size: 0.8rem; opacity: 0.7;">
+        <p style="text-align: center; font-size: 0.8rem; opacity: 0.7;">
             &copy; <script>document.write(new Date().getFullYear())</script> Derek Devon. All rights reserved.
         </p>
     </footer>
