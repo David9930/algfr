@@ -101,7 +101,7 @@
         .book-container {
             position: relative;
             width: 100%;
-            max-width: 700px; /* Increased max-width */
+            max-width: 700px;
             margin: 0 auto;
         }
         
@@ -109,20 +109,19 @@
             position: relative;
             width: 100%;
             margin: 0 auto;
-            max-width: 600px; /* Increased width */
-            border-radius: 20px;
+            max-width: 640px; /* Increased width */
+            border-radius: 30px;
             background-color: white;
             padding: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            height: 780px; /* Fixed height for all slides */
-            aspect-ratio: 1 / 1.4; /* More rectangular aspect ratio */
+            aspect-ratio: 9 / 16; /* More phone-like aspect ratio */
         }
         
         .slideshow {
             position: relative;
             width: 100%;
             height: 100%;
-            border-radius: 10px;
+            border-radius: 20px;
             overflow: hidden;
         }
         
@@ -133,11 +132,11 @@
             width: 100%;
             height: 100%;
             opacity: 0;
-            transition: opacity 0.8s ease-in-out;
+            transition: opacity 1.5s ease-in-out; /* Longer transition */
             display: flex;
             flex-direction: column;
             justify-content: center;
-            border-radius: 5px;
+            border-radius: 15px;
             overflow: hidden;
         }
         
@@ -151,11 +150,14 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            border-radius: 5px;
+            border-radius: 15px;
         }
         
         .quote-slide {
-            background-color: #001530;
+            background-color: transparent; /* Transparent background */
+            background-image: url('./images/BackgroundImageSpace.jpg');
+            background-size: cover;
+            background-position: center;
             color: white;
             text-align: center;
             padding: 20px;
@@ -172,6 +174,29 @@
             margin: 0 auto;
             max-width: 80%;
             font-style: italic;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        
+        .question-slide {
+            background-color: transparent; /* Transparent background */
+            background-image: url('./images/BackgroundImageSpace.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+        }
+        
+        .question-text {
+            font-size: 2.2rem;
+            font-weight: bold;
+            font-style: italic;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
         
         .get-some-badge {
@@ -189,7 +214,7 @@
             background-color: white;
             padding: 10px 0;
             border-radius: 0 0 15px 15px;
-            margin-top: -5px;
+            margin-top: 5px;
         }
         
         /* Spinning text animation */
@@ -302,12 +327,14 @@
             
             .book-display {
                 max-width: 90%;
-                height: auto;
-                aspect-ratio: 1 / 1.5;
             }
             
             .quote-text {
                 font-size: 1.8rem;
+            }
+            
+            .question-text {
+                font-size: 1.6rem;
             }
         }
 
@@ -363,17 +390,27 @@
                             </div>
                         </div>
                         
+                        <!-- Slide 3: Questions -->
+                        <div class="slide" id="slide-3">
+                            <div class="question-slide">
+                                <p class="question-text">Would you try to prevent 911 ?</p>
+                                <p class="question-text">Save Princess Di ?</p>
+                                <p class="question-text">Whack a Narcissistic President ?</p>
+                                <p class="question-text">Or maybe bet on certain sporting events ?</p>
+                            </div>
+                        </div>
+                        
                         <!-- Navigation Arrows -->
                         <div class="nav-arrows" aria-hidden="true">
                             <div class="arrow prev" role="button" aria-label="Previous image">&#10094;</div>
                             <div class="arrow next" role="button" aria-label="Next image">&#10095;</div>
                         </div>
                     </div>
-                    
-                    <div class="availability-container">
-                        <div class="availability">
-                            <a href="where-to-buy.html">Available in Ebook or Print</a>
-                        </div>
+                </div>
+                
+                <div class="availability-container">
+                    <div class="availability">
+                        <a href="where-to-buy.html">Available in Ebook or Print</a>
                     </div>
                 </div>
                 
@@ -386,7 +423,6 @@
                     <div class="pagination-dot" data-slide="6"></div>
                     <div class="pagination-dot" data-slide="7"></div>
                     <div class="pagination-dot" data-slide="8"></div>
-                    <div class="pagination-dot" data-slide="9"></div>
                 </div>
                 
                 <!-- Hidden but SEO-friendly content -->
