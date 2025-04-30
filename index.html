@@ -32,12 +32,11 @@
     <style>
         /* CSS Variables for layout consistency */
         :root {
-            /* Core layout dimensions - LOCKED VALUES */
+            /* Core layout dimensions */
             --book-display-width: 500px;
             --book-display-mobile-width: 90%;
             --book-container-width: 600px;
             --content-max-width: 1200px;
-            --book-cover-aspect-ratio: 1.5; /* Height to width ratio */
         }
         
         * {
@@ -122,6 +121,7 @@
             width: 100%;
             margin: 0 auto;
             max-width: var(--book-display-width); /* Fixed width */
+            height: auto; /* Maintain aspect ratio */
             border-radius: 20px;
             background-color: white;
             padding: 15px;
@@ -134,75 +134,14 @@
             width: 100%;
             border-radius: 10px;
             overflow: hidden;
-            /* Use padding-bottom to maintain aspect ratio */
-            padding-bottom: calc(100% * var(--book-cover-aspect-ratio));
-        }
-        
-        /* Slide management */
-        .book-slides {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.8s ease-in-out, visibility 0.8s;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .slide.active {
-            opacity: 1;
-            visibility: visible;
-            z-index: 2;
-        }
-        
-        /* Image slide (book cover) */
-        .image-slide {
-            width: 100%;
-            height: 100%;
+            /* Fixed height based on aspect ratio if needed */
+            /* height: calc(var(--book-display-width) * 1.5); */ /* Uncomment and adjust if needed */
         }
         
         .book-cover {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            display: block;
             border-radius: 5px;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        
-        /* Text slide */
-        .text-slide {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background-color: rgba(0, 21, 48, 0.8);
-            border-radius: 10px;
-            padding: 20px;
-        }
-        
-        .slide-content {
-            max-width: 90%;
-        }
-        
-        .slide-text {
-            color: white;
-            font-size: 1.5rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            font-style: italic;
         }
         
         /* LOCKED DIMENSIONS: Badge positioning */
@@ -241,6 +180,25 @@
             display: inline-block;
         }
         
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 8px;
+        }
+        
+        .pagination-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: white;
+            opacity: 0.5;
+        }
+        
+        .pagination-dot.active {
+            opacity: 1;
+        }
+        
         /* LOCKED DIMENSIONS: Arrow positioning */
         .nav-arrows {
             position: absolute;
@@ -260,39 +218,6 @@
             color: white;
             cursor: pointer;
             pointer-events: auto;
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            user-select: none;
-        }
-        
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            gap: 8px;
-        }
-        
-        .pagination-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: white;
-            opacity: 0.5;
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-        }
-        
-        .pagination-dot.active {
-            opacity: 1;
-        }
-        
-        .pagination-dot:hover {
-            opacity: 0.8;
         }
         
         footer {
@@ -348,10 +273,6 @@
             .book-display {
                 max-width: var(--book-display-mobile-width);
             }
-            
-            .slide-text {
-                font-size: 1.2rem;
-            }
         }
 
         /* Accessibility improvements */
@@ -393,41 +314,13 @@
             <div class="book-container">
                 <div class="book-display">
                     <div class="book-cover-container">
-                        <div class="book-slides">
-                            <!-- Slide 1: Book Cover -->
-                            <div class="slide image-slide active" id="slide-1">
-                                <img src="./images/NewWebCover.jpg" alt="A Letter Guide For Rebecca Book Cover featuring an alien with a glowing head" class="book-cover">
-                            </div>
-                            
-                            <!-- Slide 2: Time Travel Questions -->
-                            <div class="slide text-slide" id="slide-2">
-                                <div class="slide-content">
-                                    <p class="slide-text">Would you try to prevent 911 ?</p>
-                                    <p class="slide-text">Save Princess Di ?</p>
-                                    <p class="slide-text">Whack a Narcissistic President ?</p>
-                                    <p class="slide-text">Or maybe bet on certain sporting events ?</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Slides 3-7 will be added here -->
-                            <!-- Example placeholder for slide 3 -->
-                            <div class="slide text-slide" id="slide-3">
-                                <div class="slide-content">
-                                    <p class="slide-text">More content coming soon...</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Award badge - position remains fixed -->
-                        <img src="./images/Star.png" alt="Get Some! Award Badge" class="get-some-badge">
-                        
-                        <!-- Navigation arrows - position remains fixed -->
+                        <img src="./images/NewWebCover.jpg" alt="A Letter Guide For Rebecca Book Cover featuring an alien with a glowing head" class="book-cover">
                         <div class="nav-arrows" aria-hidden="true">
-                            <div class="arrow prev" role="button" aria-label="Previous image">&#10094;</div>
-                            <div class="arrow next" role="button" aria-label="Next image">&#10095;</div>
+                            <div class="arrow" role="button" aria-label="Previous image">&#10094;</div>
+                            <div class="arrow" role="button" aria-label="Next image">&#10095;</div>
                         </div>
+                        <img src="./images/Star.png" alt="Get Some! Award Badge" class="get-some-badge">
                     </div>
-                    
                     <div class="availability-container">
                         <div class="availability">
                             <a href="where-to-buy.html">Available in Ebook or Print</a>
@@ -437,6 +330,8 @@
                 
                 <div class="pagination" aria-hidden="true">
                     <div class="pagination-dot active"></div>
+                    <div class="pagination-dot"></div>
+                    <div class="pagination-dot"></div>
                     <div class="pagination-dot"></div>
                     <div class="pagination-dot"></div>
                     <div class="pagination-dot"></div>
@@ -482,77 +377,6 @@
         "priceCurrency": "USD"
       }
     }
-    </script>
-    
-    <!-- Slider control script -->
-    <script>
-        // Slider functionality
-        let currentSlide = 1;
-        const totalSlides = 7; // Total number of planned slides
-        
-        // Initialize the slider
-        document.addEventListener('DOMContentLoaded', function() {
-            // Show the first slide
-            showSlide(currentSlide);
-            
-            // Add click events to arrows
-            document.querySelector('.arrow.prev').addEventListener('click', function() {
-                changeSlide(-1);
-            });
-            
-            document.querySelector('.arrow.next').addEventListener('click', function() {
-                changeSlide(1);
-            });
-            
-            // Add click events to pagination dots
-            const dots = document.querySelectorAll('.pagination-dot');
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', function() {
-                    goToSlide(index + 1);
-                });
-            });
-        });
-        
-        // Function to change slides
-        function changeSlide(direction) {
-            showSlide(currentSlide + direction);
-        }
-        
-        // Function to go to a specific slide
-        function goToSlide(slideNumber) {
-            showSlide(slideNumber);
-        }
-        
-        // Function to display the selected slide
-        function showSlide(slideNumber) {
-            // Adjust slideNumber to handle wrapping
-            if (slideNumber > totalSlides) {
-                slideNumber = 1;
-            } else if (slideNumber < 1) {
-                slideNumber = totalSlides;
-            }
-            
-            // Update current slide
-            currentSlide = slideNumber;
-            
-            // Hide all slides
-            const slides = document.querySelectorAll('.slide');
-            slides.forEach(slide => {
-                slide.classList.remove('active');
-            });
-            
-            // Show the current slide
-            const currentSlideElement = document.getElementById('slide-' + currentSlide);
-            if (currentSlideElement) {
-                currentSlideElement.classList.add('active');
-            }
-            
-            // Update pagination dots
-            const dots = document.querySelectorAll('.pagination-dot');
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index + 1 === currentSlide);
-            });
-        }
     </script>
 </body>
 </html>
