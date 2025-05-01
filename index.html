@@ -134,14 +134,64 @@
             width: 100%;
             border-radius: 10px;
             overflow: hidden;
-            /* Fixed height based on aspect ratio if needed */
-            /* height: calc(var(--book-display-width) * 1.5); */ /* Uncomment and adjust if needed */
         }
         
+        /* Slideshow styles */
+        .slides {
+            position: relative;
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .slide {
+            display: none;
+            width: 100%;
+            border-radius: 10px;
+            background-color: transparent;
+        }
+        
+        .slide.active {
+            display: block;
+        }
+        
+        /* Image slide */
         .book-cover {
             width: 100%;
             display: block;
             border-radius: 5px;
+        }
+        
+        /* Text slide */
+        .text-slide {
+            position: relative;
+            width: 100%;
+            padding-bottom: 150%; /* Maintain aspect ratio similar to image */
+            background-color: rgba(0, 21, 48, 0.7);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .slide-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .slide-text {
+            color: white;
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-style: italic;
         }
         
         /* LOCKED DIMENSIONS: Badge positioning */
@@ -193,10 +243,16 @@
             border-radius: 50%;
             background-color: white;
             opacity: 0.5;
+            cursor: pointer;
+            transition: opacity 0.3s;
         }
         
         .pagination-dot.active {
             opacity: 1;
+        }
+        
+        .pagination-dot:hover {
+            opacity: 0.8;
         }
         
         /* LOCKED DIMENSIONS: Arrow positioning */
@@ -218,6 +274,28 @@
             color: white;
             cursor: pointer;
             pointer-events: auto;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .arrow:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Fade animation */
+        .fade {
+            animation: fadeEffect 1s;
+        }
+        
+        @keyframes fadeEffect {
+            from {opacity: 0.3;}
+            to {opacity: 1;}
         }
         
         footer {
@@ -273,6 +351,10 @@
             .book-display {
                 max-width: var(--book-display-mobile-width);
             }
+            
+            .slide-text {
+                font-size: 1.2rem;
+            }
         }
 
         /* Accessibility improvements */
@@ -314,13 +396,90 @@
             <div class="book-container">
                 <div class="book-display">
                     <div class="book-cover-container">
-                        <img src="./images/NewWebCover.jpg" alt="A Letter Guide For Rebecca Book Cover featuring an alien with a glowing head" class="book-cover">
-                        <div class="nav-arrows" aria-hidden="true">
-                            <div class="arrow" role="button" aria-label="Previous image">&#10094;</div>
-                            <div class="arrow" role="button" aria-label="Next image">&#10095;</div>
+                        <!-- Slideshow container -->
+                        <div class="slides">
+                            <!-- Slide 1: Book Cover (Original image) -->
+                            <div class="slide active fade">
+                                <img src="./images/NewWebCover.jpg" alt="A Letter Guide For Rebecca Book Cover featuring an alien with a glowing head" class="book-cover">
+                            </div>
+                            
+                            <!-- Slide 2: Time Travel Questions -->
+                            <div class="slide fade">
+                                <div class="text-slide">
+                                    <div class="slide-content">
+                                        <p class="slide-text">Would you try to prevent 911 ?</p>
+                                        <p class="slide-text">Save Princess Di ?</p>
+                                        <p class="slide-text">Whack a Narcissistic President ?</p>
+                                        <p class="slide-text">Or maybe bet on certain sporting events ?</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Slide 3: Placeholder -->
+                            <div class="slide fade">
+                                <div class="text-slide">
+                                    <div class="slide-content">
+                                        <p class="slide-text">What would you do if you knew the future?</p>
+                                        <p class="slide-text">How far would you go to change history?</p>
+                                        <p class="slide-text">Would you risk everything for a second chance?</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Slide 4: Placeholder -->
+                            <div class="slide fade">
+                                <div class="text-slide">
+                                    <div class="slide-content">
+                                        <p class="slide-text">Rebecca never believed in aliens.</p>
+                                        <p class="slide-text">Until one delivered a letter...</p>
+                                        <p class="slide-text">...from her future self.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Slide 5: Placeholder -->
+                            <div class="slide fade">
+                                <div class="text-slide">
+                                    <div class="slide-content">
+                                        <p class="slide-text">"A mind-bending exploration of fate, free will, and the consequences of changing history."</p>
+                                        <p class="slide-text">— Science Fiction Weekly</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Slide 6: Placeholder -->
+                            <div class="slide fade">
+                                <div class="text-slide">
+                                    <div class="slide-content">
+                                        <p class="slide-text">One letter.</p>
+                                        <p class="slide-text">Infinite possibilities.</p>
+                                        <p class="slide-text">The fate of humanity hangs in the balance.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Slide 7: Placeholder -->
+                            <div class="slide fade">
+                                <div class="text-slide">
+                                    <div class="slide-content">
+                                        <p class="slide-text">By Derek Devon</p>
+                                        <p class="slide-text">Available now in print and ebook</p>
+                                        <p class="slide-text">Start your journey today</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        
+                        <!-- Navigation arrows -->
+                        <div class="nav-arrows" aria-hidden="true">
+                            <div class="arrow" role="button" aria-label="Previous slide" onclick="changeSlide(-1)">&#10094;</div>
+                            <div class="arrow" role="button" aria-label="Next slide" onclick="changeSlide(1)">&#10095;</div>
+                        </div>
+                        
+                        <!-- Award badge - position remains fixed -->
                         <img src="./images/Star.png" alt="Get Some! Award Badge" class="get-some-badge">
                     </div>
+                    
                     <div class="availability-container">
                         <div class="availability">
                             <a href="where-to-buy.html">Available in Ebook or Print</a>
@@ -329,15 +488,13 @@
                 </div>
                 
                 <div class="pagination" aria-hidden="true">
-                    <div class="pagination-dot active"></div>
-                    <div class="pagination-dot"></div>
-                    <div class="pagination-dot"></div>
-                    <div class="pagination-dot"></div>
-                    <div class="pagination-dot"></div>
-                    <div class="pagination-dot"></div>
-                    <div class="pagination-dot"></div>
-                    <div class="pagination-dot"></div>
-                    <div class="pagination-dot"></div>
+                    <div class="pagination-dot active" onclick="currentSlide(1)"></div>
+                    <div class="pagination-dot" onclick="currentSlide(2)"></div>
+                    <div class="pagination-dot" onclick="currentSlide(3)"></div>
+                    <div class="pagination-dot" onclick="currentSlide(4)"></div>
+                    <div class="pagination-dot" onclick="currentSlide(5)"></div>
+                    <div class="pagination-dot" onclick="currentSlide(6)"></div>
+                    <div class="pagination-dot" onclick="currentSlide(7)"></div>
                 </div>
                 
                 <!-- Hidden but SEO-friendly content -->
@@ -377,6 +534,50 @@
         "priceCurrency": "USD"
       }
     }
+    </script>
+    
+    <!-- Slideshow JavaScript -->
+    <script>
+        let slideIndex = 1;
+        
+        // Initialize the slideshow
+        document.addEventListener('DOMContentLoaded', function() {
+            showSlides(slideIndex);
+        });
+        
+        // Next/previous controls
+        function changeSlide(n) {
+            showSlides(slideIndex += n);
+        }
+        
+        // Thumbnail image controls
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+        
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("slide");
+            let dots = document.getElementsByClassName("pagination-dot");
+            
+            // Handle wrap-around
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            
+            // Hide all slides
+            for (i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+            
+            // Remove active class from all dots
+            for (i = 0; i < dots.length; i++) {
+                dots[i].classList.remove("active");
+            }
+            
+            // Show the current slide and activate the corresponding dot
+            slides[slideIndex-1].classList.add("active");
+            dots[slideIndex-1].classList.add("active");
+        }
     </script>
 </body>
 </html>
