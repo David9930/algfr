@@ -38,6 +38,7 @@
             --book-container-width: 600px;
             --content-max-width: 1200px;
             --slide-height: 750px; /* Fixed height based on your book cover image */
+            --slide-width: 100%; /* Fixed width to match original book cover */
         }
         
         * {
@@ -126,6 +127,8 @@
             background-color: white;
             padding: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            /* Extra style to ensure width consistency */
+            min-width: 490px; /* Minimum width to prevent collapse */
         }
         
         /* LOCKED DIMENSIONS: Book cover container - THIS IS THE KEY CONTAINER */
@@ -135,6 +138,9 @@
             height: var(--slide-height); /* FIXED HEIGHT */
             border-radius: 10px;
             overflow: hidden;
+            /* Enforce width explicitly */
+            max-width: 460px; /* Exact width to match your screenshot */
+            margin: 0 auto; /* Center in parent container */
         }
         
         /* Slideshow styles */
@@ -172,6 +178,9 @@
             height: 100%;
             object-fit: cover;
             border-radius: 5px;
+            /* Ensure image maintains aspect ratio without stretching */
+            object-position: center;
+            min-width: 300px; /* Prevent collapse below minimum width */
         }
         
         /* Text slide */
@@ -180,6 +189,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 100%; /* Ensure text slide takes full width */
+            min-width: 300px; /* Match minimum width of image */
         }
         
         .slide-content {
@@ -522,6 +533,8 @@
         
         // Initialize the slideshow
         document.addEventListener('DOMContentLoaded', function() {
+            // Set fixed dimensions on load to ensure consistency
+            enforceConsistentSizes();
             showSlides(slideIndex);
         });
         
@@ -533,6 +546,29 @@
         // Thumbnail image controls
         function currentSlide(n) {
             showSlides(slideIndex = n);
+        }
+        
+        // Function to enforce consistent sizes
+        function enforceConsistentSizes() {
+            // Get original image dimensions from the first slide
+            const firstSlide = document.querySelector('.image-slide img');
+            if (!firstSlide) return;
+            
+            // Get all slides
+            const slides = document.querySelectorAll('.slide');
+            const slideContainer = document.querySelector('.book-cover-container');
+            
+            // Set explicit width based on original image
+            if (slideContainer) {
+                const computedStyle = window.getComputedStyle(firstSlide);
+                // Use the actual width of the first image to set container width
+                slideContainer.style.width = computedStyle.width;
+                
+                // Set the same width on all slides
+                slides.forEach(slide => {
+                    slide.style.width = computedStyle.width;
+                });
+            }
         }
         
         function showSlides(n) {
@@ -557,6 +593,9 @@
             // Show the current slide and activate the corresponding dot
             slides[slideIndex-1].classList.add("active");
             dots[slideIndex-1].classList.add("active");
+            
+            // After showing slide, re-apply consistent sizing
+            enforceConsistentSizes();
         }
     </script>
 </body>
