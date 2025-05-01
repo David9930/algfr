@@ -32,11 +32,12 @@
     <style>
         /* CSS Variables for layout consistency */
         :root {
-            /* Core layout dimensions */
+            /* LOCKED DIMENSIONS - DO NOT CHANGE */
             --book-display-width: 500px;
             --book-display-mobile-width: 90%;
             --book-container-width: 600px;
             --content-max-width: 1200px;
+            --slide-height: 750px; /* Fixed height based on your book cover image */
         }
         
         * {
@@ -121,74 +122,75 @@
             width: 100%;
             margin: 0 auto;
             max-width: var(--book-display-width); /* Fixed width */
-            height: auto; /* Maintain aspect ratio */
             border-radius: 20px;
             background-color: white;
             padding: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        /* LOCKED DIMENSIONS: Book cover container */
+        /* LOCKED DIMENSIONS: Book cover container - THIS IS THE KEY CONTAINER */
         .book-cover-container {
             position: relative;
             width: 100%;
+            height: var(--slide-height); /* FIXED HEIGHT */
             border-radius: 10px;
             overflow: hidden;
         }
         
         /* Slideshow styles */
         .slides {
-            position: relative;
-            width: 100%;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .slide {
-            display: none;
-            width: 100%;
-            border-radius: 10px;
-            background-color: transparent;
-        }
-        
-        .slide.active {
-            display: block;
-        }
-        
-        /* Image slide */
-        .book-cover {
-            width: 100%;
-            display: block;
-            border-radius: 5px;
-        }
-        
-        /* Text slide */
-        .text-slide {
-            position: relative;
-            width: 100%;
-            padding-bottom: 150%; /* Maintain aspect ratio similar to image */
-            background-color: rgba(0, 21, 48, 0.7);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .slide-content {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            border-radius: 10px;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease-in-out, visibility 0.8s;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 2;
+        }
+        
+        /* Image slide */
+        .image-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        
+        /* Text slide */
+        .text-slide {
+            background-color: rgba(0, 21, 48, 0.7);
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+        }
+        
+        .slide-content {
+            padding: 40px;
             text-align: center;
-            padding: 20px;
+            max-width: 80%;
         }
         
         .slide-text {
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             line-height: 1.6;
             margin-bottom: 20px;
             font-style: italic;
@@ -288,16 +290,6 @@
             background-color: rgba(0, 0, 0, 0.5);
         }
         
-        /* Fade animation */
-        .fade {
-            animation: fadeEffect 1s;
-        }
-        
-        @keyframes fadeEffect {
-            from {opacity: 0.3;}
-            to {opacity: 1;}
-        }
-        
         footer {
             margin-top: 20px;
             width: 100%;
@@ -353,7 +345,7 @@
             }
             
             .slide-text {
-                font-size: 1.2rem;
+                font-size: 1.4rem;
             }
         }
 
@@ -399,81 +391,69 @@
                         <!-- Slideshow container -->
                         <div class="slides">
                             <!-- Slide 1: Book Cover (Original image) -->
-                            <div class="slide active fade">
-                                <img src="./images/NewWebCover.jpg" alt="A Letter Guide For Rebecca Book Cover featuring an alien with a glowing head" class="book-cover">
+                            <div class="slide image-slide active">
+                                <img src="./images/NewWebCover.jpg" alt="A Letter Guide For Rebecca Book Cover featuring an alien with a glowing head">
                             </div>
                             
                             <!-- Slide 2: Time Travel Questions -->
-                            <div class="slide fade">
-                                <div class="text-slide">
-                                    <div class="slide-content">
-                                        <p class="slide-text">Would you try to prevent 911 ?</p>
-                                        <p class="slide-text">Save Princess Di ?</p>
-                                        <p class="slide-text">Whack a Narcissistic President ?</p>
-                                        <p class="slide-text">Or maybe bet on certain sporting events ?</p>
-                                    </div>
+                            <div class="slide text-slide">
+                                <div class="slide-content">
+                                    <p class="slide-text">Would you try to prevent 911 ?</p>
+                                    <p class="slide-text">Save Princess Di ?</p>
+                                    <p class="slide-text">Whack a Narcissistic President ?</p>
+                                    <p class="slide-text">Or maybe bet on certain sporting events ?</p>
                                 </div>
                             </div>
                             
                             <!-- Slide 3: Placeholder -->
-                            <div class="slide fade">
-                                <div class="text-slide">
-                                    <div class="slide-content">
-                                        <p class="slide-text">What would you do if you knew the future?</p>
-                                        <p class="slide-text">How far would you go to change history?</p>
-                                        <p class="slide-text">Would you risk everything for a second chance?</p>
-                                    </div>
+                            <div class="slide text-slide">
+                                <div class="slide-content">
+                                    <p class="slide-text">What would you do if you knew the future?</p>
+                                    <p class="slide-text">How far would you go to change history?</p>
+                                    <p class="slide-text">Would you risk everything for a second chance?</p>
                                 </div>
                             </div>
                             
                             <!-- Slide 4: Placeholder -->
-                            <div class="slide fade">
-                                <div class="text-slide">
-                                    <div class="slide-content">
-                                        <p class="slide-text">Rebecca never believed in aliens.</p>
-                                        <p class="slide-text">Until one delivered a letter...</p>
-                                        <p class="slide-text">...from her future self.</p>
-                                    </div>
+                            <div class="slide text-slide">
+                                <div class="slide-content">
+                                    <p class="slide-text">Rebecca never believed in aliens.</p>
+                                    <p class="slide-text">Until one delivered a letter...</p>
+                                    <p class="slide-text">...from her future self.</p>
                                 </div>
                             </div>
                             
                             <!-- Slide 5: Placeholder -->
-                            <div class="slide fade">
-                                <div class="text-slide">
-                                    <div class="slide-content">
-                                        <p class="slide-text">"A mind-bending exploration of fate, free will, and the consequences of changing history."</p>
-                                        <p class="slide-text">— Science Fiction Weekly</p>
-                                    </div>
+                            <div class="slide text-slide">
+                                <div class="slide-content">
+                                    <p class="slide-text">"A mind-bending exploration of fate, free will, and the consequences of changing history."</p>
+                                    <p class="slide-text">— Science Fiction Weekly</p>
                                 </div>
                             </div>
                             
                             <!-- Slide 6: Placeholder -->
-                            <div class="slide fade">
-                                <div class="text-slide">
-                                    <div class="slide-content">
-                                        <p class="slide-text">One letter.</p>
-                                        <p class="slide-text">Infinite possibilities.</p>
-                                        <p class="slide-text">The fate of humanity hangs in the balance.</p>
-                                    </div>
+                            <div class="slide text-slide">
+                                <div class="slide-content">
+                                    <p class="slide-text">One letter.</p>
+                                    <p class="slide-text">Infinite possibilities.</p>
+                                    <p class="slide-text">The fate of humanity hangs in the balance.</p>
                                 </div>
                             </div>
                             
                             <!-- Slide 7: Placeholder -->
-                            <div class="slide fade">
-                                <div class="text-slide">
-                                    <div class="slide-content">
-                                        <p class="slide-text">By Derek Devon</p>
-                                        <p class="slide-text">Available now in print and ebook</p>
-                                        <p class="slide-text">Start your journey today</p>
-                                    </div>
+                            <div class="slide text-slide">
+                                <div class="slide-content">
+                                    <p class="slide-text">By Derek Devon</p>
+                                    <p class="slide-text">Available now in print and ebook</p>
+                                    <p class="slide-text">Start your journey today</p>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- Navigation arrows -->
                         <div class="nav-arrows" aria-hidden="true">
-                            <div class="arrow" role="button" aria-label="Previous slide" onclick="changeSlide(-1)">&#10094;</div>
-                            <div class="arrow" role="button" aria-label="Next slide" onclick="changeSlide(1)">&#10095;</div>
+                            <div class="arrow prev" role="button" aria-label="Previous slide" onclick="changeSlide(-1)">&#10094;</div>
+                            <div class="arrow next" role="button" aria-label="Next slide" onclick="changeSlide(1)">&#10095;</div>
                         </div>
                         
                         <!-- Award badge - position remains fixed -->
