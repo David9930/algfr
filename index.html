@@ -185,7 +185,7 @@
         
         /* Text slide */
         .text-slide {
-            background-color: rgba(0, 21, 48, 0.7);
+            background-color: transparent; /* Make fully transparent to show space background */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -197,6 +197,8 @@
             padding: 40px;
             text-align: center;
             max-width: 80%;
+            background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent background for text readability */
+            border-radius: 15px;
         }
         
         .slide-text {
@@ -211,7 +213,7 @@
         .get-some-badge {
             position: absolute;
             right: 15px;
-            bottom: 65px;
+            bottom: 15px; /* Moved further down to match screenshot */
             width: 70px;
             height: 70px;
             z-index: 10;
