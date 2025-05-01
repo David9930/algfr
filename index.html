@@ -141,6 +141,11 @@
             /* Enforce width explicitly */
             max-width: 460px; /* Exact width to match your screenshot */
             margin: 0 auto; /* Center in parent container */
+            /* Ensure space background shows through */
+            background-color: transparent;
+            background-image: url('./images/BackgroundImageSpace.jpg');
+            background-size: cover;
+            background-position: center;
         }
         
         /* Slideshow styles */
@@ -153,6 +158,7 @@
             border-radius: 10px;
         }
         
+        /* Slide styles */
         .slide {
             position: absolute;
             top: 0;
@@ -164,6 +170,7 @@
             transition: opacity 0.8s ease-in-out, visibility 0.8s;
             border-radius: 10px;
             overflow: hidden;
+            background-color: transparent; /* Ensure all slides are transparent */
         }
         
         .slide.active {
@@ -185,19 +192,23 @@
         
         /* Text slide */
         .text-slide {
-            background-color: transparent; /* Make fully transparent to show space background */
+            background-color: transparent !important; /* Force transparency */
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%; /* Ensure text slide takes full width */
             min-width: 300px; /* Match minimum width of image */
+            /* Remove any box shadows or borders that might be hiding the background */
+            box-shadow: none;
+            border: none;
         }
         
         .slide-content {
             padding: 40px;
             text-align: center;
             max-width: 80%;
-            background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent background for text readability */
+            /* Very light transparent background to ensure text readability */
+            background-color: rgba(0, 0, 0, 0.1);
             border-radius: 15px;
         }
         
@@ -207,6 +218,7 @@
             line-height: 1.6;
             margin-bottom: 20px;
             font-style: italic;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add text shadow for better readability */
         }
         
         /* LOCKED DIMENSIONS: Badge positioning */
@@ -410,7 +422,7 @@
                             
                             <!-- Slide 2: Time Travel Questions -->
                             <div class="slide text-slide">
-                                <div class="slide-content">
+                                <div class="slide-content" style="background-color: transparent;">
                                     <p class="slide-text">Would you try to prevent 911 ?</p>
                                     <p class="slide-text">Save Princess Di ?</p>
                                     <p class="slide-text">Whack a Narcissistic President ?</p>
@@ -418,12 +430,10 @@
                                 </div>
                             </div>
                             
-                            <!-- Slide 3: Placeholder -->
+                            <!-- Slide 3: Update for transparency -->
                             <div class="slide text-slide">
                                 <div class="slide-content">
-                                    <p class="slide-text">What would you do if you knew the future?</p>
-                                    <p class="slide-text">How far would you go to change history?</p>
-                                    <p class="slide-text">Would you risk everything for a second chance?</p>
+                                    <p class="slide-text">What if you could transfer all of your memories and experiences into your 12 year old self....</p>
                                 </div>
                             </div>
                             
