@@ -355,7 +355,7 @@
                 <span class="card-icon">👀</span>
                 <h2 class="card-title">Read Online</h2>
                 <p class="card-description">Read the sample chapter directly in your browser without any downloads required.</p>
-                <a href="#" onclick="openSampleModal(event)" class="card-button view-button">
+                <a href="#" onclick="openSampleModal(event); return false;" class="card-button view-button">
                     <span>View Sample</span>
                 </a>
             </div>
@@ -366,6 +366,11 @@
             <a href="where-to-buy.html" style="display: inline-block; padding: 15px 35px; background: linear-gradient(45deg, #4a5a86, #5b6da3); color: white; text-decoration: none; border-radius: 25px; font-weight: bold; transition: all 0.3s ease;">
                 Purchase the Full Book
             </a>
+            
+            <!-- Test button to check if clicks work -->
+            <button onclick="alert('Click is working!')" style="display: block; margin: 20px auto; padding: 10px 20px; background: red; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                Test Click (Delete after testing)
+            </button>
         </section>
     </main>
     
@@ -389,22 +394,53 @@
     </footer>
     
     <script>
+        // Ensure the page is fully loaded before adding event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded');
+            
+            // Test if buttons are accessible
+            const downloadBtn = document.querySelector('a[download]');
+            const viewBtn = document.querySelector('a[onclick]');
+            
+            console.log('Download button:', downloadBtn);
+            console.log('View button:', viewBtn);
+            
+            // Add click event listener to view button as alternative
+            if (viewBtn) {
+                viewBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    openSampleModal(event);
+                    return false;
+                });
+            }
+        });
+        
         // Modal Functions
         function openSampleModal(event) {
-            event.preventDefault();
+            console.log('Opening modal...');
+            if (event) {
+                event.preventDefault();
+            }
             const modal = document.getElementById('sampleModal');
-            modal.style.display = 'flex';
-            // Trigger reflow before adding active class for animation
-            modal.offsetHeight;
-            modal.classList.add('active');
+            if (modal) {
+                modal.style.display = 'flex';
+                // Trigger reflow before adding active class for animation
+                modal.offsetHeight;
+                modal.classList.add('active');
+            } else {
+                console.error('Modal not found');
+            }
         }
         
         function closeSampleModal() {
+            console.log('Closing modal...');
             const modal = document.getElementById('sampleModal');
-            modal.classList.remove('active');
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 300);
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 300);
+            }
         }
         
         // Close modal when clicking outside of it
