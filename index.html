@@ -448,15 +448,90 @@
             background: linear-gradient(45deg, #5b7db5, #7a98c9);
         }
         
+        /* Modal Styles for Reading Sample */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            background: linear-gradient(45deg, #4a5a86, #5b6da3);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            max-height: calc(90vh - 120px);
+            background-color: white;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: transform 0.2s;
+        }
+        
+        .close-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .pdf-viewer {
+            width: 100%;
+            height: 70vh;
+            border: none;
+        }
+        
+        .sample-text {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
         @media (max-width: 768px) {
-            .button-container {
-                gap: 15px;
+            .modal-content {
+                width: 95%;
+                max-height: 85vh;
             }
             
-            .sample-button {
-                padding: 12px 25px;
-                font-size: 1rem;
-                min-width: 180px;
+            .modal-body {
+                max-height: calc(85vh - 100px);
             }
         }
     </style>
@@ -512,7 +587,7 @@
                             <div class="slide text-slide">
                                 <div class="slide-content">
                                     <p class="slide-text">Or would you try to win the heart of 'Your High School Dream' girl ?</p>
-                                    <img src="./images/ColourRebeccaHeadwithQuestionmark2" alt="High school dream girl" style="width: 150px; height: 150px; border-radius: 50%; margin-top: 20px; object-fit: cover;">
+                                    <img src="./images/ColourRebeccaHeadshot.png" alt="High school dream girl" style="width: 150px; height: 150px; border-radius: 50%; margin-top: 20px; object-fit: cover;">
                                 </div>
                             </div>
                             
@@ -533,7 +608,7 @@
                                             <span class="button-icon">⬇</span>
                                             Download pdf sample
                                         </a>
-                                        <a href="book-sample.html" class="sample-button read-online-button">
+                                        <a href="#" onclick="openSampleModal(event)" class="sample-button read-online-button">
                                             <span class="button-icon">📖</span>
                                             Read on this site
                                         </a>
@@ -585,6 +660,28 @@
             </div>
         </div>
     </main>
+    
+    <!-- Modal for Reading Sample -->
+    <div id="sampleModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                Book Sample - A Letter Guide For Rebecca
+                <button class="close-button" onclick="closeSampleModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Option 1: Display PDF in iframe -->
+                <iframe src="Sample Chapter for website.pdf" class="pdf-viewer"></iframe>
+                
+                <!-- Option 2: Display HTML text (commented out by default) -->
+                <!--
+                <div class="sample-text">
+                    <h3>Chapter 1</h3>
+                    <p>Your sample text would go here...</p>
+                </div>
+                -->
+            </div>
+        </div>
+    </div>
     
     <footer>
         <p style="text-align: center; font-size: 0.8rem; opacity: 0.7;">
@@ -685,6 +782,39 @@
             // After showing slide, re-apply consistent sizing
             enforceConsistentSizes();
         }
+        
+        // Modal Functions
+        function openSampleModal(event) {
+            event.preventDefault();
+            const modal = document.getElementById('sampleModal');
+            modal.style.display = 'flex';
+            // Trigger reflow before adding active class for animation
+            modal.offsetHeight;
+            modal.classList.add('active');
+        }
+        
+        function closeSampleModal() {
+            const modal = document.getElementById('sampleModal');
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+        
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('sampleModal');
+            if (event.target === modal) {
+                closeSampleModal();
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeSampleModal();
+            }
+        });
     </script>
 </body>
 </html>
