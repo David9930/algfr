@@ -14,6 +14,12 @@
             font-family: Arial, sans-serif;
         }
         
+        /* Debug style - remove after testing */
+        .debug {
+            outline: 3px solid red !important;
+            background: rgba(255, 0, 0, 0.1) !important;
+        }
+        
         body {
             background-color: #001530;
             color: white;
@@ -173,6 +179,9 @@
             color: white;
             border: 2px solid rgba(255, 255, 255, 0.3);
             min-width: 200px;
+            cursor: pointer; /* Ensure cursor shows pointer */
+            position: relative; /* Ensure it's above other elements */
+            z-index: 10; /* Add z-index to make sure it's clickable */
         }
         
         .card-button:hover {
@@ -346,7 +355,7 @@
                 <span class="card-icon">📥</span>
                 <h2 class="card-title">Download Sample</h2>
                 <p class="card-description">Download the sample chapter to your device and read it offline at your convenience.</p>
-                <a href="SampleChapterforwebsite.pdf" download class="card-button">
+                <a href="SampleChapterforwebsite.pdf" download class="card-button" onmouseover="console.log('Download hover')" onclick="console.log('Download clicked')">
                     <span>Download PDF</span>
                 </a>
             </div>
@@ -355,7 +364,7 @@
                 <span class="card-icon">👀</span>
                 <h2 class="card-title">Read Online</h2>
                 <p class="card-description">Read the sample chapter directly in your browser without any downloads required.</p>
-                <a href="#" onclick="openSampleModal(event); return false;" class="card-button view-button">
+                <a href="#" class="card-button view-button" onmouseover="console.log('View hover')" onclick="console.log('View clicked'); openSampleModal(event); return false;">
                     <span>View Sample</span>
                 </a>
             </div>
@@ -399,20 +408,23 @@
             console.log('Page loaded');
             
             // Test if buttons are accessible
-            const downloadBtn = document.querySelector('a[download]');
-            const viewBtn = document.querySelector('a[onclick]');
+            const buttons = document.querySelectorAll('.card-button');
+            console.log('Found buttons:', buttons.length);
             
-            console.log('Download button:', downloadBtn);
-            console.log('View button:', viewBtn);
-            
-            // Add click event listener to view button as alternative
-            if (viewBtn) {
-                viewBtn.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    openSampleModal(event);
-                    return false;
+            // Add debug class to buttons for visibility
+            buttons.forEach((btn, index) => {
+                console.log(`Button ${index}:`, btn);
+                // btn.classList.add('debug'); // Uncomment to see red outline on buttons
+                
+                // Add multiple event listeners for testing
+                btn.addEventListener('mouseenter', function() {
+                    console.log(`Button ${index} mouseenter`);
                 });
-            }
+                
+                btn.addEventListener('click', function(event) {
+                    console.log(`Button ${index} clicked`);
+                });
+            });
         });
         
         // Modal Functions
