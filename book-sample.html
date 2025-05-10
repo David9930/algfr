@@ -1,1 +1,426 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Sample - A Letter Guide For Rebecca</title>
+    <meta name="description" content="Read a sample chapter from 'A Letter Guide For Rebecca' by Derek Devon">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #001530;
+            color: white;
+            background-image: url('./images/BackgroundImageSpace.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation - same as main site */
+        nav {
+            width: 100%;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .nav-link {
+            background-color: #5b6da3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-link:hover {
+            background-color: #7683b7;
+        }
+        
+        .nav-link.active {
+            background-color: #4a5a86;
+        }
+        
+        .white-link {
+            background-color: white;
+            color: #4a5a86;
+        }
+        
+        /* Main Content */
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+        }
+        
+        .hero-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: #b8c8e0;
+            margin-bottom: 30px;
+        }
+        
+        /* Interactive Card Container */
+        .sample-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .option-card {
+            background: linear-gradient(145deg, rgba(44, 62, 98, 0.9), rgba(75, 90, 134, 0.9));
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .option-card:hover:before {
+            opacity: 1;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .card-description {
+            font-size: 1.1rem;
+            color: #b8c8e0;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .card-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            background: linear-gradient(45deg, #2d5a27, #468d3f);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            min-width: 200px;
+        }
+        
+        .card-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #468d3f, #5ba054);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .view-button {
+            background: linear-gradient(45deg, #3d5a8f, #5b7db5);
+        }
+        
+        .view-button:hover {
+            background: linear-gradient(45deg, #5b7db5, #7a98c9);
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Modal Styles - same as main site */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            background: linear-gradient(45deg, #4a5a86, #5b6da3);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            max-height: calc(90vh - 120px);
+            background-color: white;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: transform 0.2s;
+        }
+        
+        .close-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .pdf-viewer {
+            width: 100%;
+            height: 70vh;
+            border: none;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .sample-options {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .option-card {
+                padding: 30px;
+            }
+            
+            .card-icon {
+                font-size: 3rem;
+            }
+            
+            .modal-content {
+                width: 95%;
+                max-height: 85vh;
+            }
+            
+            .modal-body {
+                max-height: calc(85vh - 100px);
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .option-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .option-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav aria-label="Main navigation">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="Quiz.html" class="nav-link white-link">Quiz</a>
+                <a href="book-sample.html" class="nav-link active white-link" aria-current="page">Book Sample</a>
+                <a href="secret-fort.html" class="nav-link white-link">Secret Fort Access</a>
+                <a href="blog.html" class="nav-link white-link">Blog</a>
+                <a href="where-to-buy.html" class="nav-link white-link">Where to Buy</a>
+                <a href="contact.html" class="nav-link white-link">Contact</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main class="main-container">
+        <section class="hero-section">
+            <h1 class="hero-title">Sample Chapter</h1>
+            <p class="hero-subtitle">Get a taste of "A Letter Guide For Rebecca" with our sample chapter</p>
+        </section>
+        
+        <section class="sample-options">
+            <div class="option-card">
+                <span class="card-icon">📥</span>
+                <h2 class="card-title">Download Sample</h2>
+                <p class="card-description">Download the sample chapter to your device and read it offline at your convenience.</p>
+                <a href="SampleChapterforwebsite.pdf" download class="card-button">
+                    <span>Download PDF</span>
+                </a>
+            </div>
+            
+            <div class="option-card">
+                <span class="card-icon">👀</span>
+                <h2 class="card-title">Read Online</h2>
+                <p class="card-description">Read the sample chapter directly in your browser without any downloads required.</p>
+                <a href="#" onclick="openSampleModal(event)" class="card-button view-button">
+                    <span>View Sample</span>
+                </a>
+            </div>
+        </section>
+        
+        <section style="text-align: center; margin-top: 80px;">
+            <p style="font-size: 1.2rem; color: #b8c8e0; margin-bottom: 20px;">Like what you've read?</p>
+            <a href="where-to-buy.html" style="display: inline-block; padding: 15px 35px; background: linear-gradient(45deg, #4a5a86, #5b6da3); color: white; text-decoration: none; border-radius: 25px; font-weight: bold; transition: all 0.3s ease;">
+                Purchase the Full Book
+            </a>
+        </section>
+    </main>
+    
+    <!-- Modal for Reading Sample -->
+    <div id="sampleModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                Sample Chapter - A Letter Guide For Rebecca
+                <button class="close-button" onclick="closeSampleModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <iframe src="SampleChapterforwebsite.pdf" class="pdf-viewer"></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p style="text-align: center; font-size: 0.8rem; opacity: 0.7;">
+            &copy; <script>document.write(new Date().getFullYear())</script> Derek Devon. All rights reserved.
+        </p>
+    </footer>
+    
+    <script>
+        // Modal Functions
+        function openSampleModal(event) {
+            event.preventDefault();
+            const modal = document.getElementById('sampleModal');
+            modal.style.display = 'flex';
+            // Trigger reflow before adding active class for animation
+            modal.offsetHeight;
+            modal.classList.add('active');
+        }
+        
+        function closeSampleModal() {
+            const modal = document.getElementById('sampleModal');
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+        
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('sampleModal');
+            if (event.target === modal) {
+                closeSampleModal();
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeSampleModal();
+            }
+        });
+    </script>
+</body>
+</html>
