@@ -1,1 +1,299 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Fort - A Letter Guide For Rebecca</title>
+    <meta name="description" content="Welcome to The Fort - Exclusive content for readers of 'A Letter Guide For Rebecca' by Derek Devon">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #2c1810;
+            color: white;
+            background-image: url('./images/FortBackground.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation - consistent with other pages */
+        nav {
+            width: 100%;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .nav-link {
+            background-color: #5b6da3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-link:hover {
+            background-color: #7683b7;
+        }
+        
+        .nav-link.active {
+            background-color: #4a5a86;
+        }
+        
+        .white-link {
+            background-color: white;
+            color: #4a5a86;
+        }
+        
+        .white-link:hover {
+            background-color: #f0f0f0;
+        }
+        
+        /* Main Content */
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+            justify-content: center;
+        }
+        
+        .hero-section {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 40px;
+            color: white;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            font-family: Arial, sans-serif;
+        }
+        
+        .welcome-message {
+            font-size: 1.2rem;
+            color: white;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto 50px auto;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+        }
+        
+        /* Button Container and Styling */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .fort-button {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.95);
+            color: #6a5acd;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            min-width: 350px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: none;
+        }
+        
+        .fort-button:hover {
+            background-color: rgba(255, 255, 255, 1);
+            color: #483d8b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .home-button {
+            background-color: rgba(255, 255, 255, 0.95);
+            color: #4169e1;
+            font-weight: 500;
+        }
+        
+        .home-button:hover {
+            background-color: rgba(255, 255, 255, 1);
+            color: #0000cd;
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .welcome-message {
+                font-size: 1.1rem;
+                margin-bottom: 40px;
+                padding: 0 20px;
+            }
+            
+            .button-container {
+                max-width: 90%;
+                gap: 15px;
+            }
+            
+            .fort-button {
+                min-width: 300px;
+                padding: 12px 30px;
+                font-size: 0.95rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+                margin-bottom: 30px;
+            }
+            
+            .welcome-message {
+                font-size: 1rem;
+                margin-bottom: 30px;
+            }
+            
+            .button-container {
+                max-width: 95%;
+                gap: 12px;
+            }
+            
+            .fort-button {
+                min-width: 280px;
+                padding: 10px 25px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Animation */
+        .fort-button {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .fort-button:nth-child(1) { animation-delay: 0.1s; }
+        .fort-button:nth-child(2) { animation-delay: 0.2s; }
+        .fort-button:nth-child(3) { animation-delay: 0.3s; }
+        .fort-button:nth-child(4) { animation-delay: 0.4s; }
+        .fort-button:nth-child(5) { animation-delay: 0.5s; }
+        .fort-button:nth-child(6) { animation-delay: 0.6s; }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav aria-label="Main navigation">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link white-link">Home</a>
+                <a href="Quiz.html" class="nav-link white-link">Quiz</a>
+                <a href="book-sample.html" class="nav-link white-link">Book Sample</a>
+                <a href="secret-fort.html" class="nav-link active" aria-current="page">Secret Fort Access</a>
+                <a href="blog.html" class="nav-link white-link">Blog</a>
+                <a href="where-to-buy.html" class="nav-link white-link">Where to Buy</a>
+                <a href="contact.html" class="nav-link white-link">Contact</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main class="main-container">
+        <section class="hero-section">
+            <h1 class="hero-title">Welcome to the Fort</h1>
+            <p class="welcome-message">
+                Well since you made it here you are obviously 'Worthy'. This section will be dedicated to those people who have read the book and not the general public. I hope you will explore the various areas in the Fort and you will find some are wanting to explore your views rather than mine.
+            </p>
+            
+            <div class="button-container">
+                <a href="#actor-suggestion" class="fort-button">Actor Suggestion Form</a>
+                <a href="#camp-pictures" class="fort-button">Pictures of the Trip into Al's Camp</a>
+                <a href="#book-teaser" class="fort-button">A Teaser About Book 3</a>
+                <a href="#thoughts-comments" class="fort-button">Thoughts & Comments about the book</a>
+                <a href="index.html" class="fort-button home-button">Click HERE to go to home</a>
+                <a href="#rebecca-message" class="fort-button">A Private Message to the 'Real Rebecca'</a>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p style="text-align: center; font-size: 0.8rem; opacity: 0.7;">
+            &copy; <script>document.write(new Date().getFullYear())</script> Derek Devon. All rights reserved. | The Fort - Exclusive Access
+        </p>
+    </footer>
+    
+    <script>
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.fort-button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px) scale(1.02)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // Log access for analytics
+            console.log('User accessed The Fort at:', new Date().toISOString());
+        });
+    </script>
+</body>
+</html>
