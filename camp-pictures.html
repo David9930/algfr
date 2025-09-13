@@ -1,1 +1,511 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al's Lake and Trip In - A Letter Guide For Rebecca</title>
+    <meta name="description" content="Photo gallery from Al's camping trip - exclusive content from The Fort">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            width: 100%;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .nav-link {
+            background-color: #5b6da3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-link:hover {
+            background-color: #7683b7;
+        }
+        
+        .nav-link.active {
+            background-color: #4a5a86;
+        }
+        
+        .white-link {
+            background-color: white;
+            color: #4a5a86;
+        }
+        
+        .white-link:hover {
+            background-color: #f0f0f0;
+        }
+        
+        /* Main Content */
+        .main-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .page-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 50px;
+            text-align: center;
+            color: white;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Carousel Container */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .carousel-slides {
+            display: flex;
+            width: 500%; /* Will be adjusted based on number of photos */
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .carousel-slide {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        
+        /* Navigation Arrows */
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        
+        .carousel-nav:hover {
+            background: rgba(0, 0, 0, 0.7);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .prev {
+            left: 15px;
+        }
+        
+        .next {
+            right: 15px;
+        }
+        
+        /* Photo Description */
+        .photo-description {
+            margin-top: 25px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .description-text {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: white;
+            max-width: 600px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Dots Navigation */
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+        
+        .dot:hover {
+            background: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Instructions */
+        .instructions {
+            margin-top: 30px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+        
+        /* Back Button */
+        .back-button {
+            margin-top: 40px;
+            display: inline-block;
+            background: linear-gradient(45deg, #8b4513, #a0522d);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .back-button:hover {
+            background: linear-gradient(45deg, #a0522d, #cd853f);
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.2rem;
+                margin-bottom: 30px;
+            }
+            
+            .carousel-container {
+                padding: 20px;
+                margin: 0 10px;
+            }
+            
+            .carousel-wrapper {
+                height: 300px;
+            }
+            
+            .carousel-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            
+            .prev {
+                left: 10px;
+            }
+            
+            .next {
+                right: 10px;
+            }
+            
+            .description-text {
+                font-size: 1rem;
+            }
+            
+            .photo-description {
+                min-height: 70px;
+                padding: 15px;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .carousel-wrapper {
+                height: 250px;
+            }
+            
+            .carousel-nav {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+            
+            .description-text {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav aria-label="Main navigation">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link white-link">Home</a>
+                <a href="Quiz.html" class="nav-link white-link">Quiz</a>
+                <a href="book-sample.html" class="nav-link white-link">Book Sample</a>
+                <a href="the-fort.html" class="nav-link active" aria-current="page">Secret Fort Access</a>
+                <a href="blog.html" class="nav-link white-link">Blog</a>
+                <a href="where-to-buy.html" class="nav-link white-link">Where to Buy</a>
+                <a href="contact.html" class="nav-link white-link">Contact</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main class="main-container">
+        <h1 class="page-title">Al's Lake and Trip In</h1>
+        
+        <div class="carousel-container">
+            <div class="carousel-wrapper">
+                <div class="carousel-slides" id="carouselSlides">
+                    <!-- Slides will be populated by JavaScript -->
+                </div>
+                
+                <button class="carousel-nav prev" onclick="changeSlide(-1)" aria-label="Previous photo">‹</button>
+                <button class="carousel-nav next" onclick="changeSlide(1)" aria-label="Next photo">›</button>
+            </div>
+            
+            <div class="photo-description">
+                <div class="description-text" id="photoDescription">
+                    Click the arrows or dots to navigate through the photos from Al's camping trip
+                </div>
+            </div>
+            
+            <div class="carousel-dots" id="carouselDots">
+                <!-- Dots will be populated by JavaScript -->
+            </div>
+            
+            <div class="instructions">
+                Tap Side Pictures to rotate carousel
+            </div>
+        </div>
+        
+        <a href="the-fort.html" class="back-button">← Back to The Fort</a>
+    </main>
+    
+    <footer>
+        <p style="text-align: center; font-size: 0.8rem; opacity: 0.7;">
+            &copy; <script>document.write(new Date().getFullYear())</script> Derek Devon. All rights reserved. | The Fort - Al's Camp Photos
+        </p>
+    </footer>
+    
+    <script>
+        // Photo data - you can add descriptions here
+        const photos = [
+            {
+                src: './images/al-camp-pics/photo1.jpg',
+                description: 'Add your two-line description for photo 1 here. This can describe what\'s happening in the scene or its significance to the story.'
+            },
+            {
+                src: './images/al-camp-pics/photo2.jpg',
+                description: 'Add your two-line description for photo 2 here. Each description can be up to two lines long for optimal display.'
+            },
+            {
+                src: './images/al-camp-pics/photo3.jpg',
+                description: 'Add your two-line description for photo 3 here. You can edit these descriptions directly in the JavaScript section.'
+            },
+            {
+                src: './images/al-camp-pics/photo4.jpg',
+                description: 'Add your two-line description for photo 4 here. The descriptions help provide context for each camping photo.'
+            },
+            {
+                src: './images/al-camp-pics/photo5.jpg',
+                description: 'Add your two-line description for photo 5 here. These descriptions can tell the story behind each image.'
+            }
+            // Add more photos as needed - just follow the same format
+        ];
+        
+        let currentSlide = 0;
+        
+        // Initialize carousel
+        function initCarousel() {
+            const slidesContainer = document.getElementById('carouselSlides');
+            const dotsContainer = document.getElementById('carouselDots');
+            
+            // Set carousel width based on number of photos
+            slidesContainer.style.width = `${photos.length * 100}%`;
+            
+            // Create slides
+            photos.forEach((photo, index) => {
+                // Create slide
+                const slide = document.createElement('div');
+                slide.className = 'carousel-slide';
+                slide.innerHTML = `<img src="${photo.src}" alt="Al's camp photo ${index + 1}" onerror="this.src='./images/placeholder.jpg';">`;
+                slidesContainer.appendChild(slide);
+                
+                // Create dot
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if (index === 0) dot.classList.add('active');
+                dot.onclick = () => goToSlide(index);
+                dotsContainer.appendChild(dot);
+            });
+            
+            // Show first photo description
+            updateDescription();
+        }
+        
+        function changeSlide(direction) {
+            currentSlide += direction;
+            
+            if (currentSlide >= photos.length) {
+                currentSlide = 0;
+            } else if (currentSlide < 0) {
+                currentSlide = photos.length - 1;
+            }
+            
+            updateCarousel();
+        }
+        
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+        
+        function updateCarousel() {
+            const slidesContainer = document.getElementById('carouselSlides');
+            const dots = document.querySelectorAll('.dot');
+            
+            // Move slides
+            const translateX = -(currentSlide * (100 / photos.length));
+            slidesContainer.style.transform = `translateX(${translateX}%)`;
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+            
+            // Update description
+            updateDescription();
+        }
+        
+        function updateDescription() {
+            const descriptionElement = document.getElementById('photoDescription');
+            descriptionElement.textContent = photos[currentSlide].description;
+        }
+        
+        // Auto-advance carousel (optional - remove if you don't want this)
+        function autoAdvance() {
+            setInterval(() => {
+                changeSlide(1);
+            }, 5000); // Change slide every 5 seconds
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initCarousel();
+            // autoAdvance(); // Uncomment if you want auto-advance
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (e.key === 'ArrowRight') {
+                changeSlide(1);
+            }
+        });
+        
+        // Touch/swipe support for mobile
+        let startX = 0;
+        let endX = 0;
+        
+        document.addEventListener('touchstart', function(e) {
+            startX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', function(e) {
+            endX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            const threshold = 50;
+            const diff = startX - endX;
+            
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0) {
+                    changeSlide(1); // Swipe left - next slide
+                } else {
+                    changeSlide(-1); // Swipe right - previous slide
+                }
+            }
+        }
+    </script>
+</body>
+</html>
