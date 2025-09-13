@@ -420,7 +420,40 @@
                 // Create slide
                 const slide = document.createElement('div');
                 slide.className = 'carousel-slide';
-                slide.innerHTML = `<img src="${photo.src}" alt="Al's camp photo ${index + 1}" onerror="this.src='./images/placeholder.jpg';">`;
+                
+                // Create image with better error handling
+                const img = document.createElement('img');
+                img.src = photo.src;
+                img.alt = `Al's camp photo ${index + 1}`;
+                
+                // Add load success handler
+                img.onload = function() {
+                    console.log(`✓ Successfully loaded: ${photo.src}`);
+                };
+                
+                // Add error handler with debugging
+                img.onerror = function() {
+                    console.error(`✗ Failed to load: ${photo.src}`);
+                    // Try alternative path
+                    const altSrc = photo.src.replace('./images/', 'images/');
+                    console.log(`Trying alternative path: ${altSrc}`);
+                    this.src = altSrc;
+                    
+                    this.onerror = function() {
+                        console.error(`✗ Alternative path also failed: ${altSrc}`);
+                        // Show placeholder or error message
+                        this.style.display = 'none';
+                        slide.innerHTML = `<div style="display: flex; align-items: center; justify-content: center; height: 100%; background: rgba(255,255,255,0.1); color: white; text-align: center; padding: 20px;">
+                            <div>
+                                <div style="font-size: 2rem; margin-bottom: 10px;">📷</div>
+                                <div>Photo ${index + 1} not found</div>
+                                <div style="font-size: 0.8rem; margin-top: 5px;">Expected: ${photo.src}</div>
+                            </div>
+                        </div>`;
+                    };
+                };
+                
+                slide.appendChild(img);
                 slidesContainer.appendChild(slide);
                 
                 // Create dot
@@ -433,6 +466,12 @@
             
             // Show first photo description
             updateDescription();
+            
+            // Debug info
+            console.log('=== CAROUSEL DEBUG INFO ===');
+            console.log('Total photos:', photos.length);
+            console.log('Photos array:', photos);
+            console.log('Current page URL:', window.location.href);
         }
         
         function changeSlide(direction) {
