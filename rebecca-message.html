@@ -336,13 +336,41 @@
         }
         
         .proceed-button {
-            background: linear-gradient(135deg, rgba(100, 255, 100, 0.2), rgba(150, 255, 150, 0.3));
+            background: linear-gradient(135deg, rgba(100, 255, 100, 0.2), rgba(150, 255, 150, 0.3)), url('./images/perfection.jpg');
+            background-size: cover, cover;
+            background-position: center, center;
+            background-blend-mode: overlay;
             border-color: rgba(150, 255, 150, 0.4);
+            position: relative;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+            font-weight: 600;
+        }
+        
+        .proceed-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(100, 255, 100, 0.1), rgba(150, 255, 150, 0.2));
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            z-index: -1;
         }
         
         .proceed-button:hover {
-            background: linear-gradient(135deg, rgba(100, 255, 100, 0.3), rgba(150, 255, 150, 0.4));
+            background: linear-gradient(135deg, rgba(100, 255, 100, 0.3), rgba(150, 255, 150, 0.4)), url('./images/perfection.jpg');
+            background-size: cover, cover;
+            background-position: center, center;
+            background-blend-mode: overlay;
             box-shadow: 0 15px 40px rgba(100, 255, 100, 0.3);
+            transform: translateY(-5px) scale(1.05);
+        }
+        
+        .proceed-button:hover::after {
+            background: linear-gradient(135deg, rgba(100, 255, 100, 0.2), rgba(150, 255, 150, 0.3));
         }
         
         /* Footer */
