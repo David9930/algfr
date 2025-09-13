@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rebecca's Verification - A Letter Guide For Rebecca</title>
+    <meta name="description" content="Verification questions for the real Rebecca">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Animated Background */
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        
+        .star.small {
+            width: 1px;
+            height: 1px;
+            opacity: 0.6;
+        }
+        
+        .star.medium {
+            width: 2px;
+            height: 2px;
+            opacity: 0.4;
+        }
+        
+        .star.large {
+            width: 3px;
+            height: 3px;
+            opacity: 0.3;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        /* Navigation */
+        nav {
+            width: 100%;
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .nav-link {
+            background-color: #5b6da3;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-link:hover {
+            background-color: #7683b7;
+        }
+        
+        .white-link {
+            background-color: white;
+            color: #4a5a86;
+        }
+        
+        /* Main Container */
+        .main-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .question-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 40px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .question-header {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #81C784);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+            width: 20%;
+        }
+        
+        .question-text {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.95);
+        }
+        
+        .question-note {
+            font-size: 1rem;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+        }
+        
+        .answer-section {
+            margin: 30px 0;
+        }
+        
+        .answer-input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .answer-input:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+        }
+        
+        .submit-button {
+            background: linear-gradient(45deg, #4CAF50, #66BB6A);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+            min-width: 120px;
+        }
+        
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+        
+        .submit-button:disabled {
+            background: rgba(255, 255, 255, 0.3);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .back-button {
+            background: linear-gradient(45deg, #FF7043, #FF8A65);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+            min-width: 120px;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 112, 67, 0.4);
+        }
+        
+        .attempts-counter {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 500;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .feedback.show {
+            opacity: 1;
+        }
+        
+        .feedback.success {
+            background: rgba(76, 175, 80, 0.2);
+            color: #A5D6A7;
+            border: 1px solid rgba(76, 175, 80, 0.5);
+        }
+        
+        .feedback.error {
+            background: rgba(244, 67, 54, 0.2);
+            color: #EF9A9A;
+            border: 1px solid rgba(244, 67, 54, 0.5);
+        }
+        
+        .completion-screen {
+            display: none;
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
+        
+        .completion-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #4CAF50;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        .completion-message {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .continue-button {
+            background: linear-gradient(45deg, #FFD700, #FFA726);
+            color: #333;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .continue-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(76, 175, 80, 0.5); }
+            to { text-shadow: 0 0 30px rgba(76, 175, 80, 0.8), 0 0 40px rgba(76, 175, 80, 0.3); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .question-container {
+                padding: 30px 20px;
+                min-height: 350px;
+            }
+            
+            .question-header {
+                font-size: 2rem;
+            }
+            
+            .question-text {
+                font-size: 1.2rem;
+            }
+            
+            .answer-input {
+                font-size: 1rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="starfield" id="starfield"></div>
+    
+    <header>
+        <nav>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link white-link">Home</a>
+                <a href="Quiz.html" class="nav-link white-link">Quiz</a>
+                <a href="book-sample.html" class="nav-link white-link">Book Sample</a>
+                <a href="the-fort.html" class="nav-link white-link">Secret Fort Access</a>
+                <a href="blog.html" class="nav-link white-link">Blog</a>
+                <a href="where-to-buy.html" class="nav-link white-link">Where to Buy</a>
+                <a href="contact.html" class="nav-link white-link">Contact</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main class="main-container">
+        <div class="question-container">
+            <div id="questionScreen">
+                <h1 class="question-header">Question <span id="questionNumber">1</span></h1>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                
+                <p class="question-text" id="questionText">Loading question...</p>
+                <p class="question-note" id="questionNote">Note: Answers are case sensitive!</p>
+                
+                <div class="answer-section">
+                    <input type="text" id="answerInput" class="answer-input" placeholder="Enter your answer...">
+                    <div>
+                        <button id="submitButton" class="submit-button">Submit Answer</button>
+                        <button id="backButton" class="back-button">Back to Fort</button>
+                    </div>
+                    <div class="attempts-counter" id="attemptsCounter">Attempt 1 of 3</div>
+                </div>
+                
+                <div id="feedback" class="feedback"></div>
+            </div>
+            
+            <div id="completionScreen" class="completion-screen">
+                <h1 class="completion-title">Welcome, Rebecca!</h1>
+                <p class="completion-message">
+                    You have successfully verified your identity.<br>
+                    Your private message awaits you.
+                </p>
+                <button class="continue-button" onclick="accessPrivateMessage()">
+                    Access Your Message
+                </button>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // Encrypted questions and answers using ROT13 + Base64
+        const encryptedQuestions = [
+            {
+                // Question 1: What was the name of your dog I loved?
+                question: "V2hhdCB3YXMgdGhlIG5hbWUgYnMgbGJoZSBRYnQgViBzdmJxPw==",
+                answer: "RnZxcmE=", // Encrypted answer
+                note: "(First letter is a capital)"
+            },
+            {
+                // Question 2: [Add your second question]
+                question: "VjJoaGRDQjNZWE1nYjNWeUlHWmhkbTl5YVhSbElITnZibWM/",
+                answer: "VGVzdEFuc3dlcjI=", // Replace with encrypted answer
+                note: "Think about our shared memories..."
+            },
+            {
+                // Question 3: [Add your third question]
+                question: "VjJoaGRDQjNZWE1nYjNWeUlHWnBjbk4wSUdSaGRHVT0=",
+                answer: "VGVzdEFuc3dlcjM=", // Replace with encrypted answer
+                note: "Remember that special day?"
+            },
+            {
+                // Question 4: [Add your fourth question]
+                question: "VjJoaGRDQjNZWE1nZEdobElIQnNZV05sSUhkbElHWnBjbk4wSUcxbGRBPT0=",
+                answer: "VGVzdEFuc3dlcjQ=", // Replace with encrypted answer
+                note: "Our secret place..."
+            },
+            {
+                // Question 5: [Add your fifth question]
+                question: "VjJoaGRDQjNZWE1nZEdobElITndaV05wWVd3Z2NHaHlZWE5sSUhkbElIVnpaV1E/",
+                answer: "VGVzdEFuc3dlcjU=", // Replace with encrypted answer
+                note: "Only you would know this..."
+            }
+        ];
+        
+        let currentQuestion = 0;
+        let currentAttempt = 1;
+        const maxAttempts = 3;
+        
+        // Decryption functions
+        function rot13(str) {
+            return str.replace(/[a-zA-Z]/g, function(c) {
+                return String.fromCharCode((c <= 'Z' ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26);
+            });
+        }
+        
+        function decrypt(encryptedText) {
+            try {
+                const base64Decoded = atob(encryptedText);
+                const rot13Decoded = rot13(base64Decoded);
+                return rot13Decoded;
+            } catch (e) {
+                return "Decryption Error";
+            }
+        }
+        
+        // Create starfield
+        function createStarfield() {
+            const starfield = document.getElementById('starfield');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = `star ${['small', 'medium', 'large'][Math.floor(Math.random() * 3)]}`;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starfield.appendChild(star);
+            }
+        }
+        
+        // Initialize the quiz
+        function initQuiz() {
+            createStarfield();
+            loadQuestion();
+            
+            document.getElementById('submitButton').addEventListener('click', submitAnswer);
+            document.getElementById('backButton').addEventListener('click', () => {
+                window.location.href = 'the-fort.html';
+            });
+            
+            document.getElementById('answerInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    submitAnswer();
+                }
+            });
+        }
+        
+        function loadQuestion() {
+            const question = encryptedQuestions[currentQuestion];
+            const decryptedQuestion = decrypt(question.question);
+            
+            document.getElementById('questionNumber').textContent = currentQuestion + 1;
+            document.getElementById('questionText').textContent = decryptedQuestion;
+            document.getElementById('questionNote').textContent = question.note;
+            document.getElementById('answerInput').value = '';
+            document.getElementById('answerInput').focus();
+            
+            // Update progress bar
+            const progress = ((currentQuestion + 1) / encryptedQuestions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            // Reset attempts
+            currentAttempt = 1;
+            updateAttemptsCounter();
+            
+            // Clear feedback
+            const feedback = document.getElementById('feedback');
+            feedback.classList.remove('show');
+        }
+        
+        function updateAttemptsCounter() {
+            document.getElementById('attemptsCounter').textContent = `Attempt ${currentAttempt} of ${maxAttempts}`;
+        }
+        
+        function submitAnswer() {
+            const userAnswer = document.getElementById('answerInput').value.trim();
+            const correctAnswer = decrypt(questions[currentQuestion].answer);
+            const feedback = document.getElementById('feedback');
+            
+            if (userAnswer === correctAnswer) {
+                // Correct answer
+                showFeedback('Correct! Moving to next question...', 'success');
+                
+                setTimeout(() => {
+                    currentQuestion++;
+                    if (currentQuestion >= questions.length) {
+                        showCompletionScreen();
+                    } else {
+                        loadQuestion();
+                    }
+                }, 1500);
+                
+            } else {
+                // Wrong answer
+                currentAttempt++;
+                
+                if (currentAttempt > maxAttempts) {
+                    showFeedback('Too many incorrect attempts. Returning to home...', 'error');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                } else {
+                    showFeedback(`Incorrect. ${maxAttempts - currentAttempt + 1} attempts remaining.`, 'error');
+                    updateAttemptsCounter();
+                    document.getElementById('answerInput').value = '';
+                    document.getElementById('answerInput').focus();
+                }
+            }
+        }
+        
+        function showFeedback(message, type) {
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = message;
+            feedback.className = `feedback ${type} show`;
+        }
+        
+        function showCompletionScreen() {
+            document.getElementById('questionScreen').style.display = 'none';
+            document.getElementById('completionScreen').style.display = 'block';
+        }
+        
+        function accessPrivateMessage() {
+            // This will eventually link to Rebecca's private message page
+            alert('Rebecca\'s private message page coming soon!');
+            // window.location.href = 'rebecca-private-message.html';
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initQuiz);
+    </script>
+</body>
+</html>
