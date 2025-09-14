@@ -389,12 +389,12 @@
     </main>
     
     <!-- Hidden Google Form -->
-<form class="hidden-form" id="hiddenForm" action="https://docs.google.com/forms/d/e/1FAIpQLScDcsQuz1M-BtWCuWO3OCe4FNFtqvIXio4ATp7UTsozItDiCA/formResponse" method="post" target="hiddenFrame">
-    <input type="text" name="entry.1605116252" id="hiddenMessage">
-    <input type="text" name="entry.1913578150" id="hiddenTimestamp">
-    <input type="text" name="entry.595380753" id="hiddenSender">
-</form>
-<iframe name="hiddenFrame" class="hidden-form"></iframe>
+    <form class="hidden-form" id="hiddenForm" action="https://docs.google.com/forms/d/e/1FAIpQLScDcsQuz1M-BtWCuWO3OCe4FNFtqvIXio4ATp7UTsozItDiCA/formResponse" method="post" target="hiddenFrame">
+        <input type="text" name="entry.1605116252" id="hiddenMessage">
+        <input type="text" name="entry.1913578150" id="hiddenTimestamp">
+        <input type="text" name="entry.595380753" id="hiddenSender">
+    </form>
+    <iframe name="hiddenFrame" class="hidden-form"></iframe>
     
     <script>
         // Sample messages data (replace with actual JSON file reading)
@@ -483,10 +483,23 @@
             document.getElementById('hiddenTimestamp').value = timestamp;
             document.getElementById('hiddenSender').value = 'Nancy';
             
-            // Submit to Google Form
-            document.getElementById('hiddenForm').submit();
+            // Debug: Log what we're sending
+            console.log("=== DEBUG FORM SUBMISSION ===");
+            console.log("Message Content:", messageContent);
+            console.log("Timestamp:", timestamp);
+            console.log("Sender: Nancy");
+            console.log("Hidden message value:", document.getElementById('hiddenMessage').value);
+            console.log("Hidden timestamp value:", document.getElementById('hiddenTimestamp').value);
+            console.log("Hidden sender value:", document.getElementById('hiddenSender').value);
+            console.log("Form action URL:", document.getElementById('hiddenForm').action);
+            console.log("=== END DEBUG ===");
             
-            // Show success message (Google Forms submission is async, so we assume success)
+            // Submit to Google Form with a small delay to ensure values are set
+            setTimeout(() => {
+                document.getElementById('hiddenForm').submit();
+            }, 100);
+            
+            // Show success message
             showStatus('Message sent successfully! Derek will be notified via email.', 'success');
             
             // Add message to local display
