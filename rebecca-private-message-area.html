@@ -424,6 +424,12 @@
             const container = document.getElementById('messagesContainer');
             const noMessages = document.getElementById('noMessages');
             
+            // Check if elements exist before proceeding
+            if (!container || !noMessages) {
+                console.error('Required elements not found:', { container: !!container, noMessages: !!noMessages });
+                return;
+            }
+            
             if (messagesData.length === 0) {
                 noMessages.style.display = 'block';
                 return;
