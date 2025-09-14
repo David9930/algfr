@@ -388,13 +388,12 @@
         </div>
     </main>
     
-   <!-- Hidden Google Form -->
-<form class="hidden-form" id="hiddenForm" action="https://docs.google.com/forms/d/e/1FAIpQLScDcsQuz1M-BtWCuWO3OCe4FNFtqvIXio4ATp7UTsozItDiCA/formResponse" method="post" target="hiddenFrame">
-    <input type="text" name="entry.1605116252" id="hiddenMessage">
-    <input type="text" name="entry.1913578150" id="hiddenTimestamp">
-    <input type="text" name="entry.595380753" id="hiddenSender">
-</form>
-<iframe name="hiddenFrame" class="hidden-form"></iframe>
+    <!-- Hidden Google Form (You'll need to replace the action URL and field names) -->
+    <form class="hidden-form" id="hiddenForm" action="https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse" method="post" target="hiddenFrame">
+        <input type="text" name="entry.YOUR_FIELD_ID" id="hiddenMessage">
+        <input type="text" name="entry.YOUR_TIMESTAMP_FIELD" id="hiddenTimestamp">
+    </form>
+    <iframe name="hiddenFrame" class="hidden-form"></iframe>
     
     <script>
         // Sample messages data (replace with actual JSON file reading)
@@ -467,6 +466,9 @@
                 return;
             }
             
+            // Store the message content before clearing
+            const messageContent = messageText.value.trim();
+            
             // Disable submit button
             submitButton.disabled = true;
             submitButton.textContent = 'Sending...';
@@ -476,32 +478,26 @@
             const timestamp = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
             
             // Fill hidden form fields
-            document.getElementById('hiddenMessage').value = messageText.value;
+            document.getElementById('hiddenMessage').value = messageContent;
             document.getElementById('hiddenTimestamp').value = timestamp;
             document.getElementById('hiddenSender').value = 'Nancy';
             
             // Submit to Google Form
-            try {
-                document.getElementById('hiddenForm').submit();
-                
-                // Show success message
-                showStatus('Message sent successfully! Derek will be notified via email.', 'success');
-                
-                // Clear the form
-                messageText.value = '';
-                
-                // Note: In a real implementation, you'd add the message to your JSON file
-                // For demo purposes, we'll add it to the local display
-                messagesData.push({
-                    author: "Nancy",
-                    content: messageText.value,
-                    timestamp: timestamp
-                });
-                loadMessages();
-                
-            } catch (error) {
-                showStatus('Error sending message. Please try again.', 'error');
-            }
+            document.getElementById('hiddenForm').submit();
+            
+            // Show success message (Google Forms submission is async, so we assume success)
+            showStatus('Message sent successfully! Derek will be notified via email.', 'success');
+            
+            // Add message to local display
+            messagesData.push({
+                author: "Nancy",
+                content: messageContent,
+                timestamp: timestamp
+            });
+            loadMessages();
+            
+            // Clear the form
+            messageText.value = '';
             
             // Re-enable submit button
             setTimeout(() => {
