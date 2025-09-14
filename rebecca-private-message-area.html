@@ -440,43 +440,64 @@
             console.log("Container found:", !!container);
             console.log("NoMessages found:", !!noMessages);
             
-            // Check if elements exist before proceeding
+            // Check if container exists (most important element)
             if (!container) {
                 console.error('Messages container not found! Available elements with messages-related IDs:');
                 console.log('All elements:', document.querySelectorAll('[id*="message"], [class*="message"]'));
                 return;
             }
             
+            // If noMessages element doesn't exist, create it
             if (!noMessages) {
-                console.error('No messages element not found!');
-                return;
+                console.log("Creating missing noMessages element");
+                noMessages = document.createElement('div');
+                noMessages.className = 'no-messages';
+                noMessages.id = 'noMessages';
+                noMessages.textContent = 'No messages yet. Start the conversation below!';
+                noMessages.style.textAlign = 'center';
+                noMessages.style.color = 'rgba(255, 255, 255, 0.6)';
+                noMessages.style.fontStyle = 'italic';
+                noMessages.style.marginTop = '50px';
+                container.appendChild(noMessages);
             }
             
-            if (messagesData.length === 0) {
-                noMessages.style.display = 'block';
-                return;
-            }
-            
-            noMessages.style.display = 'none';
-            container.innerHTML = '';
-            
-            // Sort messages by timestamp (newest first)
-            const sortedMessages = [...messagesData].reverse();
-            
-            sortedMessages.forEach(message => {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `message ${message.author.toLowerCase()}`;
+            if (messagesData.length === 1) { // Only Derek's welcome message
+                noMessages.style.display = 'none';
+                container.innerHTML = '';
                 
+                // Add Derek's welcome message
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message derek';
                 messageDiv.innerHTML = `
                     <div class="message-header">
-                        <span class="message-author">${message.author}</span>
-                        <span class="message-time">${message.timestamp}</span>
+                        <span class="message-author">Derek</span>
+                        <span class="message-time">2024-12-15 10:30 AM</span>
                     </div>
-                    <div class="message-content">${message.content}</div>
+                    <div class="message-content">Welcome to our private message area, Nancy. I hope this provides a comfortable way for us to communicate.</div>
                 `;
-                
                 container.appendChild(messageDiv);
-            });
+            } else if (messagesData.length > 1) {
+                noMessages.style.display = 'none';
+                container.innerHTML = '';
+                
+                // Sort messages by timestamp (newest first)
+                const sortedMessages = [...messagesData].reverse();
+                
+                sortedMessages.forEach(message => {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `message ${message.author.toLowerCase()}`;
+                    
+                    messageDiv.innerHTML = `
+                        <div class="message-header">
+                            <span class="message-author">${message.author}</span>
+                            <span class="message-time">${message.timestamp}</span>
+                        </div>
+                        <div class="message-content">${message.content}</div>
+                    `;
+                    
+                    container.appendChild(messageDiv);
+                });
+            }
             
             // Scroll to top (newest message)
             container.scrollTop = 0;
