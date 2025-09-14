@@ -201,6 +201,7 @@
             align-items: center !important;
             justify-content: center !important;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8) !important;
+            margin-bottom: 20px;
         }
         
         .butt-button::before {
@@ -230,6 +231,63 @@
             background-blend-mode: overlay !important;
         }
         
+        /* Escape Button */
+        .escape-button {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(255, 50, 50, 0.3), rgba(255, 100, 100, 0.3)), url('./images/perfection.jpg') !important;
+            background-size: cover, cover !important;
+            background-position: center, center !important;
+            background-blend-mode: overlay !important;
+            border: 2px solid rgba(255, 50, 50, 0.4) !important;
+            border-radius: 50px;
+            padding: 108px 90px !important;
+            min-width: 500px !important;
+            min-height: 324px !important;
+            font-size: clamp(1.1rem, 2.8vw, 1.4rem);
+            font-weight: bold;
+            color: white !important;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255, 50, 50, 0.4);
+            animation: escapeGlow 3s ease-in-out infinite;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8) !important;
+            margin-top: 30px;
+        }
+        
+        .escape-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+            opacity: 0;
+        }
+        
+        .escape-button:hover::before {
+            animation: buttonShine 0.8s ease-out;
+            opacity: 1;
+        }
+        
+        .escape-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 50, 50, 0.6);
+            background: linear-gradient(135deg, rgba(255, 50, 50, 0.4), rgba(255, 100, 100, 0.4)), url('./images/perfection.jpg') !important;
+            background-size: cover, cover !important;
+            background-position: center, center !important;
+            background-blend-mode: overlay !important;
+        }
+        
         @keyframes buttonGlow {
             0%, 100% { 
                 box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
@@ -239,13 +297,22 @@
             }
         }
         
+        @keyframes escapeGlow {
+            0%, 100% { 
+                box-shadow: 0 10px 30px rgba(255, 50, 50, 0.4);
+            }
+            50% { 
+                box-shadow: 0 15px 35px rgba(255, 50, 50, 0.6);
+            }
+        }
+        
         @keyframes buttonShine {
             0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
             100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
         }
         
         .button-joke {
-            margin-top: 20px;
+            margin: 20px 0;
             font-size: clamp(0.9rem, 2vw, 1.1rem);
             color: rgba(255, 255, 255, 0.7);
             font-style: italic;
@@ -303,12 +370,13 @@
                 margin-top: 30px;
             }
             
-            .butt-button {
+            .butt-button, .escape-button {
                 padding: 70px 60px !important;
                 min-width: 350px !important;
                 min-height: 210px !important;
                 font-size: 1.2rem !important;
                 letter-spacing: 1px !important;
+                margin: 15px 0;
             }
         }
         
@@ -326,12 +394,13 @@
                 margin-bottom: 20px;
             }
             
-            .butt-button {
+            .butt-button, .escape-button {
                 padding: 50px 40px !important;
                 min-width: 280px !important;
                 min-height: 160px !important;
                 font-size: 1.1rem !important;
                 letter-spacing: 0.5px !important;
+                margin: 15px 0;
             }
         }
         
@@ -397,6 +466,7 @@
             <p class="button-intro">Press the "Butt-on" to enter the message area</p>
             <a href="#" class="butt-button" onclick="accessMessageArea()">Enter Message Area</a>
             <p class="button-joke">You better have laughed at my choice of button..... :)</p>
+            <a href="index.html" class="escape-button">Oh my God, get me the hell out of here!</a>
         </div>
     </main>
     
@@ -434,8 +504,8 @@
         
         // Access message area function
         function accessMessageArea() {
-       window.location.href = 'rebecca-private-message-area.html';
-   }
+            window.location.href = 'rebecca-private-message-area.html';
+        }
            
         // Initialize effects
         document.addEventListener('DOMContentLoaded', function() {
