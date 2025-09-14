@@ -504,50 +504,44 @@
             console.log("=== END LOAD MESSAGES DEBUG ===");
         }
         
-        // Handle form submission
-        function handleSubmit(event) {
-            event.preventDefault();
-            
-            const messageText = document.getElementById('messageText');
-            const submitButton = document.getElementById('submitButton');
-            const statusMessage = document.getElementById('statusMessage');
-            
-            if (!messageText.value.trim()) {
-                showStatus('Please enter a message', 'error');
-                return;
-            }
-            
-            // Store the message content before clearing
-            const messageContent = messageText.value.trim();
-            
-            // Disable submit button
-            submitButton.disabled = true;
-            submitButton.textContent = 'Sending...';
-            
-            // Get current timestamp
-            const now = new Date();
-            const timestamp = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            
-            // Fill hidden form fields
-            document.getElementById('hiddenMessage').value = messageContent;
-            document.getElementById('hiddenTimestamp').value = timestamp;
-            document.getElementById('hiddenSender').value = 'Nancy';
-            
-            // Debug: Log what we're sending
-            console.log("=== DEBUG FORM SUBMISSION ===");
-            console.log("Message Content:", messageContent);
-            console.log("Timestamp:", timestamp);
-            console.log("Sender: Nancy");
-            console.log("Hidden message value:", document.getElementById('hiddenMessage').value);
-            console.log("Hidden timestamp value:", document.getElementById('hiddenTimestamp').value);
-            console.log("Hidden sender value:", document.getElementById('hiddenSender').value);
-            console.log("Form action URL:", document.getElementById('hiddenForm').action);
-            console.log("=== END DEBUG ===");
-            
-            // Submit to Google Form with a small delay to ensure values are set
-            setTimeout(() => {
-                document.getElementById('hiddenForm').submit();
-            }, 100);
+/ Handle form submission
+function handleSubmit(event) {
+    event.preventDefault();
+    
+    const messageText = document.getElementById('messageText');
+    const submitButton = document.getElementById('submitButton');
+    
+    if (!messageText.value.trim()) {
+        showStatus('Please enter a message', 'error');
+        return;
+    }
+    
+    // Store the message content before clearing
+    const messageContent = messageText.value.trim();
+    
+    // Disable submit button
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending...';
+    
+    // Get current timestamp
+    const now = new Date();
+    const timestamp = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    
+    // Fill hidden form fields
+    document.getElementById('hiddenMessage').value = messageContent;
+    document.getElementById('hiddenTimestamp').value = timestamp;
+    document.getElementById('hiddenSender').value = 'Nancy';
+    
+    // TEST: Show what we're about to send
+    alert("About to send to Google Form:\nMessage: " + messageContent + "\nTimestamp: " + timestamp + "\nSender: Nancy");
+    
+    // Submit to Google Form
+    setTimeout(() => {
+        document.getElementById('hiddenForm').submit();
+    }, 100);
+    
+    // Rest of the function stays the same...
+}
             
             // Show success message
             showStatus('Message sent successfully! Derek will be notified via email.', 'success');
