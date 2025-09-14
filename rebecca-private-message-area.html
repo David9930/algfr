@@ -421,12 +421,34 @@
         
         // Load and display messages
         function loadMessages() {
-            const container = document.getElementById('messagesContainer');
-            const noMessages = document.getElementById('noMessages');
+            console.log("=== DEBUGGING LOAD MESSAGES ===");
+            
+            // Try different possible IDs for the container
+            let container = document.getElementById('messagesContainer');
+            if (!container) {
+                container = document.querySelector('.messages-container');
+                console.log("Found container using class selector:", !!container);
+            }
+            
+            // Try different possible IDs for noMessages
+            let noMessages = document.getElementById('noMessages');
+            if (!noMessages) {
+                noMessages = document.querySelector('.no-messages');
+                console.log("Found noMessages using class selector:", !!noMessages);
+            }
+            
+            console.log("Container found:", !!container);
+            console.log("NoMessages found:", !!noMessages);
             
             // Check if elements exist before proceeding
-            if (!container || !noMessages) {
-                console.error('Required elements not found:', { container: !!container, noMessages: !!noMessages });
+            if (!container) {
+                console.error('Messages container not found! Available elements with messages-related IDs:');
+                console.log('All elements:', document.querySelectorAll('[id*="message"], [class*="message"]'));
+                return;
+            }
+            
+            if (!noMessages) {
+                console.error('No messages element not found!');
                 return;
             }
             
@@ -458,6 +480,7 @@
             
             // Scroll to top (newest message)
             container.scrollTop = 0;
+            console.log("=== END LOAD MESSAGES DEBUG ===");
         }
         
         // Handle form submission
