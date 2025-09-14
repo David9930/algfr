@@ -177,14 +177,18 @@
         
         .butt-button {
             display: inline-block;
-            background: linear-gradient(135deg, #ff6b6b, #ffd93d, #ff6b6b);
-            background-size: 300% 300%;
-            border: none;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.3), rgba(255, 217, 61, 0.3)), url('./images/perfection.jpg') !important;
+            background-size: cover, cover !important;
+            background-position: center, center !important;
+            background-blend-mode: overlay !important;
+            border: 2px solid rgba(255, 107, 107, 0.4) !important;
             border-radius: 50px;
-            padding: 25px 50px;
+            padding: 108px 90px !important;
+            min-width: 500px !important;
+            min-height: 324px !important;
             font-size: clamp(1.2rem, 3vw, 1.6rem);
             font-weight: bold;
-            color: #333;
+            color: white !important;
             text-decoration: none;
             transition: all 0.4s ease;
             position: relative;
@@ -193,6 +197,10 @@
             animation: buttonGlow 3s ease-in-out infinite;
             text-transform: uppercase;
             letter-spacing: 2px;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8) !important;
         }
         
         .butt-button::before {
@@ -216,17 +224,18 @@
         .butt-button:hover {
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
-            background-position: 100% 0;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.4), rgba(255, 217, 61, 0.4)), url('./images/perfection.jpg') !important;
+            background-size: cover, cover !important;
+            background-position: center, center !important;
+            background-blend-mode: overlay !important;
         }
         
         @keyframes buttonGlow {
             0%, 100% { 
                 box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
-                background-position: 0% 50%;
             }
             50% { 
                 box-shadow: 0 15px 35px rgba(255, 107, 107, 0.6);
-                background-position: 100% 50%;
             }
         }
         
@@ -276,8 +285,8 @@
             }
             
             .message-card {
-                padding: 25px 20px;
-                margin-bottom: 30px;
+                padding: 30px 20px;
+                min-height: 350px;
             }
             
             .message-text {
@@ -295,9 +304,11 @@
             }
             
             .butt-button {
-                padding: 20px 40px;
-                font-size: 1.2rem;
-                letter-spacing: 1px;
+                padding: 70px 60px !important;
+                min-width: 350px !important;
+                min-height: 210px !important;
+                font-size: 1.2rem !important;
+                letter-spacing: 1px !important;
             }
         }
         
@@ -316,9 +327,11 @@
             }
             
             .butt-button {
-                padding: 18px 35px;
-                font-size: 1.1rem;
-                letter-spacing: 0.5px;
+                padding: 50px 40px !important;
+                min-width: 280px !important;
+                min-height: 160px !important;
+                font-size: 1.1rem !important;
+                letter-spacing: 0.5px !important;
             }
         }
         
@@ -371,11 +384,11 @@
                 
                 <p>I would have loved to be a fly on the wall when you first discovered the book. For me, it would also be extremely telling, based on when you would disclose the book to your significant other (Before you read it; Or after?). I don't think I have ever laughed so much as I did writing the book. While Derek 2.0 is off-world, in book 3, Rebecca 2.0 takes on a much greater role in the story, which I would have loved to have your input on, but doubt you would get permission to do something like that (you know I am just having some fun poking the bear... we both know you are far too independent to have to ask anyone for permission, and I would not be shocked to discover you were the alpha in that relationship).</p>
 
-                <p> I have no idea when or if you will read this letter but if you're reading it for the first time, I am planning on heading to my 41 foot sailboat "It-Girl" (yes I named it in honour of you) for a three year circumnavigation (around the world in 1,095 days). Who know's, I may fall in love with some other part of the world and never return except to the unfortunate odd funeral. So, if you read this after January 2026, then the Dundas Valley meet and greet won't fit my travel schedule. But rest assured, you will continue to occupy a very large and special place in my heat and my life. The almost three years I got to be "Your Guy" was the best almost three years in my entire life (so far...). And before you say “What a pathetic loser”, just remember, this pathetic loser got to be with the hottest, cutest and best girl in High School for almost three years! I know you will be busy spending time with your kids and grandkids (never thought I would ever call you Granny :)), but I hope that every now and then you may stop to think about where I may be in the world at that moment and just maybe make a dimpled smile for me. </p>
+                <p> I have no idea when or if you will read this letter but if you're reading it for the first time, I am planning on heading to my 41 foot sailboat "It-Girl" (yes I named it in honour of you) for a three year circumnavigation (around the world in 1,095 days). Who know's, I may fall in love with some other part of the world and never return except to the unfortunate odd funeral. So, if you read this after January 2026, then the Dundas Valley meet and greet won't fit my travel schedule. But rest assured, you will continue to occupy a very large and special place in my heat and my life. The almost three years I got to be "Your Guy" was the best almost three years in my entire life (so far...). And before you say "What a pathetic loser", just remember, this pathetic loser got to be with the hottest, cutest and best girl in High School for almost three years! I know you will be busy spending time with your kids and grandkids (never thought I would ever call you Granny :)), but I hope that every now and then you may stop to think about where I may be in the world at that moment and just maybe make a dimpled smile for me. </p>
                 
                 <p><span class="highlight">One last request is to please say hello to 'Todd and Brenda' (hehe) for me.</span> I have kept somewhat informed as to 'Cynders' accomplishments, but have no idea what Owen is up to. So, that is it, feel free to go take a strip off me in the message area (Only you and I have access to this area in case you were wondering and I have programmed a little monitoring bot that will notify me when you have entered this area). After all, I am a computer genius (lol).</p>
 
-                <p> And this is the last paragraph I assure you! It turns out I actually love writing. I may not be that good (yet) but practice makes better! I have written a 10 episode streaming series called "Living With The Ghost of Sam" (www.lwtgos.com) which I am currently converting into a mini book series and I just finished a 16 book series called "The Last Axiom" (www.thelastaxiom.com). You probably should read them... hint...hint.. And I hope I did not offend you with the selection of the background image for the <i>”I am the Original"</i> Button. As you know, it has always been my kryptonite! </p>
+                <p> And this is the last paragraph I assure you! It turns out I actually love writing. I may not be that good (yet) but practice makes better! I have written a 10 episode streaming series called "Living With The Ghost of Sam" (www.lwtgos.com) which I am currently converting into a mini book series and I just finished a 16 book series called "The Last Axiom" (www.thelastaxiom.com). You probably should read them... hint...hint.. And I hope I did not offend you with the selection of the background image for the <i>"I am the Original"</i> Button. As you know, it has always been my kryptonite! </p>
                 
             </div>
         </div>
