@@ -593,20 +593,16 @@
         }
         
         function startQuestions() {
-            // Add some dramatic effect before transitioning
-            const button = event.target;
-            button.style.background = 'linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 255, 100, 0.4))';
-            button.style.transform = 'scale(1.1)';
-            button.innerHTML = 'Preparing Questions...';
-            
-            setTimeout(() => {
-                alert('Questions section coming soon! This will lead to the verification questions.');
-                button.innerHTML = 'I am the Original';
-                button.style.background = '';
-                button.style.transform = '';
-                // Eventually: window.location.href = 'rebecca-questions.html';
-            }, 1500);
-        }
+    // Add some dramatic effect before transitioning
+    const button = event.target;
+    button.style.background = 'linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 255, 100, 0.4))';
+    button.style.transform = 'scale(1.1)';
+    button.innerHTML = 'Preparing Questions...';
+    
+    setTimeout(() => {
+        window.location.href = 'rebecca-questions.html';
+    }, 1500);
+}
         
         // Initialize effects when page loads
         document.addEventListener('DOMContentLoaded', function() {
