@@ -505,8 +505,8 @@
             document.getElementById('debugStatus').textContent = status;
         }
         
-        // Simplified form submission - just use fetch
-        async function handleSubmit(event) {
+        // HTML Form submission approach - bypasses CORS
+        function handleSubmit(event) {
             event.preventDefault();
             
             const messageText = document.getElementById('messageText');
@@ -521,55 +521,85 @@
             const timestamp = new Date().toLocaleString();
             
             // Update debug display
-            updateDebugDisplay(messageContent, timestamp, "Sending...");
+            updateDebugDisplay(messageContent, timestamp, "Sending via HTML form...");
             
             // Disable submit button
             submitButton.disabled = true;
             submitButton.textContent = 'Sending...';
             
-            try {
-                // Create form data
-                const formData = new FormData();
-                formData.append('entry.1605116252', messageContent);
-                formData.append('entry.1913578150', timestamp);
-                formData.append('entry.595380753', 'Nancy');
-                
-                console.log('📤 Submitting to Google Forms with data:');
-                for (let [key, value] of formData.entries()) {
-                    console.log(`  ${key}: "${value}"`);
+            console.log('📤 Submitting to Google Forms via HTML form:');
+            console.log(`  Message: "${messageContent}"`);
+            console.log(`  Timestamp: "${timestamp}"`);
+            console.log(`  Sender: "Nancy"`);
+            
+            // Create and submit HTML form
+            const form = document.createElement('form');
+            form.action = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLScDcsQuz1M-BtWCuWO3OCe4FNFtqvIXio4ATp7UTsozItDiCA/formResponse';
+            form.method = 'POST';
+            form.target = 'hiddenSubmitFrame'; // Submit to hidden iframe
+            form.style.display = 'none';
+            
+            // Create form fields
+            const messageField = document.createElement('input');
+            messageField.type = 'text';
+            messageField.name = 'entry.1605116252';
+            messageField.value = messageContent;
+            
+            const timestampField = document.createElement('input');
+            timestampField.type = 'text';
+            timestampField.name = 'entry.1913578150';
+            timestampField.value = timestamp;
+            
+            const senderField = document.createElement('input');
+            senderField.type = 'text';
+            senderField.name = 'entry.595380753';
+            senderField.value = 'Nancy';
+            
+            // Append fields to form
+            form.appendChild(messageField);
+            form.appendChild(timestampField);
+            form.appendChild(senderField);
+            
+            // Create hidden iframe if it doesn't exist
+            let iframe = document.getElementById('hiddenSubmitFrame');
+            if (!iframe) {
+                iframe = document.createElement('iframe');
+                iframe.id = 'hiddenSubmitFrame';
+                iframe.name = 'hiddenSubmitFrame';
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+            }
+            
+            // Add form to page and submit
+            document.body.appendChild(form);
+            form.submit();
+            
+            // Clean up the form after submission
+            setTimeout(() => {
+                if (form.parentNode) {
+                    document.body.removeChild(form);
                 }
-                
-                // Submit to Google Forms
-                await fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLScDcsQuz1M-BtWCuWO3OCe4FNFtqvIXio4ATp7UTsozItDiCA/formResponse', {
-                    method: 'POST',
-                    body: formData,
-                    mode: 'no-cors'
-                });
-                
-                // Since we can't read the response with no-cors, assume success
-                showStatus('Message sent! (Check Google Form to verify)', 'success');
-                updateDebugDisplay(messageContent, timestamp, "Sent!");
-                
-                // Add to local display
-                messagesData.push({
-                    author: "Nancy",
-                    content: messageContent,
-                    timestamp: timestamp
-                });
-                loadMessages();
-                
-                // Clear form
-                messageText.value = '';
-                
-            } catch (error) {
-                console.error('❌ Submission error:', error);
-                showStatus('Error sending message: ' + error.message, 'error');
-                updateDebugDisplay(messageContent, timestamp, "Error: " + error.message);
-            } finally {
-                // Re-enable button
+            }, 1000);
+            
+            // Show success message
+            showStatus('Message sent via HTML form!', 'success');
+            updateDebugDisplay(messageContent, timestamp, "Sent via HTML form!");
+            
+            // Add to local display
+            messagesData.push({
+                author: "Nancy",
+                content: messageContent,
+                timestamp: timestamp
+            });
+            loadMessages();
+            
+            // Clear form and re-enable button
+            messageText.value = '';
+            
+            setTimeout(() => {
                 submitButton.disabled = false;
                 submitButton.textContent = 'Send Message';
-            }
+            }, 1500);
         }
         
         // Test direct submission
