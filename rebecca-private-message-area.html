@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Private Message Area - A Letter Guide For Rebecca</title>
+    <title>Private Message Area - Fixed Version</title>
     <meta name="description" content="Private messaging between Rebecca and Derek">
     
     <style>
@@ -296,11 +296,6 @@
             border: 1px solid rgba(244, 67, 54, 0.5);
         }
         
-        /* Hidden Google Form */
-        .hidden-form {
-            display: none;
-        }
-        
         /* Debug Box for Testing */
         .debug-box {
             background: rgba(255, 255, 0, 0.1);
@@ -319,6 +314,15 @@
             margin: 5px 0;
             font-family: monospace;
             font-size: 0.9rem;
+        }
+        
+        /* Test Form */
+        .test-form {
+            background: rgba(255, 0, 255, 0.1);
+            border: 2px solid #ff00ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
         }
         
         /* Responsive Design */
@@ -370,7 +374,7 @@
     <div class="starfield" id="starfield"></div>
     
     <header class="header">
-        <h1>Private Message Area</h1>
+        <h1>Private Message Area - Fixed Version</h1>
         <p>Secure communication between Nancy and Derek</p>
     </header>
     
@@ -398,32 +402,38 @@
                     <button type="submit" class="submit-button" id="submitButton">
                         Send Message
                     </button>
-                    <a href="rebecca-private-message.html" class="back-button">
-                        Back to Letter
-                    </a>
+                    <button type="button" class="back-button" id="testButton">
+                        Test Direct Submit
+                    </button>
                 </div>
                 
                 <div class="status-message" id="statusMessage"></div>
             </form>
         </div>
         
-        <!-- DEBUG BOX - Shows exactly what's being sent -->
+        <!-- DEBUG BOX -->
         <div class="debug-box" id="debugBox">
-            <h3>🔍 Debug Info - What's Being Sent to Google Form:</h3>
-            <div class="debug-item">Message Field: <span id="debugMessage">Not set yet</span></div>
-            <div class="debug-item">Timestamp Field: <span id="debugTimestamp">Not set yet</span></div>
-            <div class="debug-item">Sender Field: <span id="debugSender">Not set yet</span></div>
-            <div class="debug-item">Form Action URL: <span id="debugUrl">Not set yet</span></div>
+            <h3>🔍 Debug Info - Current Form Data:</h3>
+            <div class="debug-item">Message: <span id="debugMessage">Not set yet</span></div>
+            <div class="debug-item">Timestamp: <span id="debugTimestamp">Not set yet</span></div>
+            <div class="debug-item">Sender: <span id="debugSender">Nancy</span></div>
+            <div class="debug-item">Status: <span id="debugStatus">Ready</span></div>
+        </div>
+        
+        <!-- TEST FORM - Direct submission to Google Forms -->
+        <div class="test-form">
+            <h3>🧪 Direct Google Form Test</h3>
+            <p>This form submits directly to Google without JavaScript interference:</p>
+            <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScDcsQuz1M-BtWCuWO3OCe4FNFtqvIXio4ATp7UTsozItDiCA/formResponse" method="post" target="_blank">
+                <input type="text" name="entry.1605116252" placeholder="Test message" style="width: 100%; padding: 5px; margin: 5px 0;">
+                <input type="text" name="entry.1913578150" placeholder="Test timestamp" style="width: 100%; padding: 5px; margin: 5px 0;">
+                <input type="text" name="entry.595380753" value="Test Sender" style="width: 100%; padding: 5px; margin: 5px 0;">
+                <button type="submit" style="padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 5px;">
+                    Submit Direct Test
+                </button>
+            </form>
         </div>
     </main>
-    
-    <!-- Hidden Google Form -->
-    <form class="hidden-form" id="hiddenForm" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScDcsQuz1M-BtWCuWO3OCe4FNFtqvIXio4ATp7UTsozItDiCA/formResponse" method="post" target="hiddenFrame">
-        <input type="text" name="entry.1605116252" id="hiddenMessage">
-        <input type="text" name="entry.1913578150" id="hiddenTimestamp">
-        <input type="text" name="entry.595380753" id="hiddenSender">
-    </form>
-    <iframe name="hiddenFrame" class="hidden-form"></iframe>
     
     <script>
         // Sample messages data
@@ -489,32 +499,14 @@
         }
         
         // Update debug display
-        function updateDebugDisplay(messageContent, timestamp) {
-            document.getElementById('debugMessage').textContent = messageContent || "EMPTY!";
-            document.getElementById('debugTimestamp').textContent = timestamp || "EMPTY!";
-            document.getElementById('debugSender').textContent = "Nancy";
-            document.getElementById('debugUrl').textContent = "https://docs.google.com/forms/d/e/1FAIpQLScDcsQuz1M-BtWCuWO3OCe4FNFtqvIXio4ATp7UTsozItDiCA/formResponse";
-            
-            // Also show the actual hidden form field values
-            const hiddenMessage = document.getElementById('hiddenMessage');
-            const hiddenTimestamp = document.getElementById('hiddenTimestamp');
-            const hiddenSender = document.getElementById('hiddenSender');
-            
-            console.log("🔍 DETAILED DEBUG:");
-            console.log("JavaScript values:", {
-                messageContent,
-                timestamp,
-                sender: "Nancy"
-            });
-            console.log("Hidden form field values:", {
-                hiddenMessage: hiddenMessage ? hiddenMessage.value : "ELEMENT NOT FOUND",
-                hiddenTimestamp: hiddenTimestamp ? hiddenTimestamp.value : "ELEMENT NOT FOUND", 
-                hiddenSender: hiddenSender ? hiddenSender.value : "ELEMENT NOT FOUND"
-            });
+        function updateDebugDisplay(messageContent, timestamp, status = "Ready") {
+            document.getElementById('debugMessage').textContent = messageContent || "Not set yet";
+            document.getElementById('debugTimestamp').textContent = timestamp || "Not set yet";
+            document.getElementById('debugStatus').textContent = status;
         }
         
-        // Handle form submission
-        function handleSubmit(event) {
+        // Simplified form submission - just use fetch
+        async function handleSubmit(event) {
             event.preventDefault();
             
             const messageText = document.getElementById('messageText');
@@ -525,86 +517,40 @@
                 return;
             }
             
-            // Store the message content before clearing
             const messageContent = messageText.value.trim();
+            const timestamp = new Date().toLocaleString();
+            
+            // Update debug display
+            updateDebugDisplay(messageContent, timestamp, "Sending...");
             
             // Disable submit button
             submitButton.disabled = true;
             submitButton.textContent = 'Sending...';
             
-            // Get current timestamp
-            const now = new Date();
-            const timestamp = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
-            
-            // Update debug display FIRST
-            updateDebugDisplay(messageContent, timestamp);
-            
-            // Fill hidden form fields
-            const hiddenMessage = document.getElementById('hiddenMessage');
-            const hiddenTimestamp = document.getElementById('hiddenTimestamp');
-            const hiddenSender = document.getElementById('hiddenSender');
-            
-            if (hiddenMessage) hiddenMessage.value = messageContent;
-            if (hiddenTimestamp) hiddenTimestamp.value = timestamp;
-            if (hiddenSender) hiddenSender.value = 'Nancy';
-            
-            // Enhanced debugging - log the actual form data being sent
-            console.log("🔍 ENHANCED DEBUG - Form Data Being Sent:");
-            console.log("Hidden form element:", document.getElementById('hiddenForm'));
-            console.log("Form action:", document.getElementById('hiddenForm').action);
-            console.log("Form method:", document.getElementById('hiddenForm').method);
-            
-            // Log each field's name and value
-            const formElements = document.getElementById('hiddenForm').elements;
-            for (let i = 0; i < formElements.length; i++) {
-                const element = formElements[i];
-                console.log(`Field ${i}: name="${element.name}" value="${element.value}" type="${element.type}"`);
-            }
-            
-            // Also create FormData object to see what would actually be sent
-            const formData = new FormData(document.getElementById('hiddenForm'));
-            console.log("FormData entries:");
-            for (let [key, value] of formData.entries()) {
-                console.log(`  ${key}: "${value}"`);
-            }
-            
-            // Confirmation alert before submission with ALL the data
-            const confirmSubmit = confirm(
-                "🔍 ENHANCED DEBUG - Ready to submit to Google Form?\n\n" +
-                "Form Action: " + document.getElementById('hiddenForm').action + "\n\n" +
-                "Field Data:\n" +
-                "• entry.1605116252 (Messages): '" + (hiddenMessage ? hiddenMessage.value : 'NULL') + "'\n" +
-                "• entry.1913578150 (Timestamp): '" + (hiddenTimestamp ? hiddenTimestamp.value : 'NULL') + "'\n" +
-                "• entry.595380753 (Sender): '" + (hiddenSender ? hiddenSender.value : 'NULL') + "'\n\n" +
-                "Click OK to submit, Cancel to abort."
-            );
-            
-            if (confirmSubmit) {
-                // Try alternative submission method using fetch
+            try {
+                // Create form data
                 const formData = new FormData();
                 formData.append('entry.1605116252', messageContent);
                 formData.append('entry.1913578150', timestamp);
                 formData.append('entry.595380753', 'Nancy');
                 
-                console.log("🚀 Trying fetch submission method...");
+                console.log('📤 Submitting to Google Forms with data:');
+                for (let [key, value] of formData.entries()) {
+                    console.log(`  ${key}: "${value}"`);
+                }
                 
-                fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLScDcsQuz1M-BtWCuWO3OCe4FNFtqvIXio4ATp7UTsozItDiCA/formResponse', {
+                // Submit to Google Forms
+                await fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLScDcsQuz1M-BtWCuWO3OCe4FNFtqvIXio4ATp7UTsozItDiCA/formResponse', {
                     method: 'POST',
                     body: formData,
                     mode: 'no-cors'
-                }).then(() => {
-                    console.log("✅ Fetch submission completed");
-                    showStatus('Message sent via fetch method!', 'success');
-                }).catch((error) => {
-                    console.log("❌ Fetch failed, trying form submission...", error);
-                    // Fallback to form submission
-                    setTimeout(() => {
-                        document.getElementById('hiddenForm').submit();
-                        showStatus('Message sent via form submission!', 'success');
-                    }, 100);
                 });
                 
-                // Add message to local display
+                // Since we can't read the response with no-cors, assume success
+                showStatus('Message sent! (Check Google Form to verify)', 'success');
+                updateDebugDisplay(messageContent, timestamp, "Sent!");
+                
+                // Add to local display
                 messagesData.push({
                     author: "Nancy",
                     content: messageContent,
@@ -612,15 +558,58 @@
                 });
                 loadMessages();
                 
-                // Clear the form
+                // Clear form
                 messageText.value = '';
-            }
-            
-            // Re-enable submit button
-            setTimeout(() => {
+                
+            } catch (error) {
+                console.error('❌ Submission error:', error);
+                showStatus('Error sending message: ' + error.message, 'error');
+                updateDebugDisplay(messageContent, timestamp, "Error: " + error.message);
+            } finally {
+                // Re-enable button
                 submitButton.disabled = false;
                 submitButton.textContent = 'Send Message';
-            }, 2000);
+            }
+        }
+        
+        // Test direct submission
+        function testDirectSubmit() {
+            const messageText = document.getElementById('messageText');
+            if (!messageText.value.trim()) {
+                showStatus('Please enter a message to test', 'error');
+                return;
+            }
+            
+            // Create a temporary form and submit it in a new window
+            const testForm = document.createElement('form');
+            testForm.action = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLScDcsQuz1M-BtWCuWO3OCe4FNFtqvIXio4ATp7UTsozItDiCA/formResponse';
+            testForm.method = 'post';
+            testForm.target = '_blank';
+            
+            const messageField = document.createElement('input');
+            messageField.type = 'text';
+            messageField.name = 'entry.1605116252';
+            messageField.value = messageText.value.trim();
+            
+            const timestampField = document.createElement('input');
+            timestampField.type = 'text';
+            timestampField.name = 'entry.1913578150';
+            timestampField.value = new Date().toLocaleString();
+            
+            const senderField = document.createElement('input');
+            senderField.type = 'text';
+            senderField.name = 'entry.595380753';
+            senderField.value = 'Nancy (Direct Test)';
+            
+            testForm.appendChild(messageField);
+            testForm.appendChild(timestampField);
+            testForm.appendChild(senderField);
+            
+            document.body.appendChild(testForm);
+            testForm.submit();
+            document.body.removeChild(testForm);
+            
+            showStatus('Direct test submitted! Check the new window and your Google Form responses.', 'success');
         }
         
         // Show status message
@@ -642,9 +631,14 @@
             // Add form submission handler
             document.getElementById('messageForm').addEventListener('submit', handleSubmit);
             
+            // Add test button handler
+            document.getElementById('testButton').addEventListener('click', testDirectSubmit);
+            
             // Character counter for textarea
             const textarea = document.getElementById('messageText');
             textarea.addEventListener('input', function() {
+                updateDebugDisplay(this.value, new Date().toLocaleString(), "Typing...");
+                
                 const remaining = 1000 - this.value.length;
                 if (remaining < 100) {
                     this.style.borderColor = remaining < 50 ? '#ff6b6b' : '#ffd93d';
