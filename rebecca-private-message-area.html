@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Private Message Area - Fixed Version</title>
+    <title>Private Message Area - Apps Script Version</title>
     <meta name="description" content="Private messaging between Rebecca and Derek">
     
     <style>
@@ -95,6 +95,29 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+        }
+        
+        /* Setup Instructions */
+        .setup-notice {
+            background: rgba(255, 165, 0, 0.1);
+            border: 2px solid #ffa500;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .setup-notice h3 {
+            color: #ffa500;
+            margin-bottom: 10px;
+        }
+        
+        .setup-notice ol {
+            margin-left: 20px;
+            line-height: 1.6;
+        }
+        
+        .setup-notice li {
+            margin-bottom: 5px;
         }
         
         /* Messages Display Area */
@@ -192,6 +215,27 @@
             gap: 15px;
         }
         
+        .script-url-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 0.9rem;
+            font-family: monospace;
+        }
+        
+        .script-url-input:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+        }
+        
+        .script-url-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+        
         .message-textarea {
             width: 100%;
             min-height: 100px;
@@ -248,8 +292,8 @@
             box-shadow: none;
         }
         
-        .back-button {
-            background: linear-gradient(135deg, #FF7043, #FF8A65);
+        .load-button {
+            background: linear-gradient(135deg, #2196F3, #64B5F6);
             color: white;
             border: none;
             padding: 12px 30px;
@@ -258,15 +302,13 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         
-        .back-button:hover {
+        .load-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 112, 67, 0.4);
+            box-shadow: 0 8px 20px rgba(33, 150, 243, 0.4);
         }
         
         /* Status Messages */
@@ -296,7 +338,7 @@
             border: 1px solid rgba(244, 67, 54, 0.5);
         }
         
-        /* Debug Box for Testing */
+        /* Debug Box */
         .debug-box {
             background: rgba(255, 255, 0, 0.1);
             border: 2px solid #ffd93d;
@@ -314,15 +356,6 @@
             margin: 5px 0;
             font-family: monospace;
             font-size: 0.9rem;
-        }
-        
-        /* Test Form */
-        .test-form {
-            background: rgba(255, 0, 255, 0.1);
-            border: 2px solid #ff00ff;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 20px;
         }
         
         /* Responsive Design */
@@ -345,28 +378,9 @@
                 align-items: center;
             }
             
-            .submit-button, .back-button {
+            .submit-button, .load-button {
                 width: 200px;
             }
-        }
-        
-        /* Custom Scrollbar */
-        .messages-container::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .messages-container::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-        
-        .messages-container::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-        }
-        
-        .messages-container::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.5);
         }
     </style>
 </head>
@@ -374,21 +388,43 @@
     <div class="starfield" id="starfield"></div>
     
     <header class="header">
-        <h1>Private Message Area - Fixed Version</h1>
-        <p>Secure communication between Nancy and Derek</p>
+        <h1>Private Message Area - Apps Script Version</h1>
+        <p>Reliable messaging with Google Apps Script backend</p>
     </header>
     
     <main class="container">
+        <!-- Setup Instructions -->
+        <div class="setup-notice">
+            <h3>Setup Required</h3>
+            <ol>
+                <li>Go to <a href="https://script.google.com" target="_blank" style="color: #ffa500;">script.google.com</a></li>
+                <li>Create a new project and paste the Apps Script code</li>
+                <li>Create a Google Sheet and copy its ID</li>
+                <li>Replace "YOUR_SPREADSHEET_ID_HERE" in the script with your sheet ID</li>
+                <li>Deploy the script as a web app (Execute as: Me, Access: Anyone)</li>
+                <li>Copy the web app URL and paste it below</li>
+            </ol>
+        </div>
+        
         <!-- Messages Display -->
         <div class="messages-container" id="messagesContainer">
             <div class="no-messages" id="noMessages">
-                No messages yet. Start the conversation below!
+                No messages yet. Set up your Apps Script URL and start messaging!
             </div>
         </div>
         
         <!-- Message Input -->
         <div class="input-container">
-            <div class="input-header">Send a Private Message</div>
+            <div class="input-header">Apps Script Configuration & Messaging</div>
+            
+            <input 
+                type="url" 
+                id="scriptUrl" 
+                class="script-url-input" 
+                placeholder="Paste your Google Apps Script web app URL here..."
+                value=""
+            />
+            
             <form class="message-form" id="messageForm">
                 <textarea 
                     id="messageText" 
@@ -402,8 +438,8 @@
                     <button type="submit" class="submit-button" id="submitButton">
                         Send Message
                     </button>
-                    <button type="button" class="back-button" id="testButton">
-                        Test Direct Submit
+                    <button type="button" class="load-button" id="loadButton">
+                        Load Messages
                     </button>
                 </div>
                 
@@ -411,27 +447,12 @@
             </form>
         </div>
         
-        <!-- DEBUG BOX -->
+        <!-- Debug Box -->
         <div class="debug-box" id="debugBox">
-            <h3>🔍 Debug Info - Current Form Data:</h3>
-            <div class="debug-item">Message: <span id="debugMessage">Not set yet</span></div>
-            <div class="debug-item">Timestamp: <span id="debugTimestamp">Not set yet</span></div>
-            <div class="debug-item">Sender: <span id="debugSender">Nancy</span></div>
+            <h3>Debug Info</h3>
+            <div class="debug-item">Script URL: <span id="debugUrl">Not set</span></div>
+            <div class="debug-item">Last Message: <span id="debugMessage">None</span></div>
             <div class="debug-item">Status: <span id="debugStatus">Ready</span></div>
-        </div>
-        
-        <!-- TEST FORM - Direct submission to Google Forms -->
-        <div class="test-form">
-            <h3>🧪 Direct Google Form Test</h3>
-            <p>This form submits directly to Google without JavaScript interference:</p>
-            <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScDcsQuz1M-BtWCuWO3OCe4FNFtqvIXio4ATp7UTsozItDiCA/formResponse" method="post" target="_blank">
-                <input type="text" name="entry.1605116252" placeholder="Test message" style="width: 100%; padding: 5px; margin: 5px 0;">
-                <input type="text" name="entry.1913578150" placeholder="Test timestamp" style="width: 100%; padding: 5px; margin: 5px 0;">
-                <input type="text" name="entry.595380753" value="Test Sender" style="width: 100%; padding: 5px; margin: 5px 0;">
-                <button type="submit" style="padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 5px;">
-                    Submit Direct Test
-                </button>
-            </form>
         </div>
     </main>
     
@@ -440,7 +461,7 @@
         let messagesData = [
             {
                 author: "Derek",
-                content: "Welcome to our private message area, Nancy. I hope this provides a comfortable way for us to communicate.",
+                content: "Welcome to our private message area, Nancy. This version uses Google Apps Script for reliable message delivery.",
                 timestamp: "2024-12-15 10:30 AM"
             }
         ];
@@ -463,10 +484,7 @@
             const container = document.getElementById('messagesContainer');
             const noMessages = document.getElementById('noMessages');
             
-            if (!container) {
-                console.error('Messages container not found!');
-                return;
-            }
+            if (!container) return;
             
             if (messagesData.length === 0) {
                 if (noMessages) noMessages.style.display = 'block';
@@ -494,19 +512,54 @@
                 container.appendChild(messageDiv);
             });
             
-            // Scroll to top (newest message)
             container.scrollTop = 0;
         }
         
         // Update debug display
-        function updateDebugDisplay(messageContent, timestamp, status = "Ready") {
-            document.getElementById('debugMessage').textContent = messageContent || "Not set yet";
-            document.getElementById('debugTimestamp').textContent = timestamp || "Not set yet";
-            document.getElementById('debugStatus').textContent = status;
+        function updateDebugDisplay() {
+            const scriptUrl = document.getElementById('scriptUrl').value;
+            document.getElementById('debugUrl').textContent = scriptUrl || 'Not set';
         }
         
-        // HTML Form submission approach - bypasses CORS
-        function handleSubmit(event) {
+        // Send message to Google Apps Script
+        async function sendMessage(message, sender = 'Nancy') {
+            const scriptUrl = document.getElementById('scriptUrl').value.trim();
+            
+            if (!scriptUrl) {
+                throw new Error('Please enter your Google Apps Script URL first');
+            }
+            
+            const data = {
+                message: message,
+                sender: sender,
+                timestamp: new Date().toLocaleString()
+            };
+            
+            console.log('Sending to Apps Script:', data);
+            
+            const response = await fetch(scriptUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            
+            if (!result.success) {
+                throw new Error(result.error || 'Unknown error occurred');
+            }
+            
+            return result;
+        }
+        
+        // Handle form submission
+        async function handleSubmit(event) {
             event.preventDefault();
             
             const messageText = document.getElementById('messageText');
@@ -518,128 +571,65 @@
             }
             
             const messageContent = messageText.value.trim();
-            const timestamp = new Date().toLocaleString();
             
             // Update debug display
-            updateDebugDisplay(messageContent, timestamp, "Sending via HTML form...");
+            document.getElementById('debugMessage').textContent = messageContent;
+            document.getElementById('debugStatus').textContent = 'Sending...';
             
             // Disable submit button
             submitButton.disabled = true;
             submitButton.textContent = 'Sending...';
             
-            console.log('📤 Submitting to Google Forms via HTML form:');
-            console.log(`  Message: "${messageContent}"`);
-            console.log(`  Timestamp: "${timestamp}"`);
-            console.log(`  Sender: "Nancy"`);
-            
-            // Create and submit HTML form
-            const form = document.createElement('form');
-            form.action = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLScDcsQuz1M-BtWCuWO3OCe4FNFtqvIXio4ATp7UTsozItDiCA/formResponse';
-            form.method = 'POST';
-            form.target = 'hiddenSubmitFrame'; // Submit to hidden iframe
-            form.style.display = 'none';
-            
-            // Create form fields
-            const messageField = document.createElement('input');
-            messageField.type = 'text';
-            messageField.name = 'entry.1605116252';
-            messageField.value = messageContent;
-            
-            const timestampField = document.createElement('input');
-            timestampField.type = 'text';
-            timestampField.name = 'entry.1913578150';
-            timestampField.value = timestamp;
-            
-            const senderField = document.createElement('input');
-            senderField.type = 'text';
-            senderField.name = 'entry.595380753';
-            senderField.value = 'Nancy';
-            
-            // Append fields to form
-            form.appendChild(messageField);
-            form.appendChild(timestampField);
-            form.appendChild(senderField);
-            
-            // Create hidden iframe if it doesn't exist
-            let iframe = document.getElementById('hiddenSubmitFrame');
-            if (!iframe) {
-                iframe = document.createElement('iframe');
-                iframe.id = 'hiddenSubmitFrame';
-                iframe.name = 'hiddenSubmitFrame';
-                iframe.style.display = 'none';
-                document.body.appendChild(iframe);
-            }
-            
-            // Add form to page and submit
-            document.body.appendChild(form);
-            form.submit();
-            
-            // Clean up the form after submission
-            setTimeout(() => {
-                if (form.parentNode) {
-                    document.body.removeChild(form);
-                }
-            }, 1000);
-            
-            // Show success message
-            showStatus('Message sent via HTML form!', 'success');
-            updateDebugDisplay(messageContent, timestamp, "Sent via HTML form!");
-            
-            // Add to local display
-            messagesData.push({
-                author: "Nancy",
-                content: messageContent,
-                timestamp: timestamp
-            });
-            loadMessages();
-            
-            // Clear form and re-enable button
-            messageText.value = '';
-            
-            setTimeout(() => {
+            try {
+                await sendMessage(messageContent, 'Nancy');
+                
+                showStatus('Message sent successfully!', 'success');
+                document.getElementById('debugStatus').textContent = 'Sent!';
+                
+                // Add to local display
+                messagesData.push({
+                    author: "Nancy",
+                    content: messageContent,
+                    timestamp: new Date().toLocaleString()
+                });
+                loadMessages();
+                
+                // Clear form
+                messageText.value = '';
+                
+            } catch (error) {
+                console.error('Send error:', error);
+                showStatus('Error: ' + error.message, 'error');
+                document.getElementById('debugStatus').textContent = 'Error: ' + error.message;
+            } finally {
+                // Re-enable button
                 submitButton.disabled = false;
                 submitButton.textContent = 'Send Message';
-            }, 1500);
+            }
         }
         
-        // Test direct submission
-        function testDirectSubmit() {
-            const messageText = document.getElementById('messageText');
-            if (!messageText.value.trim()) {
-                showStatus('Please enter a message to test', 'error');
+        // Load messages from Apps Script (optional feature)
+        async function loadMessagesFromScript() {
+            const scriptUrl = document.getElementById('scriptUrl').value.trim();
+            const loadButton = document.getElementById('loadButton');
+            
+            if (!scriptUrl) {
+                showStatus('Please enter your Google Apps Script URL first', 'error');
                 return;
             }
             
-            // Create a temporary form and submit it in a new window
-            const testForm = document.createElement('form');
-            testForm.action = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLScDcsQuz1M-BtWCuWO3OCe4FNFtqvIXio4ATp7UTsozItDiCA/formResponse';
-            testForm.method = 'post';
-            testForm.target = '_blank';
+            loadButton.disabled = true;
+            loadButton.textContent = 'Loading...';
             
-            const messageField = document.createElement('input');
-            messageField.type = 'text';
-            messageField.name = 'entry.1605116252';
-            messageField.value = messageText.value.trim();
-            
-            const timestampField = document.createElement('input');
-            timestampField.type = 'text';
-            timestampField.name = 'entry.1913578150';
-            timestampField.value = new Date().toLocaleString();
-            
-            const senderField = document.createElement('input');
-            senderField.type = 'text';
-            senderField.name = 'entry.595380753';
-            senderField.value = 'Nancy (Direct Test)';
-            
-            testForm.appendChild(messageField);
-            testForm.appendChild(timestampField);
-            testForm.appendChild(senderField);
-            
-            document.body.appendChild(testForm);
-            testForm.submit();
-            document.body.removeChild(testForm);
-            
-            showStatus('Direct test submitted! Check the new window and your Google Form responses.', 'success');
+            try {
+                // This would require additional Apps Script function
+                showStatus('Load feature requires additional setup', 'error');
+            } catch (error) {
+                showStatus('Error loading messages: ' + error.message, 'error');
+            } finally {
+                loadButton.disabled = false;
+                loadButton.textContent = 'Load Messages';
+            }
         }
         
         // Show status message
@@ -661,21 +651,11 @@
             // Add form submission handler
             document.getElementById('messageForm').addEventListener('submit', handleSubmit);
             
-            // Add test button handler
-            document.getElementById('testButton').addEventListener('click', testDirectSubmit);
+            // Add load button handler
+            document.getElementById('loadButton').addEventListener('click', loadMessagesFromScript);
             
-            // Character counter for textarea
-            const textarea = document.getElementById('messageText');
-            textarea.addEventListener('input', function() {
-                updateDebugDisplay(this.value, new Date().toLocaleString(), "Typing...");
-                
-                const remaining = 1000 - this.value.length;
-                if (remaining < 100) {
-                    this.style.borderColor = remaining < 50 ? '#ff6b6b' : '#ffd93d';
-                } else {
-                    this.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                }
-            });
+            // Update debug display when URL changes
+            document.getElementById('scriptUrl').addEventListener('input', updateDebugDisplay);
         });
     </script>
 </body>
