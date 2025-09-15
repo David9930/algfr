@@ -580,11 +580,29 @@
             );
             
             if (confirmSubmit) {
-                // Submit to Google Form with delay
-                setTimeout(() => {
-                    document.getElementById('hiddenForm').submit();
-                    showStatus('Message sent to Google Form!', 'success');
-                }, 500);
+                // Try alternative submission method using fetch
+                const formData = new FormData();
+                formData.append('entry.1605116252', messageContent);
+                formData.append('entry.1913578150', timestamp);
+                formData.append('entry.595380753', 'Nancy');
+                
+                console.log("🚀 Trying fetch submission method...");
+                
+                fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLScDcsQuz1M-BtWCuWO3OCe4FNFtqvIXio4ATp7UTsozItDiCA/formResponse', {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'no-cors'
+                }).then(() => {
+                    console.log("✅ Fetch submission completed");
+                    showStatus('Message sent via fetch method!', 'success');
+                }).catch((error) => {
+                    console.log("❌ Fetch failed, trying form submission...", error);
+                    // Fallback to form submission
+                    setTimeout(() => {
+                        document.getElementById('hiddenForm').submit();
+                        showStatus('Message sent via form submission!', 'success');
+                    }, 100);
+                });
                 
                 // Add message to local display
                 messagesData.push({
