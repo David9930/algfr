@@ -548,12 +548,34 @@
             if (hiddenTimestamp) hiddenTimestamp.value = timestamp;
             if (hiddenSender) hiddenSender.value = 'Nancy';
             
-            // Confirmation alert before submission
+            // Enhanced debugging - log the actual form data being sent
+            console.log("🔍 ENHANCED DEBUG - Form Data Being Sent:");
+            console.log("Hidden form element:", document.getElementById('hiddenForm'));
+            console.log("Form action:", document.getElementById('hiddenForm').action);
+            console.log("Form method:", document.getElementById('hiddenForm').method);
+            
+            // Log each field's name and value
+            const formElements = document.getElementById('hiddenForm').elements;
+            for (let i = 0; i < formElements.length; i++) {
+                const element = formElements[i];
+                console.log(`Field ${i}: name="${element.name}" value="${element.value}" type="${element.type}"`);
+            }
+            
+            // Also create FormData object to see what would actually be sent
+            const formData = new FormData(document.getElementById('hiddenForm'));
+            console.log("FormData entries:");
+            for (let [key, value] of formData.entries()) {
+                console.log(`  ${key}: "${value}"`);
+            }
+            
+            // Confirmation alert before submission with ALL the data
             const confirmSubmit = confirm(
-                "Ready to submit to Google Form?\n\n" +
-                "Message: " + messageContent + "\n" +
-                "Timestamp: " + timestamp + "\n" +
-                "Sender: Nancy\n\n" +
+                "🔍 ENHANCED DEBUG - Ready to submit to Google Form?\n\n" +
+                "Form Action: " + document.getElementById('hiddenForm').action + "\n\n" +
+                "Field Data:\n" +
+                "• entry.1605116252 (Messages): '" + (hiddenMessage ? hiddenMessage.value : 'NULL') + "'\n" +
+                "• entry.1913578150 (Timestamp): '" + (hiddenTimestamp ? hiddenTimestamp.value : 'NULL') + "'\n" +
+                "• entry.595380753 (Sender): '" + (hiddenSender ? hiddenSender.value : 'NULL') + "'\n\n" +
                 "Click OK to submit, Cancel to abort."
             );
             
