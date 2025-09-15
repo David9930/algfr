@@ -317,7 +317,7 @@
     </main>
     
     <script>
-        // HARD-CODED APPS SCRIPT URL - REPLACE WITH YOUR ACTUAL URL
+        // HARD-CODED APPS SCRIPT URL - CONFIGURED FOR YOUR DEPLOYMENT
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzbfqzk2KoPuZuOFCHcnREpH_y52QAA1RaJdWNsWYtNvyPIXaP78mGhFUVfBQXa70TGcA/exec';
         
         let messagesData = [];
@@ -339,14 +339,15 @@
             const noMessages = document.getElementById('noMessages');
             const loadingMessages = document.getElementById('loadingMessages');
             
-            loadingMessages.style.display = 'none';
+            // Check if elements exist before accessing their properties
+            if (loadingMessages) loadingMessages.style.display = 'none';
             
             if (messagesData.length === 0) {
-                noMessages.style.display = 'block';
+                if (noMessages) noMessages.style.display = 'block';
                 return;
             }
             
-            noMessages.style.display = 'none';
+            if (noMessages) noMessages.style.display = 'none';
             container.innerHTML = '';
             
             messagesData.forEach(message => {
