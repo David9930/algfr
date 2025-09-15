@@ -301,6 +301,26 @@
             display: none;
         }
         
+        /* Debug Box for Testing */
+        .debug-box {
+            background: rgba(255, 255, 0, 0.1);
+            border: 2px solid #ffd93d;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            color: #ffd93d;
+        }
+        
+        .debug-box h3 {
+            margin-bottom: 10px;
+        }
+        
+        .debug-item {
+            margin: 5px 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
         /* Responsive Design */
         @media (max-width: 768px) {
             .container {
@@ -386,6 +406,15 @@
                 <div class="status-message" id="statusMessage"></div>
             </form>
         </div>
+        
+        <!-- DEBUG BOX - Shows exactly what's being sent -->
+        <div class="debug-box" id="debugBox">
+            <h3>🔍 Debug Info - What's Being Sent to Google Form:</h3>
+            <div class="debug-item">Message Field: <span id="debugMessage">Not set yet</span></div>
+            <div class="debug-item">Timestamp Field: <span id="debugTimestamp">Not set yet</span></div>
+            <div class="debug-item">Sender Field: <span id="debugSender">Not set yet</span></div>
+            <div class="debug-item">Form Action URL: <span id="debugUrl">Not set yet</span></div>
+        </div>
     </main>
     
     <!-- Hidden Google Form -->
@@ -397,7 +426,7 @@
     <iframe name="hiddenFrame" class="hidden-form"></iframe>
     
     <script>
-        // Sample messages data (replace with actual JSON file reading)
+        // Sample messages data
         let messagesData = [
             {
                 author: "Derek",
@@ -421,87 +450,67 @@
         
         // Load and display messages
         function loadMessages() {
-            console.log("=== DEBUGGING LOAD MESSAGES ===");
+            const container = document.getElementById('messagesContainer');
+            const noMessages = document.getElementById('noMessages');
             
-            // Try different possible IDs for the container
-            let container = document.getElementById('messagesContainer');
             if (!container) {
-                container = document.querySelector('.messages-container');
-                console.log("Found container using class selector:", !!container);
-            }
-            
-            // Try different possible IDs for noMessages
-            let noMessages = document.getElementById('noMessages');
-            if (!noMessages) {
-                noMessages = document.querySelector('.no-messages');
-                console.log("Found noMessages using class selector:", !!noMessages);
-            }
-            
-            console.log("Container found:", !!container);
-            console.log("NoMessages found:", !!noMessages);
-            
-            // Check if container exists (most important element)
-            if (!container) {
-                console.error('Messages container not found! Available elements with messages-related IDs:');
-                console.log('All elements:', document.querySelectorAll('[id*="message"], [class*="message"]'));
+                console.error('Messages container not found!');
                 return;
             }
             
-            // If noMessages element doesn't exist, create it
-            if (!noMessages) {
-                console.log("Creating missing noMessages element");
-                noMessages = document.createElement('div');
-                noMessages.className = 'no-messages';
-                noMessages.id = 'noMessages';
-                noMessages.textContent = 'No messages yet. Start the conversation below!';
-                noMessages.style.textAlign = 'center';
-                noMessages.style.color = 'rgba(255, 255, 255, 0.6)';
-                noMessages.style.fontStyle = 'italic';
-                noMessages.style.marginTop = '50px';
-                container.appendChild(noMessages);
+            if (messagesData.length === 0) {
+                if (noMessages) noMessages.style.display = 'block';
+                return;
             }
             
-            if (messagesData.length === 1) { // Only Derek's welcome message
-                noMessages.style.display = 'none';
-                container.innerHTML = '';
-                
-                // Add Derek's welcome message
+            if (noMessages) noMessages.style.display = 'none';
+            container.innerHTML = '';
+            
+            // Sort messages by timestamp (newest first)
+            const sortedMessages = [...messagesData].reverse();
+            
+            sortedMessages.forEach(message => {
                 const messageDiv = document.createElement('div');
-                messageDiv.className = 'message derek';
+                messageDiv.className = `message ${message.author.toLowerCase()}`;
+                
                 messageDiv.innerHTML = `
                     <div class="message-header">
-                        <span class="message-author">Derek</span>
-                        <span class="message-time">2024-12-15 10:30 AM</span>
+                        <span class="message-author">${message.author}</span>
+                        <span class="message-time">${message.timestamp}</span>
                     </div>
-                    <div class="message-content">Welcome to our private message area, Nancy. I hope this provides a comfortable way for us to communicate.</div>
+                    <div class="message-content">${message.content}</div>
                 `;
+                
                 container.appendChild(messageDiv);
-            } else if (messagesData.length > 1) {
-                noMessages.style.display = 'none';
-                container.innerHTML = '';
-                
-                // Sort messages by timestamp (newest first)
-                const sortedMessages = [...messagesData].reverse();
-                
-                sortedMessages.forEach(message => {
-                    const messageDiv = document.createElement('div');
-                    messageDiv.className = `message ${message.author.toLowerCase()}`;
-                    
-                    messageDiv.innerHTML = `
-                        <div class="message-header">
-                            <span class="message-author">${message.author}</span>
-                            <span class="message-time">${message.timestamp}</span>
-                        </div>
-                        <div class="message-content">${message.content}</div>
-                    `;
-                    
-                    container.appendChild(messageDiv);
-                });
-            }
+            });
             
             // Scroll to top (newest message)
             container.scrollTop = 0;
-            console.log("=== END LOAD MESSAGES DEBUG ===");
+        }
+        
+        // Update debug display
+        function updateDebugDisplay(messageContent, timestamp) {
+            document.getElementById('debugMessage').textContent = messageContent || "EMPTY!";
+            document.getElementById('debugTimestamp').textContent = timestamp || "EMPTY!";
+            document.getElementById('debugSender').textContent = "Nancy";
+            document.getElementById('debugUrl').textContent = "https://docs.google.com/forms/d/e/1FAIpQLScDcsQuz1M-BtWCuWO3OCe4FNFtqvIXio4ATp7UTsozItDiCA/formResponse";
+            
+            // Also show the actual hidden form field values
+            const hiddenMessage = document.getElementById('hiddenMessage');
+            const hiddenTimestamp = document.getElementById('hiddenTimestamp');
+            const hiddenSender = document.getElementById('hiddenSender');
+            
+            console.log("🔍 DETAILED DEBUG:");
+            console.log("JavaScript values:", {
+                messageContent,
+                timestamp,
+                sender: "Nancy"
+            });
+            console.log("Hidden form field values:", {
+                hiddenMessage: hiddenMessage ? hiddenMessage.value : "ELEMENT NOT FOUND",
+                hiddenTimestamp: hiddenTimestamp ? hiddenTimestamp.value : "ELEMENT NOT FOUND", 
+                hiddenSender: hiddenSender ? hiddenSender.value : "ELEMENT NOT FOUND"
+            });
         }
         
         // Handle form submission
@@ -527,32 +536,45 @@
             const now = new Date();
             const timestamp = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
             
+            // Update debug display FIRST
+            updateDebugDisplay(messageContent, timestamp);
+            
             // Fill hidden form fields
-            document.getElementById('hiddenMessage').value = messageContent;
-            document.getElementById('hiddenTimestamp').value = timestamp;
-            document.getElementById('hiddenSender').value = 'Nancy';
+            const hiddenMessage = document.getElementById('hiddenMessage');
+            const hiddenTimestamp = document.getElementById('hiddenTimestamp');
+            const hiddenSender = document.getElementById('hiddenSender');
             
-            // Simple alert to see what we're sending
-            alert("About to send to Google Form:\nMessage: " + messageContent + "\nTimestamp: " + timestamp + "\nSender: Nancy");
+            if (hiddenMessage) hiddenMessage.value = messageContent;
+            if (hiddenTimestamp) hiddenTimestamp.value = timestamp;
+            if (hiddenSender) hiddenSender.value = 'Nancy';
             
-            // Submit to Google Form
-            setTimeout(() => {
-                document.getElementById('hiddenForm').submit();
-            }, 100);
+            // Confirmation alert before submission
+            const confirmSubmit = confirm(
+                "Ready to submit to Google Form?\n\n" +
+                "Message: " + messageContent + "\n" +
+                "Timestamp: " + timestamp + "\n" +
+                "Sender: Nancy\n\n" +
+                "Click OK to submit, Cancel to abort."
+            );
             
-            // Show success message
-            showStatus('Message sent successfully! Derek will be notified via email.', 'success');
-            
-            // Add message to local display
-            messagesData.push({
-                author: "Nancy",
-                content: messageContent,
-                timestamp: timestamp
-            });
-            loadMessages();
-            
-            // Clear the form
-            messageText.value = '';
+            if (confirmSubmit) {
+                // Submit to Google Form with delay
+                setTimeout(() => {
+                    document.getElementById('hiddenForm').submit();
+                    showStatus('Message sent to Google Form!', 'success');
+                }, 500);
+                
+                // Add message to local display
+                messagesData.push({
+                    author: "Nancy",
+                    content: messageContent,
+                    timestamp: timestamp
+                });
+                loadMessages();
+                
+                // Clear the form
+                messageText.value = '';
+            }
             
             // Re-enable submit button
             setTimeout(() => {
