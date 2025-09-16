@@ -1125,6 +1125,20 @@
             }
         }
         
+        function startAutoRefresh() {
+    stopAutoRefresh();
+    if (autoRefreshEnabled) {
+        autoRefreshInterval = setInterval(() => {
+            if (isOnline && autoRefreshEnabled) {
+                loadMessageHistory();
+            }
+        }, 30000); // Refresh every 30 seconds
+    }
+}
+
+function stopAutoRefresh() {
+    // existing function stays the same
+}
         function stopAutoRefresh() {
             if (autoRefreshInterval) {
                 clearInterval(autoRefreshInterval);
