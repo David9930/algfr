@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Derek's Admin Message Interface</title>
-    <meta name="description" content="Admin interface for responding to messages">
+    <title>Derek's Admin Message Interface - Google Sheets</title>
+    <meta name="description" content="Admin interface for responding to messages with Google Sheets integration">
     
     <style>
         * {
@@ -70,14 +70,76 @@
             font-size: 1.1rem;
         }
         
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .connection-status.online {
+            border: 1px solid rgba(46, 213, 115, 0.5);
+            color: #2ed573;
+        }
+        
+        .connection-status.offline {
+            border: 1px solid rgba(255, 71, 87, 0.5);
+            color: #ff4757;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ff4757;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-indicator.connected {
+            background: #2ed573;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
         .container {
             flex: 1;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
             display: flex;
             flex-direction: column;
             gap: 20px;
+        }
+        
+        .admin-notice {
+            background: linear-gradient(135deg, rgba(175, 76, 76, 0.2), rgba(199, 129, 129, 0.2));
+            border: 2px solid #AF4C4C;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .admin-notice h3 {
+            color: #ff6b6b;
+            margin-bottom: 5px;
+            font-size: 1.3rem;
+        }
+        
+        .admin-notice p {
+            color: rgba(255, 255, 255, 0.9);
         }
         
         .messages-container {
@@ -86,19 +148,63 @@
             padding: 20px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            min-height: 400px;
-            max-height: 500px;
+            min-height: 450px;
+            max-height: 600px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
         
+        .message-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .message-filter {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .filter-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-button.active {
+            background: #AF4C4C;
+            border-color: #AF4C4C;
+        }
+        
+        .filter-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .messages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
         .message {
-            padding: 15px 20px;
-            border-radius: 12px;
-            max-width: 80%;
+            padding: 20px;
+            border-radius: 15px;
             animation: messageSlide 0.3s ease-out;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         @keyframes messageSlide {
@@ -107,66 +213,164 @@
         }
         
         .message.derek {
-            background: linear-gradient(135deg, rgba(175, 76, 76, 0.2), rgba(199, 129, 129, 0.2));
-            border: 1px solid rgba(175, 76, 76, 0.3);
+            background: linear-gradient(135deg, rgba(175, 76, 76, 0.3), rgba(199, 129, 129, 0.3));
+            border-color: rgba(175, 76, 76, 0.5);
             align-self: flex-end;
+            margin-left: 20%;
         }
         
         .message.nancy {
-            background: linear-gradient(135deg, rgba(33, 150, 243, 0.2), rgba(100, 181, 246, 0.2));
-            border: 1px solid rgba(33, 150, 243, 0.3);
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.3), rgba(100, 181, 246, 0.3));
+            border-color: rgba(33, 150, 243, 0.5);
             align-self: flex-start;
+            margin-right: 20%;
         }
         
         .message-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
         }
         
         .message-author {
             font-weight: bold;
             color: #ffd93d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .author-badge {
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
         }
         
         .message-time {
             color: rgba(255, 255, 255, 0.6);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
         
         .message-content {
-            line-height: 1.5;
-            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.95);
+            word-wrap: break-word;
+            font-size: 1.05rem;
+        }
+        
+        .message-id {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 8px;
+            font-family: monospace;
+            opacity: 0.7;
+        }
+        
+        .message-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        
+        .message-action-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .message-action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            text-align: center;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #AF4C4C;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         .no-messages {
             text-align: center;
             color: rgba(255, 255, 255, 0.6);
             font-style: italic;
-            margin-top: 50px;
+            padding: 50px 20px;
         }
         
-        .loading-messages {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.6);
-            font-style: italic;
-            margin-top: 50px;
+        .no-messages h3 {
+            color: #AF4C4C;
+            margin-bottom: 10px;
         }
         
         .input-container {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
-            padding: 20px;
+            padding: 25px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .input-header {
             text-align: center;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .response-templates {
             margin-bottom: 15px;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.1rem;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .template-btn {
+            background: rgba(175, 76, 76, 0.2);
+            border: 1px solid rgba(175, 76, 76, 0.4);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .template-btn:hover {
+            background: rgba(175, 76, 76, 0.4);
+            transform: translateY(-1px);
         }
         
         .message-form {
@@ -177,37 +381,55 @@
         
         .message-textarea {
             width: 100%;
-            min-height: 100px;
-            padding: 15px;
+            min-height: 120px;
+            padding: 20px;
             border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
+            border-radius: 15px;
             background: rgba(255, 255, 255, 0.1);
             color: white;
             font-size: 1rem;
             resize: vertical;
+            font-family: inherit;
+            line-height: 1.5;
         }
         
         .message-textarea:focus {
             outline: none;
             border-color: #AF4C4C;
-            box-shadow: 0 0 15px rgba(175, 76, 76, 0.3);
+            box-shadow: 0 0 20px rgba(175, 76, 76, 0.3);
         }
         
         .message-textarea::placeholder {
             color: rgba(255, 255, 255, 0.5);
         }
         
+        .char-counter {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: right;
+            margin-top: -10px;
+        }
+        
+        .char-counter.warning {
+            color: #ff9500;
+        }
+        
+        .char-counter.danger {
+            color: #ff4757;
+        }
+        
         .form-actions {
             display: flex;
             gap: 15px;
             justify-content: center;
+            flex-wrap: wrap;
         }
         
-        .submit-button {
+        .action-button {
             background: linear-gradient(135deg, #AF4C4C, #C18181);
             color: white;
             border: none;
-            padding: 12px 30px;
+            padding: 15px 35px;
             border-radius: 25px;
             font-size: 1rem;
             font-weight: 600;
@@ -215,119 +437,274 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
         }
         
-        .submit-button:hover {
+        .action-button:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(175, 76, 76, 0.4);
         }
         
-        .submit-button:disabled {
+        .action-button:disabled {
             background: rgba(255, 255, 255, 0.3);
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
         
-        .refresh-button {
-            background: linear-gradient(135deg, #2196F3, #64B5F6);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .action-button.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: buttonSpin 1s linear infinite;
+            transform: translate(-50%, -50%);
         }
         
-        .refresh-button:hover {
-            transform: translateY(-2px);
+        .action-button.loading {
+            color: transparent;
+        }
+        
+        @keyframes buttonSpin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .refresh-button {
+            background: linear-gradient(135deg, #2196F3, #64B5F6);
+        }
+        
+        .refresh-button:hover:not(:disabled) {
             box-shadow: 0 8px 20px rgba(33, 150, 243, 0.4);
         }
         
+        .clear-button {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+        }
+        
+        .clear-button:hover:not(:disabled) {
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+        }
+        
         .status-message {
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin-top: 10px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-top: 15px;
             font-weight: 500;
             text-align: center;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
         }
         
-        .status-message.show { opacity: 1; }
+        .status-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
         
         .status-message.success {
-            background: rgba(175, 76, 76, 0.2);
+            background: linear-gradient(135deg, rgba(175, 76, 76, 0.2), rgba(199, 129, 129, 0.2));
             color: #C18181;
             border: 1px solid rgba(175, 76, 76, 0.5);
         }
         
         .status-message.error {
-            background: rgba(244, 67, 54, 0.2);
+            background: linear-gradient(135deg, rgba(244, 67, 54, 0.2), rgba(239, 154, 154, 0.2));
             color: #EF9A9A;
             border: 1px solid rgba(244, 67, 54, 0.5);
         }
         
-        .admin-notice {
-            background: rgba(175, 76, 76, 0.1);
-            border: 2px solid #AF4C4C;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            text-align: center;
+        .status-message.info {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.2), rgba(100, 181, 246, 0.2));
+            color: #81D4FA;
+            border: 1px solid rgba(33, 150, 243, 0.5);
         }
         
-        .admin-notice h3 {
-            color: #AF4C4C;
-            margin-bottom: 5px;
+        .auto-refresh-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .toggle-switch.active {
+            background: #AF4C4C;
+        }
+        
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .toggle-switch.active::after {
+            transform: translateX(26px);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+                gap: 15px;
+            }
+            
+            .messages-container {
+                min-height: 350px;
+                max-height: 450px;
+            }
+            
+            .message {
+                margin-left: 0;
+                margin-right: 0;
+                padding: 15px;
+            }
+            
+            .message.derek,
+            .message.nancy {
+                margin-left: 0;
+                margin-right: 0;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .action-button {
+                width: 100%;
+                padding: 15px;
+            }
+            
+            .response-templates {
+                justify-content: flex-start;
+            }
+            
+            .template-btn {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+            
+            .message-stats {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
 <body>
     <div class="starfield" id="starfield"></div>
     
+    <div class="connection-status" id="connectionStatus">
+        <div class="status-indicator" id="statusIndicator"></div>
+        <span id="statusText">Connecting...</span>
+    </div>
+    
     <header class="header">
         <h1>Derek's Admin Interface</h1>
-        <p>Private message responses & administration</p>
+        <p>Private message responses & administration with Google Sheets</p>
     </header>
     
     <main class="container">
         <div class="admin-notice">
-            <h3>Administrator Access</h3>
-            <p>Logged in as Derek - Messages sent from this interface will appear as "Derek"</p>
+            <h3>🔐 Administrator Access</h3>
+            <p>Logged in as Derek - Messages sent from this interface will appear as "Derek" and Nancy will be notified by email</p>
         </div>
         
         <div class="messages-container" id="messagesContainer">
-            <div class="loading-messages" id="loadingMessages">
-                Loading message history...
+            <div class="message-stats">
+                <span id="messageCount">Loading messages...</span>
+                <div class="message-filter">
+                    <span>Filter:</span>
+                    <button class="filter-button active" onclick="filterMessages('all')">All</button>
+                    <button class="filter-button" onclick="filterMessages('nancy')">Nancy</button>
+                    <button class="filter-button" onclick="filterMessages('derek')">Derek</button>
+                </div>
+                <span id="lastUpdated">Last updated: --:--</span>
             </div>
+            
+            <div class="loading-container" id="loadingContainer">
+                <div class="loading-spinner"></div>
+                <div>Loading message history...</div>
+            </div>
+            
+            <div class="messages-list" id="messagesList" style="display: none;">
+                <!-- Messages will be populated here -->
+            </div>
+            
             <div class="no-messages" id="noMessages" style="display: none;">
-                No messages yet. Nancy hasn't sent any messages.
+                <h3>📭 No messages yet</h3>
+                <p>Nancy hasn't sent any messages yet. When she does, they'll appear here.</p>
             </div>
         </div>
         
         <div class="input-container">
-            <div class="input-header">Respond to Nancy</div>
+            <div class="input-header">
+                Respond to Nancy
+                <div class="status-indicator" id="headerStatusIndicator"></div>
+            </div>
+            
+            <div class="response-templates">
+                <button class="template-btn" onclick="insertTemplate('thanks')">Thanks</button>
+                <button class="template-btn" onclick="insertTemplate('question')">I have a question</button>
+                <button class="template-btn" onclick="insertTemplate('memory')">I remember</button>
+                <button class="template-btn" onclick="insertTemplate('custom')">Custom</button>
+            </div>
             
             <form class="message-form" id="messageForm">
                 <textarea 
                     id="messageText" 
                     class="message-textarea" 
-                    placeholder="Type your response here..."
+                    placeholder="Type your response to Nancy here... (Max 1500 characters)"
+                    maxlength="1500"
                     required
                 ></textarea>
                 
+                <div class="char-counter" id="charCounter">0 / 1500</div>
+                
                 <div class="form-actions">
-                    <button type="submit" class="submit-button" id="submitButton">
+                    <button type="submit" class="action-button" id="submitButton">
                         Send Response
                     </button>
-                    <button type="button" class="refresh-button" id="refreshButton">
+                    <button type="button" class="action-button refresh-button" id="refreshButton">
                         Refresh Messages
                     </button>
+                    <button type="button" class="action-button clear-button" id="clearButton">
+                        Clear Draft
+                    </button>
+                </div>
+                
+                <div class="auto-refresh-section">
+                    <label for="autoRefresh">Auto-refresh messages</label>
+                    <div class="toggle-switch active" id="autoRefreshToggle" onclick="toggleAutoRefresh()"></div>
+                    <span id="refreshStatus">Every 30 seconds</span>
                 </div>
                 
                 <div class="status-message" id="statusMessage"></div>
@@ -336,10 +713,45 @@
     </main>
     
     <script>
-        // SAME APPS SCRIPT URL AS NANCY'S INTERFACE
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzbfqzk2KoPuZuOFCHcnREpH_y52QAA1RaJdWNsWYtNvyPIXaP78mGhFUVfBQXa70TGcA/exec';
+        // Configuration - Replace with your actual Google Apps Script URL
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
         
+        // Response templates
+        const templates = {
+            'thanks': "Thanks for reaching out, Nancy. ",
+            'question': "I have a question about what you mentioned: ",
+            'memory': "I remember that too. It's funny how ",
+            'custom': ""
+        };
+        
+        // Global variables
         let messagesData = [];
+        let filteredMessages = [];
+        let currentFilter = 'all';
+        let autoRefreshInterval = null;
+        let autoRefreshEnabled = true;
+        let isOnline = navigator.onLine;
+        let lastMessageCount = 0;
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+        
+        function initializeApp() {
+            createStarfield();
+            setupEventListeners();
+            updateConnectionStatus();
+            loadMessageHistory();
+            
+            // Start auto-refresh if enabled
+            if (autoRefreshEnabled) {
+                startAutoRefresh();
+            }
+            
+            // Check connection status periodically
+            setInterval(updateConnectionStatus, 5000);
+        }
         
         function createStarfield() {
             const starfield = document.getElementById('starfield');
@@ -353,139 +765,393 @@
             }
         }
         
-        function displayMessages() {
-            const container = document.getElementById('messagesContainer');
-            const noMessages = document.getElementById('noMessages');
-            const loadingMessages = document.getElementById('loadingMessages');
+        function setupEventListeners() {
+            // Form submission
+            document.getElementById('messageForm').addEventListener('submit', handleSubmit);
             
-            if (loadingMessages) loadingMessages.style.display = 'none';
+            // Button clicks
+            document.getElementById('refreshButton').addEventListener('click', () => loadMessageHistory(true));
+            document.getElementById('clearButton').addEventListener('click', clearDraft);
             
-            if (messagesData.length === 0) {
-                if (noMessages) noMessages.style.display = 'block';
-                return;
-            }
+            // Character counter
+            const messageText = document.getElementById('messageText');
+            messageText.addEventListener('input', updateCharCounter);
             
-            if (noMessages) noMessages.style.display = 'none';
-            container.innerHTML = '';
-            
-            messagesData.forEach(message => {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `message ${message.sender.toLowerCase()}`;
-                
-                messageDiv.innerHTML = `
-                    <div class="message-header">
-                        <span class="message-author">${message.sender}</span>
-                        <span class="message-time">${message.timestamp}</span>
-                    </div>
-                    <div class="message-content">${message.message}</div>
-                `;
-                
-                container.appendChild(messageDiv);
+            // Connection status listeners
+            window.addEventListener('online', () => {
+                isOnline = true;
+                updateConnectionStatus();
+                showStatus('Connection restored. Refreshing messages...', 'success');
+                loadMessageHistory(true);
             });
             
-            container.scrollTop = container.scrollHeight;
+            window.addEventListener('offline', () => {
+                isOnline = false;
+                updateConnectionStatus();
+                showStatus('Connection lost. Messages will be queued until reconnected.', 'error');
+            });
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    handleSubmit(e);
+                } else if (e.key === 'F5' || (e.ctrlKey && e.key === 'r')) {
+                    e.preventDefault();
+                    loadMessageHistory(true);
+                }
+            });
         }
         
-        async function loadMessageHistory() {
-            // For now, show sample messages from what we know exists
-            showSampleMessages();
+        async function loadMessageHistory(showLoading = false) {
+            try {
+                if (showLoading) {
+                    document.getElementById('loadingContainer').style.display = 'flex';
+                    document.getElementById('messagesList').style.display = 'none';
+                    document.getElementById('noMessages').style.display = 'none';
+                }
+                
+                const response = await fetch(`${APPS_SCRIPT_URL}?action=getMessages&t=${Date.now()}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    messagesData = result.messages || [];
+                    applyMessageFilter();
+                    updateMessageStats();
+                    updateConnectionStatus(true);
+                    
+                    // Show notification for new messages from Nancy
+                    const newNancyMessages = messagesData.filter(m => 
+                        m.sender.toLowerCase() === 'nancy' && 
+                        messagesData.indexOf(m) >= lastMessageCount
+                    );
+                    
+                    if (newNancyMessages.length > 0 && lastMessageCount > 0) {
+                        showStatus(`${newNancyMessages.length} new message${newNancyMessages.length > 1 ? 's' : ''} from Nancy!`, 'info');
+                        playNotificationSound();
+                    }
+                    lastMessageCount = messagesData.length;
+                    
+                } else {
+                    console.error('Failed to load messages:', result.error);
+                    showStatus('Failed to load message history: ' + result.error, 'error');
+                    updateConnectionStatus(false);
+                }
+            } catch (error) {
+                console.error('Error loading messages:', error);
+                showStatus('Network error loading messages. Please check your connection.', 'error');
+                updateConnectionStatus(false);
+                
+                // Show offline messages if available
+                if (messagesData.length > 0) {
+                    applyMessageFilter();
+                    showStatus('Showing cached messages. Connection will retry automatically.', 'info');
+                }
+            } finally {
+                document.getElementById('loadingContainer').style.display = 'none';
+            }
         }
         
-        function showSampleMessages() {
-            // Show the actual messages we know exist from your test
-            messagesData = [
-                { sender: 'Nancy', message: 'Not another test!', timestamp: '9/15/2025, 7:00:24 PM' },
-                { sender: 'Nancy', message: 'hey there', timestamp: '9/15/2025, 7:12:46 PM' },
-                { sender: 'Nancy', message: 'derek email test 1', timestamp: '9/15/2025, 7:27:26 PM' },
-                { sender: 'Nancy', message: 'How now brown cow :)', timestamp: '9/15/2025, 7:30:01 PM' },
-                { sender: 'Nancy', message: 'I Love the book Dave!', timestamp: '9/15/2025, 7:53:32 PM' },
-                { sender: 'Nancy', message: 'Who is Maureen?', timestamp: '9/15/2025, 7:53:54 PM' },
-                { sender: 'Nancy', message: 'Hey Dave I love the book', timestamp: '9/15/2025, 7:58:57 PM' },
-                { sender: 'Nancy', message: 'Who is Tina? What the hell where you thinking of dating her.... :(', timestamp: '9/15/2025, 7:59:32 PM' }
-            ];
+        function applyMessageFilter() {
+            if (currentFilter === 'all') {
+                filteredMessages = [...messagesData];
+            } else {
+                filteredMessages = messagesData.filter(msg => 
+                    msg.sender.toLowerCase() === currentFilter
+                );
+            }
             displayMessages();
         }
         
-        function sendMessageViaForm(message, sender = 'Derek') {
-            return new Promise((resolve) => {
-                const data = {
-                    message: message,
-                    sender: sender,
-                    timestamp: new Date().toLocaleString()
-                };
-                
-                console.log('Sending Derek response:', data);
-                
-                const form = document.createElement('form');
-                form.action = APPS_SCRIPT_URL;
-                form.method = 'POST';
-                form.target = 'hiddenFrame';
-                form.style.display = 'none';
-                
-                const dataField = document.createElement('input');
-                dataField.type = 'hidden';
-                dataField.name = 'data';
-                dataField.value = JSON.stringify(data);
-                form.appendChild(dataField);
-                
-                let iframe = document.getElementById('hiddenFrame');
-                if (!iframe) {
-                    iframe = document.createElement('iframe');
-                    iframe.id = 'hiddenFrame';
-                    iframe.name = 'hiddenFrame';
-                    iframe.style.display = 'none';
-                    document.body.appendChild(iframe);
-                }
-                
-                document.body.appendChild(form);
-                form.submit();
-                
-                setTimeout(() => {
-                    if (form.parentNode) {
-                        document.body.removeChild(form);
-                    }
-                    resolve({ success: true });
-                }, 1000);
+        function filterMessages(filter) {
+            currentFilter = filter;
+            
+            // Update filter button states
+            document.querySelectorAll('.filter-button').forEach(btn => {
+                btn.classList.remove('active');
             });
+            event.target.classList.add('active');
+            
+            applyMessageFilter();
+        }
+        
+        function displayMessages() {
+            const messagesList = document.getElementById('messagesList');
+            const noMessages = document.getElementById('noMessages');
+            const container = document.getElementById('messagesContainer');
+            
+            if (filteredMessages.length === 0) {
+                messagesList.style.display = 'none';
+                noMessages.style.display = 'block';
+                noMessages.innerHTML = `
+                    <h3>📭 No ${currentFilter === 'all' ? '' : currentFilter + ' '}messages</h3>
+                    <p>${currentFilter === 'nancy' ? "Nancy hasn't sent any messages yet." : 
+                        currentFilter === 'derek' ? "You haven't sent any responses yet." : 
+                        "No messages in the conversation yet."}</p>
+                `;
+                return;
+            }
+            
+            noMessages.style.display = 'none';
+            messagesList.style.display = 'flex';
+            messagesList.innerHTML = '';
+            
+            filteredMessages.forEach((message, index) => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${message.sender.toLowerCase()}`;
+                messageDiv.style.animationDelay = `${index * 0.1}s`;
+                
+                const isFromNancy = message.sender.toLowerCase() === 'nancy';
+                const badgeText = isFromNancy ? 'User' : 'Admin';
+                const badgeColor = isFromNancy ? '#2196F3' : '#AF4C4C';
+                
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-author">
+                            ${message.sender}
+                            <span class="author-badge" style="border-color: ${badgeColor}; background: ${badgeColor}20;">${badgeText}</span>
+                        </div>
+                        <span class="message-time">${formatTimestamp(message.timestamp)}</span>
+                    </div>
+                    <div class="message-content">${escapeHtml(message.message)}</div>
+                    ${message.id ? `<div class="message-id">ID: ${message.id.substring(0, 8)}...</div>` : ''}
+                    <div class="message-actions">
+                        ${isFromNancy ? `<button class="message-action-btn" onclick="replyToMessage('${message.id}', '${escapeHtml(message.sender)}')">Reply</button>` : ''}
+                        <button class="message-action-btn" onclick="copyMessageId('${message.id}')">Copy ID</button>
+                    </div>
+                `;
+                
+                messagesList.appendChild(messageDiv);
+            });
+            
+            // Scroll to bottom
+            setTimeout(() => {
+                container.scrollTop = container.scrollHeight;
+            }, 100);
+        }
+        
+        function updateMessageStats() {
+            const messageCount = document.getElementById('messageCount');
+            const lastUpdated = document.getElementById('lastUpdated');
+            
+            const totalMessages = messagesData.length;
+            const nancyMessages = messagesData.filter(m => m.sender.toLowerCase() === 'nancy').length;
+            const derekMessages = messagesData.filter(m => m.sender.toLowerCase() === 'derek').length;
+            
+            messageCount.textContent = `${totalMessages} total (Nancy: ${nancyMessages}, Derek: ${derekMessages})`;
+            lastUpdated.textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
+        }
+        
+        function insertTemplate(templateKey) {
+            const messageText = document.getElementById('messageText');
+            const template = templates[templateKey] || '';
+            
+            if (templateKey === 'custom') {
+                messageText.value = '';
+                messageText.focus();
+                return;
+            }
+            
+            // If textarea is empty, insert template, otherwise append
+            if (messageText.value.trim() === '') {
+                messageText.value = template;
+            } else {
+                messageText.value += template;
+            }
+            
+            messageText.focus();
+            messageText.setSelectionRange(messageText.value.length, messageText.value.length);
+            updateCharCounter();
+        }
+        
+        function replyToMessage(messageId, sender) {
+            const messageText = document.getElementById('messageText');
+            const replyTemplate = `@${sender}: `;
+            
+            messageText.value = replyTemplate;
+            messageText.focus();
+            messageText.setSelectionRange(messageText.value.length, messageText.value.length);
+            updateCharCounter();
+            
+            // Scroll to input
+            document.querySelector('.input-container').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+        
+        function copyMessageId(messageId) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(messageId).then(() => {
+                    showStatus('Message ID copied to clipboard', 'success');
+                });
+            } else {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = messageId;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showStatus('Message ID copied to clipboard', 'success');
+            }
         }
         
         async function handleSubmit(event) {
             event.preventDefault();
             
             const messageText = document.getElementById('messageText');
-            const submitButton = document.getElementById('submitButton');
+            const messageContent = messageText.value.trim();
             
-            if (!messageText.value.trim()) {
+            if (!messageContent) {
                 showStatus('Please enter a response', 'error');
+                messageText.focus();
                 return;
             }
             
-            const messageContent = messageText.value.trim();
+            if (!isOnline) {
+                showStatus('No internet connection. Please try again when online.', 'error');
+                return;
+            }
             
-            submitButton.disabled = true;
-            submitButton.textContent = 'Sending...';
+            // Disable form during submission
+            setFormLoading(true);
             
             try {
-                await sendMessageViaForm(messageContent, 'Derek');
-                
-                showStatus('Response sent! Nancy will be notified.', 'success');
-                
-                // Add to local display immediately
-                messagesData.push({
-                    sender: "Derek",
+                const messageData = {
                     message: messageContent,
+                    sender: 'Derek',
                     timestamp: new Date().toLocaleString()
-                });
-                displayMessages();
+                };
                 
-                messageText.value = '';
+                const response = await sendMessage(messageData);
+                
+                if (response.success) {
+                    showStatus('Response sent successfully! Nancy will be notified by email.', 'success');
+                    messageText.value = '';
+                    updateCharCounter();
+                    
+                    // Add message to local display immediately
+                    messagesData.push(messageData);
+                    applyMessageFilter();
+                    updateMessageStats();
+                    
+                    // Refresh messages after delay
+                    setTimeout(() => loadMessageHistory(), 2000);
+                    
+                } else {
+                    throw new Error(response.error || 'Failed to send response');
+                }
                 
             } catch (error) {
                 console.error('Send error:', error);
-                showStatus('Error: ' + error.message, 'error');
+                showStatus('Error sending response: ' + error.message, 'error');
             } finally {
+                setFormLoading(false);
+            }
+        }
+        
+        async function sendMessage(messageData) {
+            const formData = new FormData();
+            formData.append('data', JSON.stringify(messageData));
+            
+            const response = await fetch(APPS_SCRIPT_URL, {
+                method: 'POST',
+                body: formData
+            });
+            
+            return await response.json();
+        }
+        
+        function setFormLoading(loading) {
+            const submitButton = document.getElementById('submitButton');
+            const messageText = document.getElementById('messageText');
+            const refreshButton = document.getElementById('refreshButton');
+            
+            if (loading) {
+                submitButton.disabled = true;
+                submitButton.classList.add('loading');
+                messageText.disabled = true;
+                refreshButton.disabled = true;
+            } else {
                 submitButton.disabled = false;
-                submitButton.textContent = 'Send Response';
+                submitButton.classList.remove('loading');
+                messageText.disabled = false;
+                refreshButton.disabled = false;
+                messageText.focus();
+            }
+        }
+        
+        function clearDraft() {
+            const messageText = document.getElementById('messageText');
+            messageText.value = '';
+            messageText.focus();
+            updateCharCounter();
+            showStatus('Draft cleared', 'info');
+        }
+        
+        function updateCharCounter() {
+            const messageText = document.getElementById('messageText');
+            const charCounter = document.getElementById('charCounter');
+            const length = messageText.value.length;
+            const maxLength = 1500;
+            
+            charCounter.textContent = `${length} / ${maxLength}`;
+            
+            if (length > maxLength * 0.9) {
+                charCounter.className = 'char-counter danger';
+            } else if (length > maxLength * 0.7) {
+                charCounter.className = 'char-counter warning';
+            } else {
+                charCounter.className = 'char-counter';
+            }
+        }
+        
+        function toggleAutoRefresh() {
+            const toggle = document.getElementById('autoRefreshToggle');
+            const status = document.getElementById('refreshStatus');
+            
+            autoRefreshEnabled = !autoRefreshEnabled;
+            
+            if (autoRefreshEnabled) {
+                toggle.classList.add('active');
+                status.textContent = 'Every 30 seconds';
+                startAutoRefresh();
+                showStatus('Auto-refresh enabled', 'success');
+            } else {
+                toggle.classList.remove('active');
+                status.textContent = 'Disabled';
+                stopAutoRefresh();
+                showStatus('Auto-refresh disabled', 'info');
+            }
+        }
+        
+        function stopAutoRefresh() {
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+                autoRefreshInterval = null;
+            }
+        }
+        
+        function updateConnectionStatus(forceOnline = null) {
+            const statusIndicator = document.getElementById('statusIndicator');
+            const headerIndicator = document.getElementById('headerStatusIndicator');
+            const statusText = document.getElementById('statusText');
+            const connectionStatus = document.getElementById('connectionStatus');
+            
+            const online = forceOnline !== null ? forceOnline : isOnline;
+            
+            if (online) {
+                statusIndicator.classList.add('connected');
+                headerIndicator.classList.add('connected');
+                statusText.textContent = 'Connected';
+                connectionStatus.classList.remove('offline');
+                connectionStatus.classList.add('online');
+            } else {
+                statusIndicator.classList.remove('connected');
+                headerIndicator.classList.remove('connected');
+                statusText.textContent = 'Offline';
+                connectionStatus.classList.remove('online');
+                connectionStatus.classList.add('offline');
             }
         }
         
@@ -499,12 +1165,49 @@
             }, 5000);
         }
         
-        document.addEventListener('DOMContentLoaded', function() {
-            createStarfield();
-            loadMessageHistory();
-            
-            document.getElementById('messageForm').addEventListener('submit', handleSubmit);
-            document.getElementById('refreshButton').addEventListener('click', loadMessageHistory);
+        function formatTimestamp(timestamp) {
+            try {
+                const date = new Date(timestamp);
+                return date.toLocaleString();
+            } catch (e) {
+                return timestamp;
+            }
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function playNotificationSound() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = 600;
+                oscillator.type = 'sine';
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.01);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.4);
+            } catch (e) {
+                // Ignore audio errors
+            }
+        }
+        
+        // Initialize character counter on page load
+        window.addEventListener('load', updateCharCounter);
+        
+        // Clean up on page unload
+        window.addEventListener('beforeunload', () => {
+            stopAutoRefresh();
         });
     </script>
 </body>
