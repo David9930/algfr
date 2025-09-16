@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Derek's Admin Message Interface</title>
+    <meta name="description" content="Admin interface for responding to messages">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2e1a1a, #3e1616, #460f0f);
+            color: #e8e8e8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 4s infinite;
+        }
+        
+        .star.small { width: 1px; height: 1px; opacity: 0.6; }
+        .star.medium { width: 2px; height: 2px; opacity: 0.4; }
+        .star.large { width: 3px; height: 3px; opacity: 0.3; }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        .header {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #ff6b6b, #ffaa3d, #ff7f7f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+        
+        .container {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .messages-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-height: 400px;
+            max-height: 500px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            padding: 15px 20px;
+            border-radius: 12px;
+            max-width: 80%;
+            animation: messageSlide 0.3s ease-out;
+        }
+        
+        @keyframes messageSlide {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message.derek {
+            background: linear-gradient(135deg, rgba(175, 76, 76, 0.2), rgba(199, 129, 129, 0.2));
+            border: 1px solid rgba(175, 76, 76, 0.3);
+            align-self: flex-end;
+        }
+        
+        .message.nancy {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.2), rgba(100, 181, 246, 0.2));
+            border: 1px solid rgba(33, 150, 243, 0.3);
+            align-self: flex-start;
+        }
+        
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .message-author {
+            font-weight: bold;
+            color: #ffd93d;
+        }
+        
+        .message-time {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8rem;
+        }
+        
+        .message-content {
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .no-messages {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+            margin-top: 50px;
+        }
+        
+        .loading-messages {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+            margin-top: 50px;
+        }
+        
+        .input-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .input-header {
+            text-align: center;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+        
+        .message-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message-textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            resize: vertical;
+        }
+        
+        .message-textarea:focus {
+            outline: none;
+            border-color: #AF4C4C;
+            box-shadow: 0 0 15px rgba(175, 76, 76, 0.3);
+        }
+        
+        .message-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .submit-button {
+            background: linear-gradient(135deg, #AF4C4C, #C18181);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(175, 76, 76, 0.4);
+        }
+        
+        .submit-button:disabled {
+            background: rgba(255, 255, 255, 0.3);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .refresh-button {
+            background: linear-gradient(135deg, #2196F3, #64B5F6);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .refresh-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(33, 150, 243, 0.4);
+        }
+        
+        .status-message {
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-weight: 500;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .status-message.show { opacity: 1; }
+        
+        .status-message.success {
+            background: rgba(175, 76, 76, 0.2);
+            color: #C18181;
+            border: 1px solid rgba(175, 76, 76, 0.5);
+        }
+        
+        .status-message.error {
+            background: rgba(244, 67, 54, 0.2);
+            color: #EF9A9A;
+            border: 1px solid rgba(244, 67, 54, 0.5);
+        }
+        
+        .admin-notice {
+            background: rgba(175, 76, 76, 0.1);
+            border: 2px solid #AF4C4C;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .admin-notice h3 {
+            color: #AF4C4C;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="starfield" id="starfield"></div>
+    
+    <header class="header">
+        <h1>Derek's Admin Interface</h1>
+        <p>Private message responses & administration</p>
+    </header>
+    
+    <main class="container">
+        <div class="admin-notice">
+            <h3>Administrator Access</h3>
+            <p>Logged in as Derek - Messages sent from this interface will appear as "Derek"</p>
+        </div>
+        
+        <div class="messages-container" id="messagesContainer">
+            <div class="loading-messages" id="loadingMessages">
+                Loading message history...
+            </div>
+            <div class="no-messages" id="noMessages" style="display: none;">
+                No messages yet. Nancy hasn't sent any messages.
+            </div>
+        </div>
+        
+        <div class="input-container">
+            <div class="input-header">Respond to Nancy</div>
+            
+            <form class="message-form" id="messageForm">
+                <textarea 
+                    id="messageText" 
+                    class="message-textarea" 
+                    placeholder="Type your response here..."
+                    required
+                ></textarea>
+                
+                <div class="form-actions">
+                    <button type="submit" class="submit-button" id="submitButton">
+                        Send Response
+                    </button>
+                    <button type="button" class="refresh-button" id="refreshButton">
+                        Refresh Messages
+                    </button>
+                </div>
+                
+                <div class="status-message" id="statusMessage"></div>
+            </form>
+        </div>
+    </main>
+    
+    <script>
+        // SAME APPS SCRIPT URL AS NANCY'S INTERFACE
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzbfqzk2KoPuZuOFCHcnREpH_y52QAA1RaJdWNsWYtNvyPIXaP78mGhFUVfBQXa70TGcA/exec';
+        
+        let messagesData = [];
+        
+        function createStarfield() {
+            const starfield = document.getElementById('starfield');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = `star ${['small', 'medium', 'large'][Math.floor(Math.random() * 3)]}`;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 4 + 's';
+                starfield.appendChild(star);
+            }
+        }
+        
+        function displayMessages() {
+            const container = document.getElementById('messagesContainer');
+            const noMessages = document.getElementById('noMessages');
+            const loadingMessages = document.getElementById('loadingMessages');
+            
+            if (loadingMessages) loadingMessages.style.display = 'none';
+            
+            if (messagesData.length === 0) {
+                if (noMessages) noMessages.style.display = 'block';
+                return;
+            }
+            
+            if (noMessages) noMessages.style.display = 'none';
+            container.innerHTML = '';
+            
+            messagesData.forEach(message => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${message.sender.toLowerCase()}`;
+                
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <span class="message-author">${message.sender}</span>
+                        <span class="message-time">${message.timestamp}</span>
+                    </div>
+                    <div class="message-content">${message.message}</div>
+                `;
+                
+                container.appendChild(messageDiv);
+            });
+            
+            container.scrollTop = container.scrollHeight;
+        }
+        
+        async function loadMessageHistory() {
+            // For now, show sample messages from what we know exists
+            showSampleMessages();
+        }
+        
+        function showSampleMessages() {
+            // Show the actual messages we know exist from your test
+            messagesData = [
+                { sender: 'Nancy', message: 'Not another test!', timestamp: '9/15/2025, 7:00:24 PM' },
+                { sender: 'Nancy', message: 'hey there', timestamp: '9/15/2025, 7:12:46 PM' },
+                { sender: 'Nancy', message: 'derek email test 1', timestamp: '9/15/2025, 7:27:26 PM' },
+                { sender: 'Nancy', message: 'How now brown cow :)', timestamp: '9/15/2025, 7:30:01 PM' },
+                { sender: 'Nancy', message: 'I Love the book Dave!', timestamp: '9/15/2025, 7:53:32 PM' },
+                { sender: 'Nancy', message: 'Who is Maureen?', timestamp: '9/15/2025, 7:53:54 PM' },
+                { sender: 'Nancy', message: 'Hey Dave I love the book', timestamp: '9/15/2025, 7:58:57 PM' },
+                { sender: 'Nancy', message: 'Who is Tina? What the hell where you thinking of dating her.... :(', timestamp: '9/15/2025, 7:59:32 PM' }
+            ];
+            displayMessages();
+        }
+        
+        function sendMessageViaForm(message, sender = 'Derek') {
+            return new Promise((resolve) => {
+                const data = {
+                    message: message,
+                    sender: sender,
+                    timestamp: new Date().toLocaleString()
+                };
+                
+                console.log('Sending Derek response:', data);
+                
+                const form = document.createElement('form');
+                form.action = APPS_SCRIPT_URL;
+                form.method = 'POST';
+                form.target = 'hiddenFrame';
+                form.style.display = 'none';
+                
+                const dataField = document.createElement('input');
+                dataField.type = 'hidden';
+                dataField.name = 'data';
+                dataField.value = JSON.stringify(data);
+                form.appendChild(dataField);
+                
+                let iframe = document.getElementById('hiddenFrame');
+                if (!iframe) {
+                    iframe = document.createElement('iframe');
+                    iframe.id = 'hiddenFrame';
+                    iframe.name = 'hiddenFrame';
+                    iframe.style.display = 'none';
+                    document.body.appendChild(iframe);
+                }
+                
+                document.body.appendChild(form);
+                form.submit();
+                
+                setTimeout(() => {
+                    if (form.parentNode) {
+                        document.body.removeChild(form);
+                    }
+                    resolve({ success: true });
+                }, 1000);
+            });
+        }
+        
+        async function handleSubmit(event) {
+            event.preventDefault();
+            
+            const messageText = document.getElementById('messageText');
+            const submitButton = document.getElementById('submitButton');
+            
+            if (!messageText.value.trim()) {
+                showStatus('Please enter a response', 'error');
+                return;
+            }
+            
+            const messageContent = messageText.value.trim();
+            
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+            
+            try {
+                await sendMessageViaForm(messageContent, 'Derek');
+                
+                showStatus('Response sent! Nancy will be notified.', 'success');
+                
+                // Add to local display immediately
+                messagesData.push({
+                    sender: "Derek",
+                    message: messageContent,
+                    timestamp: new Date().toLocaleString()
+                });
+                displayMessages();
+                
+                messageText.value = '';
+                
+            } catch (error) {
+                console.error('Send error:', error);
+                showStatus('Error: ' + error.message, 'error');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Send Response';
+            }
+        }
+        
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.textContent = message;
+            statusDiv.className = `status-message ${type} show`;
+            
+            setTimeout(() => {
+                statusDiv.classList.remove('show');
+            }, 5000);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            createStarfield();
+            loadMessageHistory();
+            
+            document.getElementById('messageForm').addEventListener('submit', handleSubmit);
+            document.getElementById('refreshButton').addEventListener('click', loadMessageHistory);
+        });
+    </script>
+</body>
+</html>
