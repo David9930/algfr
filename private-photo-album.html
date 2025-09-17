@@ -179,6 +179,20 @@
             transform: scale(1.02);
         }
         
+        .click-hint {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            backdrop-filter: blur(10px);
+            opacity: 0.8;
+            pointer-events: none;
+        }
+        
         .photo-description {
             padding: 20px;
             text-align: center;
@@ -198,48 +212,12 @@
         .navigation-controls {
             padding: 20px;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
             background: rgba(0, 0, 0, 0.2);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            flex-wrap: nowrap;
+            gap: 15px;
             min-height: 80px;
-        }
-        
-        .nav-btn {
-            background: linear-gradient(135deg, #2196F3, #64B5F6);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            flex-shrink: 0;
-            min-width: 100px;
-            justify-content: center;
-        }
-        
-        .nav-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
-        }
-        
-        .nav-btn:disabled {
-            background: rgba(255, 255, 255, 0.2);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .nav-btn .arrow {
-            font-size: 1.2rem;
         }
         
         .progress-indicator {
@@ -283,6 +261,41 @@
         .dot.active {
             background: #ffd93d;
             transform: scale(1.3);
+        }
+        
+        .nav-buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #2196F3, #64B5F6);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+            min-width: 100px;
+            justify-content: center;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+        }
+        
+        .nav-btn .arrow {
+            font-size: 1.2rem;
         }
         
         .loading {
@@ -329,21 +342,6 @@
             
             .navigation-controls {
                 padding: 15px;
-                flex-direction: column;
-                gap: 15px;
-                min-height: auto;
-            }
-            
-            .progress-indicator {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .nav-buttons-container {
-                display: flex;
-                width: 100%;
-                justify-content: space-between;
-                gap: 15px;
             }
             
             .progress-bar {
@@ -353,8 +351,6 @@
             .nav-btn {
                 padding: 10px 16px;
                 font-size: 0.8rem;
-                flex: 1;
-                max-width: 120px;
             }
             
             .page-dots {
@@ -545,7 +541,7 @@
             <div class="modal-info">
                 <h3 id="modalTitle">Photo Title</h3>
                 <p id="modalDescription">Photo description</p>
-                <small id="modalNumber">Photo 1 of 34</small>
+                <small id="modalNumber">Photo 1 of 35</small>
             </div>
         </div>
     </div>
@@ -676,6 +672,7 @@ const photoDescriptions = {
                              </svg>
                          `)}'"
                          loading="lazy">
+                    <div class="click-hint">Click for full view</div>
                 </div>
                 
                 <div class="photo-description">
@@ -683,16 +680,6 @@ const photoDescriptions = {
                 </div>
                 
                 <div class="navigation-controls">
-                    <div class="nav-buttons-container">
-                        <button class="nav-btn" onclick="previousPage()" ${pageNumber === 1 ? 'disabled' : ''}>
-                            <span class="arrow">‹</span> Previous
-                        </button>
-                        
-                        <button class="nav-btn" onclick="nextPage()" ${pageNumber === TOTAL_PHOTOS ? 'disabled' : ''}>
-                            Next <span class="arrow">›</span>
-                        </button>
-                    </div>
-                    
                     <div class="progress-indicator">
                         <span>${pageNumber}/${TOTAL_PHOTOS}</span>
                         <div class="progress-bar">
@@ -701,6 +688,16 @@ const photoDescriptions = {
                         <div class="page-dots">
                             ${createPageDots(pageNumber)}
                         </div>
+                    </div>
+                    
+                    <div class="nav-buttons-container">
+                        <button class="nav-btn" onclick="previousPage()">
+                            <span class="arrow">‹</span> Previous
+                        </button>
+                        
+                        <button class="nav-btn" onclick="nextPage()">
+                            Next <span class="arrow">›</span>
+                        </button>
                     </div>
                 </div>
             `;
@@ -746,22 +743,34 @@ const photoDescriptions = {
         }
         
         function nextPage() {
-            if (currentPage < TOTAL_PHOTOS) {
-                const nextPageElement = document.getElementById(`page-${currentPage + 1}`);
-                if (nextPageElement) {
-                    nextPageElement.classList.add('page-transition-next');
-                    showPage(currentPage + 1);
-                }
+            let nextPageNum;
+            if (currentPage >= TOTAL_PHOTOS) {
+                // Loop back to first page
+                nextPageNum = 1;
+            } else {
+                nextPageNum = currentPage + 1;
+            }
+            
+            const nextPageElement = document.getElementById(`page-${nextPageNum}`);
+            if (nextPageElement) {
+                nextPageElement.classList.add('page-transition-next');
+                showPage(nextPageNum);
             }
         }
         
         function previousPage() {
-            if (currentPage > 1) {
-                const prevPageElement = document.getElementById(`page-${currentPage - 1}`);
-                if (prevPageElement) {
-                    prevPageElement.classList.add('page-transition-prev');
-                    showPage(currentPage - 1);
-                }
+            let prevPageNum;
+            if (currentPage <= 1) {
+                // Loop to last page
+                prevPageNum = TOTAL_PHOTOS;
+            } else {
+                prevPageNum = currentPage - 1;
+            }
+            
+            const prevPageElement = document.getElementById(`page-${prevPageNum}`);
+            if (prevPageElement) {
+                prevPageElement.classList.add('page-transition-prev');
+                showPage(prevPageNum);
             }
         }
         
