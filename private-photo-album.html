@@ -18,6 +18,7 @@
             background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
             color: #e8e8e8;
             min-height: 100vh;
+            overflow-x: hidden;
         }
         
         .starfield {
@@ -49,7 +50,7 @@
         .header {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(15px);
-            padding: 20px;
+            padding: 15px 20px;
             text-align: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: sticky;
@@ -58,18 +59,18 @@
         }
         
         .header h1 {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .header p {
             color: rgba(255, 255, 255, 0.8);
-            font-size: 1.1rem;
-            margin-bottom: 15px;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
         }
         
         .nav-button {
@@ -77,9 +78,9 @@
             background: linear-gradient(135deg, #4CAF50, #66BB6A);
             color: white;
             text-decoration: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-size: 1rem;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: 600;
             transition: all 0.3s ease;
             text-transform: uppercase;
@@ -90,98 +91,98 @@
         
         .nav-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+            box-shadow: 0 6px 15px rgba(76, 175, 80, 0.4);
         }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
+        .album-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 120px);
+            padding: 20px;
         }
         
-        .photo-counter {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 15px;
+        .album-book {
+            width: 100%;
+            max-width: 500px;
+            position: relative;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .photo-counter h3 {
-            color: #ffd93d;
-            margin-bottom: 5px;
-        }
-        
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-        
-        .photo-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             overflow: hidden;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-            animation: fadeInUp 0.6s ease-out;
         }
         
-        .photo-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 215, 0, 0.3);
+        .album-page {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
         }
         
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .album-page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(-20px); }
+        }
+        
+        .page-header {
+            padding: 20px 20px 10px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .page-number {
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd93d;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .page-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            margin-bottom: 5px;
         }
         
         .photo-container {
             position: relative;
             width: 100%;
-            height: 250px;
+            height: 350px;
             overflow: hidden;
+            margin: 20px 0;
         }
         
         .photo-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            border-radius: 10px;
+            margin: 0 20px;
+            width: calc(100% - 40px);
             cursor: pointer;
+            transition: transform 0.3s ease;
         }
         
         .photo-container img:hover {
-            transform: scale(1.05);
-        }
-        
-        .photo-number {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            color: #ffd93d;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: bold;
+            transform: scale(1.02);
         }
         
         .photo-description {
             padding: 20px;
-            min-height: 80px;
+            text-align: center;
+            min-height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -189,10 +190,94 @@
         
         .photo-description p {
             color: rgba(255, 255, 255, 0.9);
-            line-height: 1.5;
-            text-align: center;
+            line-height: 1.6;
             font-size: 0.95rem;
             margin: 0;
+        }
+        
+        .navigation-controls {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #2196F3, #64B5F6);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+        }
+        
+        .nav-btn:disabled {
+            background: rgba(255, 255, 255, 0.2);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .nav-btn .arrow {
+            font-size: 1.2rem;
+        }
+        
+        .progress-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+        
+        .progress-bar {
+            width: 120px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #66BB6A);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .page-dots {
+            display: flex;
+            gap: 4px;
+            margin: 0 10px;
+        }
+        
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active {
+            background: #ffd93d;
+            transform: scale(1.3);
         }
         
         .loading {
@@ -202,13 +287,13 @@
         }
         
         .loading-spinner {
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             border: 3px solid rgba(255, 255, 255, 0.3);
             border-top: 3px solid #4CAF50;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
+            margin: 0 auto 15px;
         }
         
         @keyframes spin {
@@ -223,164 +308,106 @@
             padding: 15px;
             border-radius: 10px;
             text-align: center;
-            margin: 20px 0;
+            margin: 20px;
         }
         
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
-        
-        .modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .modal-content {
-            max-width: 90vw;
-            max-height: 90vh;
-            position: relative;
-            animation: zoomIn 0.3s ease;
-        }
-        
-        @keyframes zoomIn {
-            from { transform: scale(0.8); }
-            to { transform: scale(1); }
-        }
-        
-        .modal img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-        
-        .modal-close {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .modal-close:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
-        }
-        
-        .modal-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .modal-nav:hover {
-            background: rgba(0, 0, 0, 0.7);
-            transform: translateY(-50%) scale(1.1);
-        }
-        
-        .modal-prev {
-            left: -70px;
-        }
-        
-        .modal-next {
-            right: -70px;
-        }
-        
-        .modal-info {
-            position: absolute;
-            bottom: -60px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            color: white;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 15px;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-        }
-        
-        /* Mobile Responsive */
+        /* Mobile optimizations */
         @media (max-width: 768px) {
-            .container {
-                padding: 20px 15px;
-            }
-            
-            .photo-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
+            .album-container {
+                padding: 10px;
+                min-height: calc(100vh - 100px);
             }
             
             .photo-container {
-                height: 200px;
+                height: 280px;
             }
             
-            .modal-nav {
-                display: none;
+            .navigation-controls {
+                padding: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
             }
             
-            .modal-content {
-                max-width: 95vw;
-                max-height: 80vh;
+            .progress-indicator {
+                order: -1;
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 10px;
             }
             
-            .modal-info {
-                position: static;
-                margin-top: 20px;
+            .progress-bar {
+                width: 200px;
+            }
+            
+            .nav-btn {
+                padding: 10px 16px;
+                font-size: 0.8rem;
+            }
+            
+            .page-dots {
+                max-width: 200px;
+                overflow-x: auto;
+                padding: 5px 0;
             }
         }
         
         @media (max-width: 480px) {
-            .photo-grid {
-                grid-template-columns: 1fr;
-            }
-            
             .header {
-                padding: 15px;
+                padding: 12px 15px;
             }
             
             .header h1 {
                 font-size: 1.5rem;
             }
             
-            .nav-button {
-                padding: 10px 20px;
-                font-size: 0.9rem;
+            .album-book {
+                max-width: 100%;
+                border-radius: 15px;
             }
+            
+            .photo-container {
+                height: 250px;
+            }
+            
+            .photo-container img {
+                margin: 0 15px;
+                width: calc(100% - 30px);
+            }
+            
+            .photo-description {
+                padding: 15px;
+                min-height: 80px;
+            }
+            
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 0.75rem;
+            }
+        }
+        
+        /* Swipe gesture support */
+        .album-book {
+            touch-action: pan-y;
+        }
+        
+        /* Page transition effects */
+        .page-transition-next {
+            animation: slideInRight 0.4s ease-out;
+        }
+        
+        .page-transition-prev {
+            animation: slideInLeft 0.4s ease-out;
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
         }
     </style>
 </head>
@@ -393,35 +420,18 @@
         <a href="rebecca-private-message-area.html" class="nav-button">← Back to Messages</a>
     </header>
     
-    <main class="container">
-        <div class="photo-counter">
-            <h3>Photo Collection</h3>
-            <p id="photoCount">Loading photos...</p>
-        </div>
-        
+    <main class="album-container">
         <div id="loadingMessage" class="loading">
             <div class="loading-spinner"></div>
-            <p>Loading your photo collection...</p>
+            <p>Loading your photo album...</p>
         </div>
         
         <div id="errorMessage" class="error-message" style="display: none;"></div>
         
-        <div id="photoGrid" class="photo-grid" style="display: none;"></div>
-    </main>
-    
-    <!-- Modal for enlarged view -->
-    <div id="photoModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">&times;</button>
-            <button class="modal-nav modal-prev" onclick="navigateModal(-1)">‹</button>
-            <button class="modal-nav modal-next" onclick="navigateModal(1)">›</button>
-            <img id="modalImage" src="" alt="Enlarged photo">
-            <div class="modal-info">
-                <p id="modalDescription"></p>
-                <small id="modalNumber"></small>
-            </div>
+        <div id="albumBook" class="album-book" style="display: none;">
+            <!-- Pages will be dynamically generated -->
         </div>
-    </div>
+    </main>
     
     <script>
         // Configuration
@@ -462,10 +472,12 @@
             30: "Thirtieth photo description - the final memory in this collection."
         };
         
-        let currentModalPhoto = 1;
-        let loadedPhotos = [];
+        let currentPage = 1;
+        let totalPages = TOTAL_PHOTOS;
+        let touchStartX = 0;
+        let touchEndX = 0;
         
-        // Initialize the page
+        // Initialize the album
         document.addEventListener('DOMContentLoaded', function() {
             createStarfield();
             loadPhotoAlbum();
@@ -473,7 +485,7 @@
         
         function createStarfield() {
             const starfield = document.getElementById('starfield');
-            for (let i = 0; i < 80; i++) {
+            for (let i = 0; i < 60; i++) {
                 const star = document.createElement('div');
                 star.className = `star ${['small', 'medium', 'large'][Math.floor(Math.random() * 3)]}`;
                 star.style.left = Math.random() * 100 + '%';
@@ -483,141 +495,207 @@
             }
         }
         
-        async function loadPhotoAlbum() {
-            const photoGrid = document.getElementById('photoGrid');
+        function loadPhotoAlbum() {
+            const albumBook = document.getElementById('albumBook');
             const loadingMessage = document.getElementById('loadingMessage');
             const errorMessage = document.getElementById('errorMessage');
-            const photoCount = document.getElementById('photoCount');
             
             try {
-                let loadedCount = 0;
-                
+                // Create all pages
                 for (let i = 1; i <= TOTAL_PHOTOS; i++) {
-                    const photoCard = createPhotoCard(i);
-                    photoGrid.appendChild(photoCard);
-                    
-                    // Add delay for staggered animation
-                    photoCard.style.animationDelay = `${i * 0.1}s`;
-                    
-                    // Try to load the image
-                    const img = photoCard.querySelector('img');
-                    
-                    img.onload = function() {
-                        loadedCount++;
-                        updatePhotoCount(loadedCount);
-                        this.style.opacity = '1';
-                    };
-                    
-                    img.onerror = function() {
-                        // If image fails to load, show placeholder
-                        this.src = 'data:image/svg+xml,' + encodeURIComponent(`
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" fill="#333">
-                                <rect width="300" height="200" fill="#1a1a2e"/>
-                                <text x="150" y="100" text-anchor="middle" fill="#666" font-family="Arial" font-size="14">
-                                    Photo ${i} not found
-                                </text>
-                            </svg>
-                        `);
-                        loadedCount++;
-                        updatePhotoCount(loadedCount);
-                    };
+                    const page = createAlbumPage(i);
+                    albumBook.appendChild(page);
                 }
                 
-                // Show the grid and hide loading message
+                // Show first page
+                showPage(1);
+                
+                // Set up touch/swipe gestures
+                setupSwipeGestures();
+                
+                // Set up keyboard navigation
+                setupKeyboardNavigation();
+                
+                // Hide loading and show album
                 setTimeout(() => {
                     loadingMessage.style.display = 'none';
-                    photoGrid.style.display = 'grid';
+                    albumBook.style.display = 'block';
                 }, 500);
-                
-                loadedPhotos = Array.from({length: TOTAL_PHOTOS}, (_, i) => i + 1);
                 
             } catch (error) {
                 console.error('Error loading photo album:', error);
                 loadingMessage.style.display = 'none';
-                errorMessage.textContent = 'Error loading photo album. Please check that images are uploaded to the correct folder.';
+                errorMessage.textContent = 'Error loading photo album. Please check that images are uploaded correctly.';
                 errorMessage.style.display = 'block';
             }
         }
         
-        function createPhotoCard(photoNumber) {
-            const card = document.createElement('div');
-            card.className = 'photo-card';
+        function createAlbumPage(pageNumber) {
+            const page = document.createElement('div');
+            page.className = 'album-page';
+            page.id = `page-${pageNumber}`;
             
-            card.innerHTML = `
-                <div class="photo-container">
-                    <div class="photo-number">#${photoNumber}</div>
-                    <img src="${PHOTO_FOLDER}pic-${photoNumber}.jpg" 
-                         alt="Photo ${photoNumber}" 
-                         onclick="openModal(${photoNumber})"
-                         style="opacity: 0; transition: opacity 0.5s ease;">
+            page.innerHTML = `
+                <div class="page-header">
+                    <div class="page-number">Photo ${pageNumber} of ${TOTAL_PHOTOS}</div>
+                    <div class="page-title">Memory #${pageNumber}</div>
                 </div>
+                
+                <div class="photo-container">
+                    <img src="${PHOTO_FOLDER}pic-${pageNumber}.jpg" 
+                         alt="Photo ${pageNumber}" 
+                         onerror="this.src='data:image/svg+xml,${encodeURIComponent(`
+                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="#1a1a2e">
+                                 <rect width="400" height="300" fill="#1a1a2e"/>
+                                 <text x="200" y="150" text-anchor="middle" fill="#666" font-family="Arial" font-size="16">
+                                     Photo ${pageNumber} not found
+                                 </text>
+                             </svg>
+                         `)}'"
+                         loading="lazy">
+                </div>
+                
                 <div class="photo-description">
-                    <p>${photoDescriptions[photoNumber] || `Photo ${photoNumber} - Add your description here.`}</p>
+                    <p>${photoDescriptions[pageNumber] || `Photo ${pageNumber} - Add your description here.`}</p>
+                </div>
+                
+                <div class="navigation-controls">
+                    <button class="nav-btn" onclick="previousPage()" ${pageNumber === 1 ? 'disabled' : ''}>
+                        <span class="arrow">‹</span> Previous
+                    </button>
+                    
+                    <div class="progress-indicator">
+                        <span>${pageNumber}/${TOTAL_PHOTOS}</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${(pageNumber / TOTAL_PHOTOS) * 100}%"></div>
+                        </div>
+                        <div class="page-dots">
+                            ${createPageDots(pageNumber)}
+                        </div>
+                    </div>
+                    
+                    <button class="nav-btn" onclick="nextPage()" ${pageNumber === TOTAL_PHOTOS ? 'disabled' : ''}>
+                        Next <span class="arrow">›</span>
+                    </button>
                 </div>
             `;
             
-            return card;
+            return page;
         }
         
-        function updatePhotoCount(loaded) {
-            const photoCount = document.getElementById('photoCount');
-            photoCount.textContent = `${loaded} of ${TOTAL_PHOTOS} photos loaded`;
-        }
-        
-        function openModal(photoNumber) {
-            const modal = document.getElementById('photoModal');
-            const modalImage = document.getElementById('modalImage');
-            const modalDescription = document.getElementById('modalDescription');
-            const modalNumber = document.getElementById('modalNumber');
+        function createPageDots(currentPageNum) {
+            let dots = '';
+            const maxDots = 15; // Show max 15 dots on mobile
+            const totalDots = Math.min(TOTAL_PHOTOS, maxDots);
             
-            currentModalPhoto = photoNumber;
-            modalImage.src = `${PHOTO_FOLDER}pic-${photoNumber}.jpg`;
-            modalDescription.textContent = photoDescriptions[photoNumber] || `Photo ${photoNumber}`;
-            modalNumber.textContent = `Photo ${photoNumber} of ${TOTAL_PHOTOS}`;
-            
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closeModal() {
-            const modal = document.getElementById('photoModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-        
-        function navigateModal(direction) {
-            let newPhoto = currentModalPhoto + direction;
-            
-            if (newPhoto < 1) newPhoto = TOTAL_PHOTOS;
-            if (newPhoto > TOTAL_PHOTOS) newPhoto = 1;
-            
-            openModal(newPhoto);
-        }
-        
-        // Keyboard navigation for modal
-        document.addEventListener('keydown', function(e) {
-            const modal = document.getElementById('photoModal');
-            if (!modal.classList.contains('active')) return;
-            
-            switch(e.key) {
-                case 'Escape':
-                    closeModal();
-                    break;
-                case 'ArrowLeft':
-                    navigateModal(-1);
-                    break;
-                case 'ArrowRight':
-                    navigateModal(1);
-                    break;
+            if (TOTAL_PHOTOS <= maxDots) {
+                // Show all dots if total photos <= maxDots
+                for (let i = 1; i <= TOTAL_PHOTOS; i++) {
+                    dots += `<div class="dot ${i === currentPageNum ? 'active' : ''}" onclick="goToPage(${i})"></div>`;
+                }
+            } else {
+                // Show subset of dots with current page in view
+                const start = Math.max(1, currentPageNum - Math.floor(maxDots/2));
+                const end = Math.min(TOTAL_PHOTOS, start + maxDots - 1);
+                
+                for (let i = start; i <= end; i++) {
+                    dots += `<div class="dot ${i === currentPageNum ? 'active' : ''}" onclick="goToPage(${i})"></div>`;
+                }
             }
-        });
+            
+            return dots;
+        }
         
-        // Close modal when clicking outside the image
-        document.getElementById('photoModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
+        function showPage(pageNumber) {
+            // Hide all pages
+            document.querySelectorAll('.album-page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show current page
+            const currentPageElement = document.getElementById(`page-${pageNumber}`);
+            if (currentPageElement) {
+                currentPageElement.classList.add('active');
+                currentPage = pageNumber;
             }
-        });
+        }
+        
+        function nextPage() {
+            if (currentPage < TOTAL_PHOTOS) {
+                const nextPageElement = document.getElementById(`page-${currentPage + 1}`);
+                if (nextPageElement) {
+                    nextPageElement.classList.add('page-transition-next');
+                    showPage(currentPage + 1);
+                }
+            }
+        }
+        
+        function previousPage() {
+            if (currentPage > 1) {
+                const prevPageElement = document.getElementById(`page-${currentPage - 1}`);
+                if (prevPageElement) {
+                    prevPageElement.classList.add('page-transition-prev');
+                    showPage(currentPage - 1);
+                }
+            }
+        }
+        
+        function goToPage(pageNumber) {
+            if (pageNumber >= 1 && pageNumber <= TOTAL_PHOTOS) {
+                showPage(pageNumber);
+            }
+        }
+        
+        function setupSwipeGestures() {
+            const albumBook = document.getElementById('albumBook');
+            
+            albumBook.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            albumBook.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipeGesture();
+            });
+        }
+        
+        function handleSwipeGesture() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Swiped left - go to next page
+                    nextPage();
+                } else {
+                    // Swiped right - go to previous page
+                    previousPage();
+                }
+            }
+        }
+        
+        function setupKeyboardNavigation() {
+            document.addEventListener('keydown', function(e) {
+                switch(e.key) {
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        previousPage();
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        nextPage();
+                        break;
+                    case 'Home':
+                        e.preventDefault();
+                        goToPage(1);
+                        break;
+                    case 'End':
+                        e.preventDefault();
+                        goToPage(TOTAL_PHOTOS);
+                        break;
+                }
+            });
+        }
     </script>
 </body>
 </html>
