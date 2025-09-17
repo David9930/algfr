@@ -202,6 +202,8 @@
             align-items: center;
             background: rgba(0, 0, 0, 0.2);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+            flex-wrap: nowrap;
+            min-height: 80px;
         }
         
         .nav-btn {
@@ -219,6 +221,9 @@
             gap: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            flex-shrink: 0;
+            min-width: 100px;
+            justify-content: center;
         }
         
         .nav-btn:hover:not(:disabled) {
@@ -324,16 +329,21 @@
             
             .navigation-controls {
                 padding: 15px;
-                flex-wrap: wrap;
-                gap: 10px;
-                justify-content: center;
+                flex-direction: column;
+                gap: 15px;
+                min-height: auto;
             }
             
             .progress-indicator {
-                order: -1;
                 width: 100%;
                 justify-content: center;
-                margin-bottom: 10px;
+            }
+            
+            .nav-buttons-container {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                gap: 15px;
             }
             
             .progress-bar {
@@ -343,6 +353,8 @@
             .nav-btn {
                 padding: 10px 16px;
                 font-size: 0.8rem;
+                flex: 1;
+                max-width: 120px;
             }
             
             .page-dots {
@@ -409,6 +421,98 @@
             from { opacity: 0; transform: translateX(-50px); }
             to { opacity: 1; transform: translateX(0); }
         }
+        
+        /* Fullscreen Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            max-width: 95vw;
+            max-height: 95vh;
+            position: relative;
+            animation: zoomIn 0.3s ease;
+        }
+        
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .modal img {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+        
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+        }
+        
+        .modal-info {
+            position: absolute;
+            bottom: -80px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-info h3 {
+            color: #ffd93d;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .modal-info p {
+            line-height: 1.5;
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
@@ -432,6 +536,19 @@
             <!-- Pages will be dynamically generated -->
         </div>
     </main>
+    
+    <!-- Fullscreen Modal -->
+    <div id="photoModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeFullscreen()">&times;</button>
+            <img id="modalImage" src="" alt="Fullscreen photo">
+            <div class="modal-info">
+                <h3 id="modalTitle">Photo Title</h3>
+                <p id="modalDescription">Photo description</p>
+                <small id="modalNumber">Photo 1 of 30</small>
+            </div>
+        </div>
+    </div>
     
     <script>
         // Configuration
@@ -544,6 +661,7 @@
                 <div class="photo-container">
                     <img src="${PHOTO_FOLDER}pic-${pageNumber}.jpg" 
                          alt="Photo ${pageNumber}" 
+                         onclick="openFullscreen(${pageNumber})"
                          onerror="this.src='data:image/svg+xml,${encodeURIComponent(`
                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="#1a1a2e">
                                  <rect width="400" height="300" fill="#1a1a2e"/>
@@ -560,9 +678,15 @@
                 </div>
                 
                 <div class="navigation-controls">
-                    <button class="nav-btn" onclick="previousPage()" ${pageNumber === 1 ? 'disabled' : ''}>
-                        <span class="arrow">‹</span> Previous
-                    </button>
+                    <div class="nav-buttons-container">
+                        <button class="nav-btn" onclick="previousPage()" ${pageNumber === 1 ? 'disabled' : ''}>
+                            <span class="arrow">‹</span> Previous
+                        </button>
+                        
+                        <button class="nav-btn" onclick="nextPage()" ${pageNumber === TOTAL_PHOTOS ? 'disabled' : ''}>
+                            Next <span class="arrow">›</span>
+                        </button>
+                    </div>
                     
                     <div class="progress-indicator">
                         <span>${pageNumber}/${TOTAL_PHOTOS}</span>
@@ -573,10 +697,6 @@
                             ${createPageDots(pageNumber)}
                         </div>
                     </div>
-                    
-                    <button class="nav-btn" onclick="nextPage()" ${pageNumber === TOTAL_PHOTOS ? 'disabled' : ''}>
-                        Next <span class="arrow">›</span>
-                    </button>
                 </div>
             `;
             
@@ -676,6 +796,19 @@
         
         function setupKeyboardNavigation() {
             document.addEventListener('keydown', function(e) {
+                const modal = document.getElementById('photoModal');
+                if (modal.classList.contains('active')) {
+                    // Modal is open - handle modal navigation
+                    switch(e.key) {
+                        case 'Escape':
+                            e.preventDefault();
+                            closeFullscreen();
+                            break;
+                    }
+                    return;
+                }
+                
+                // Normal album navigation
                 switch(e.key) {
                     case 'ArrowLeft':
                         e.preventDefault();
@@ -696,6 +829,40 @@
                 }
             });
         }
+        
+        function openFullscreen(photoNumber) {
+            const modal = document.getElementById('photoModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            const modalNumber = document.getElementById('modalNumber');
+            
+            modalImage.src = `${PHOTO_FOLDER}pic-${photoNumber}.jpg`;
+            modalTitle.textContent = `Memory #${photoNumber}`;
+            modalDescription.textContent = photoDescriptions[photoNumber] || `Photo ${photoNumber}`;
+            modalNumber.textContent = `Photo ${photoNumber} of ${TOTAL_PHOTOS}`;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeFullscreen() {
+            const modal = document.getElementById('photoModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal when clicking outside the image
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('photoModal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        closeFullscreen();
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html>
