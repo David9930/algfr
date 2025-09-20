@@ -614,7 +614,7 @@
             });
         }
         
-        // Message loading - simplified to work with your existing system
+        // Message loading - restored to work with your Google Apps Script
         async function loadMessageHistory(showLoading = false) {
             try {
                 if (showLoading) {
@@ -623,29 +623,111 @@
                     document.getElementById('noMessages').style.display = 'none';
                 }
                 
-                // Use your existing message retrieval method
-                updateConnectionStatus(true);
-                displayBasicMessages();
+                // Try to fetch messages from your Google Apps Script
+                const response = await fetch(`${APPS_SCRIPT_URL}?action=getMessages&t=${Date.now()}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    
+                    if (result.success && result.messages) {
+                        messagesData = result.messages;
+                        displayMessages();
+                        updateMessageStats();
+                        updateConnectionStatus(true);
+                        
+                        // Check for new messages
+                        if (messagesData.length > lastMessageCount && lastMessageCount > 0) {
+                            const newCount = messagesData.length - lastMessageCount;
+                            showStatus(`${newCount} new message${newCount > 1 ? 's' : ''}!`, 'info');
+                        }
+                        lastMessageCount = messagesData.length;
+                    } else {
+                        // Fallback if enhanced endpoint not available
+                        displayFallbackMessage();
+                        updateConnectionStatus(true);
+                    }
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
                 
             } catch (error) {
                 console.error('Error loading messages:', error);
-                showStatus('Could not load messages.', 'error');
+                showStatus('Could not load messages. Check connection.', 'error');
                 updateConnectionStatus(false);
+                displayFallbackMessage();
             } finally {
                 document.getElementById('loadingContainer').style.display = 'none';
             }
         }
         
-        function displayBasicMessages() {
-            // Simple display that shows your messaging system is working
+        function displayMessages() {
+            const messagesList = document.getElementById('messagesList');
+            const noMessages = document.getElementById('noMessages');
+            const container = document.getElementById('messagesContainer');
+            
+            if (messagesData.length === 0) {
+                messagesList.style.display = 'none';
+                noMessages.style.display = 'block';
+                return;
+            }
+            
+            noMessages.style.display = 'none';
+            messagesList.style.display = 'flex';
+            messagesList.innerHTML = '';
+            
+            messagesData.forEach((message, index) => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${(message.sender || '').toLowerCase()}`;
+                messageDiv.style.animationDelay = `${index * 0.1}s`;
+                
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <span class="message-author">${escapeHtml(message.sender || 'Unknown')}</span>
+                        <span class="message-time">${formatTimestamp(message.timestamp)}</span>
+                    </div>
+                    <div class="message-content">${escapeHtml(message.message || '')}</div>
+                `;
+                
+                messagesList.appendChild(messageDiv);
+            });
+            
+            // Scroll to bottom
+            setTimeout(() => {
+                container.scrollTop = container.scrollHeight;
+            }, 100);
+        }
+        
+        function displayFallbackMessage() {
             document.getElementById('messagesList').style.display = 'flex';
             document.getElementById('noMessages').style.display = 'none';
             document.getElementById('messagesList').innerHTML = `
                 <div style="text-align: center; padding: 30px; color: rgba(255,255,255,0.7);">
                     <p>📧 Messages are being saved to your Google Sheet</p>
-                    <p style="margin-top: 10px; font-size: 0.9rem;">Use the refresh button to check for new messages</p>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">Message display requires backend setup. Sending still works!</p>
                 </div>
             `;
+        }
+        
+        function formatTimestamp(timestamp) {
+            try {
+                if (!timestamp) return 'Unknown time';
+                const date = new Date(timestamp);
+                return date.toLocaleString();
+            } catch (e) {
+                return timestamp || 'Unknown time';
+            }
+        }
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
         
         function updateMessageStats() {
