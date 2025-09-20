@@ -614,7 +614,7 @@
             });
         }
         
-        // Message loading - restored to work with your Google Apps Script
+        // Message loading - copied from working Nancy-Backdoor.html
         async function loadMessageHistory(showLoading = false) {
             try {
                 if (showLoading) {
@@ -623,43 +623,41 @@
                     document.getElementById('noMessages').style.display = 'none';
                 }
                 
-                // Try to fetch messages from your Google Apps Script
-                const response = await fetch(`${APPS_SCRIPT_URL}?action=getMessages&t=${Date.now()}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
+                const response = await fetch(`${APPS_SCRIPT_URL}?action=getMessages&t=${Date.now()}`);
+                const result = await response.json();
                 
-                if (response.ok) {
-                    const result = await response.json();
+                if (result.success) {
+                    messagesData = result.messages || [];
+                    displayMessages();
+                    updateMessageStats();
+                    updateConnectionStatus(true);
                     
-                    if (result.success && result.messages) {
-                        messagesData = result.messages;
-                        displayMessages();
-                        updateMessageStats();
-                        updateConnectionStatus(true);
-                        
-                        // Check for new messages
-                        if (messagesData.length > lastMessageCount && lastMessageCount > 0) {
-                            const newCount = messagesData.length - lastMessageCount;
-                            showStatus(`${newCount} new message${newCount > 1 ? 's' : ''}!`, 'info');
-                        }
-                        lastMessageCount = messagesData.length;
-                    } else {
-                        // Fallback if enhanced endpoint not available
-                        displayFallbackMessage();
-                        updateConnectionStatus(true);
+                    // Show notification for new messages
+                    if (messagesData.length > lastMessageCount && lastMessageCount > 0) {
+                        const newCount = messagesData.length - lastMessageCount;
+                        showStatus(`${newCount} new message${newCount > 1 ? 's' : ''}!`, 'info');
+                        playNotificationSound();
                     }
+                    lastMessageCount = messagesData.length;
+                    
                 } else {
-                    throw new Error(`HTTP ${response.status}`);
+                    console.error('Failed to load messages:', result.error);
+                    showStatus('Failed to load message history: ' + (result.error || 'Unknown error'), 'error');
+                    updateConnectionStatus(false);
+                    displayFallbackMessage();
                 }
-                
             } catch (error) {
                 console.error('Error loading messages:', error);
-                showStatus('Could not load messages. Check connection.', 'error');
+                showStatus('Network error loading messages. Please check your connection.', 'error');
                 updateConnectionStatus(false);
-                displayFallbackMessage();
+                
+                // Show cached messages if available
+                if (messagesData.length > 0) {
+                    displayMessages();
+                    showStatus('Showing cached messages. Connection will retry automatically.', 'info');
+                } else {
+                    displayFallbackMessage();
+                }
             } finally {
                 document.getElementById('loadingContainer').style.display = 'none';
             }
@@ -713,21 +711,41 @@
             `;
         }
         
-        function formatTimestamp(timestamp) {
-            try {
-                if (!timestamp) return 'Unknown time';
-                const date = new Date(timestamp);
-                return date.toLocaleString();
-            } catch (e) {
-                return timestamp || 'Unknown time';
+        function updateMessageStats() {
+            const messageCount = document.getElementById('messageCount');
+            const lastUpdated = document.getElementById('lastUpdated');
+            
+            if (messagesData.length === 0) {
+                messageCount.textContent = 'No messages';
+            } else {
+                const nancyMessages = messagesData.filter(m => (m.sender || '').toLowerCase() === 'nancy').length;
+                const derekMessages = messagesData.filter(m => (m.sender || '').toLowerCase() === 'derek').length;
+                messageCount.textContent = `${messagesData.length} total (Nancy: ${nancyMessages}, Derek: ${derekMessages})`;
             }
+            
+            lastUpdated.textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
         }
         
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+        function playNotificationSound() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = 800;
+                oscillator.type = 'sine';
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.01);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.3);
+            } catch (e) {
+                // Audio not supported or blocked
+            }
         }
         
         function updateMessageStats() {
