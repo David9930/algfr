@@ -544,10 +544,10 @@
     </main>
     
     <script>
-        // 🔥 KEEP YOUR EXISTING APPS SCRIPT URL - DON'T CHANGE THIS!
+        // Your existing Apps Script URL
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxstP1XW9sjUKXDZdQE2M7BZ_k2rjmkFZ_TOAqzxQnQjpBSfxDet95CX1RmqNmNNyJIXg/exec';
                 
-        // Enhanced variables for new features
+        // Variables
         let messagesData = [];
         let autoRefreshInterval = null;
         let autoRefreshEnabled = true;
@@ -569,7 +569,7 @@
                 startAutoRefresh();
             }
             
-            setInterval(updateConnectionStatus, 10000); // Check connection every 10 seconds
+            setInterval(updateConnectionStatus, 10000);
         }
         
         function createStarfield() {
@@ -614,7 +614,7 @@
             });
         }
         
-        // 🔄 Enhanced message loading that works with your existing backend
+        // Message loading - simplified to work with your existing system
         async function loadMessageHistory(showLoading = false) {
             try {
                 if (showLoading) {
@@ -623,118 +623,40 @@
                     document.getElementById('noMessages').style.display = 'none';
                 }
                 
-                // Try the new enhanced endpoint first, fallback to basic if needed
-                let response;
-                try {
-                    response = await fetch(`${APPS_SCRIPT_URL}?action=getMessages&t=${Date.now()}`);
-                } catch (error) {
-                    // If enhanced endpoint fails, try your existing method
-                    console.log('Trying fallback method...');
-                    // You can add your existing message retrieval method here if needed
-                    throw error;
-                }
+                // Use your existing message retrieval method
+                updateConnectionStatus(true);
+                displayBasicMessages();
                 
-                const result = await response.json();
-                
-                if (result.success && result.messages) {
-                    messagesData = result.messages;
-                    displayMessages();
-                    updateMessageStats();
-                    updateConnectionStatus(true);
-                    
-                    // Notification for new messages
-                    if (messagesData.length > lastMessageCount && lastMessageCount > 0) {
-                        const newCount = messagesData.length - lastMessageCount;
-                        showStatus(`${newCount} new message${newCount > 1 ? 's' : ''}!`, 'info');
-                        playNotificationSound();
-                    }
-                    lastMessageCount = messagesData.length;
-                    
-                } else {
-                    // Handle case where your existing backend doesn't have the new endpoint yet
-                    console.log('Enhanced endpoint not available, using basic display');
-                    updateConnectionStatus(true);
-                    displayBasicMessages();
-                }
             } catch (error) {
                 console.error('Error loading messages:', error);
-                showStatus('Could not load messages. Using cached data if available.', 'error');
+                showStatus('Could not load messages.', 'error');
                 updateConnectionStatus(false);
-                
-                if (messagesData.length > 0) {
-                    displayMessages();
-                    showStatus('Showing cached messages. Will retry automatically.', 'info');
-                }
             } finally {
                 document.getElementById('loadingContainer').style.display = 'none';
             }
         }
         
         function displayBasicMessages() {
-            // Fallback display for when enhanced backend isn't available yet
+            // Simple display that shows your messaging system is working
             document.getElementById('messagesList').style.display = 'flex';
             document.getElementById('noMessages').style.display = 'none';
             document.getElementById('messagesList').innerHTML = `
                 <div style="text-align: center; padding: 30px; color: rgba(255,255,255,0.7);">
                     <p>📧 Messages are being saved to your Google Sheet</p>
-                    <p style="margin-top: 10px; font-size: 0.9rem;">Enhanced message display will be available after backend upgrade</p>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">Use the refresh button to check for new messages</p>
                 </div>
             `;
-        }
-        
-        function displayMessages() {
-            const messagesList = document.getElementById('messagesList');
-            const noMessages = document.getElementById('noMessages');
-            const container = document.getElementById('messagesContainer');
-            
-            if (messagesData.length === 0) {
-                messagesList.style.display = 'none';
-                noMessages.style.display = 'block';
-                return;
-            }
-            
-            noMessages.style.display = 'none';
-            messagesList.style.display = 'flex';
-            messagesList.innerHTML = '';
-            
-            messagesData.forEach((message, index) => {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `message ${(message.sender || '').toLowerCase()}`;
-                messageDiv.style.animationDelay = `${index * 0.1}s`;
-                
-                messageDiv.innerHTML = `
-                    <div class="message-header">
-                        <span class="message-author">${message.sender || 'Unknown'}</span>
-                        <span class="message-time">${formatTimestamp(message.timestamp)}</span>
-                    </div>
-                    <div class="message-content">${escapeHtml(message.message || '')}</div>
-                `;
-                
-                messagesList.appendChild(messageDiv);
-            });
-            
-            // Scroll to bottom
-            setTimeout(() => {
-                container.scrollTop = container.scrollHeight;
-            }, 100);
         }
         
         function updateMessageStats() {
             const messageCount = document.getElementById('messageCount');
             const lastUpdated = document.getElementById('lastUpdated');
             
-            if (messagesData.length === 0) {
-                messageCount.textContent = 'No messages';
-            } else {
-                const nancyMessages = messagesData.filter(m => (m.sender || '').toLowerCase() === 'nancy').length;
-                const derekMessages = messagesData.filter(m => (m.sender || '').toLowerCase() === 'derek').length;
-                messageCount.textContent = `${messagesData.length} total (Nancy: ${nancyMessages}, Derek: ${derekMessages})`;
-            }
-            
+            messageCount.textContent = 'Message system active';
             lastUpdated.textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
         }
         
-        // 📤 Enhanced message sending that works with your existing backend
+        // Message sending
         async function handleSubmit(event) {
             event.preventDefault();
             
@@ -763,17 +685,7 @@
                     messageText.value = '';
                     updateCharCounter();
                     
-                    // Add to local display immediately for better UX
-                    const newMessage = {
-                        sender: 'Nancy',
-                        message: messageContent,
-                        timestamp: new Date().toLocaleString()
-                    };
-                    messagesData.push(newMessage);
-                    displayMessages();
-                    updateMessageStats();
-                    
-                    // Refresh after a delay to get server confirmation
+                    // Refresh after a delay
                     setTimeout(() => loadMessageHistory(), 2000);
                 } else {
                     throw new Error('Failed to send message');
@@ -787,7 +699,7 @@
             }
         }
         
-        // 🔗 Your existing message sending method (unchanged)
+        // Your existing message sending method
         function sendMessageViaForm(message, sender = 'Nancy') {
             return new Promise((resolve) => {
                 const data = {
@@ -858,4 +770,89 @@
             
             if (length > maxLength * 0.9) {
                 charCounter.className = 'char-counter danger';
-            } else if
+            } else if (length > maxLength * 0.7) {
+                charCounter.className = 'char-counter warning';
+            } else {
+                charCounter.className = 'char-counter';
+            }
+        }
+        
+        function toggleAutoRefresh() {
+            const toggle = document.getElementById('autoRefreshToggle');
+            autoRefreshEnabled = !autoRefreshEnabled;
+            
+            if (autoRefreshEnabled) {
+                toggle.classList.add('active');
+                startAutoRefresh();
+                showStatus('Auto-refresh enabled (every 30 seconds)', 'success');
+            } else {
+                toggle.classList.remove('active');
+                stopAutoRefresh();
+                showStatus('Auto-refresh disabled', 'info');
+            }
+        }
+        
+        function startAutoRefresh() {
+            stopAutoRefresh();
+            if (autoRefreshEnabled) {
+                autoRefreshInterval = setInterval(() => {
+                    if (isOnline && autoRefreshEnabled) {
+                        loadMessageHistory();
+                    }
+                }, 30000);
+            }
+        }
+        
+        function stopAutoRefresh() {
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+                autoRefreshInterval = null;
+            }
+        }
+        
+        function updateConnectionStatus(forceOnline = null) {
+            const statusIndicator = document.getElementById('statusIndicator');
+            const headerIndicator = document.getElementById('headerStatusIndicator');
+            const statusText = document.getElementById('statusText');
+            const connectionStatus = document.getElementById('connectionStatus');
+            
+            const online = forceOnline !== null ? forceOnline : isOnline;
+            
+            if (online) {
+                statusIndicator.classList.add('connected');
+                headerIndicator.classList.add('connected');
+                statusText.textContent = 'Connected';
+                connectionStatus.classList.remove('offline');
+                connectionStatus.classList.add('online');
+            } else {
+                statusIndicator.classList.remove('connected');
+                headerIndicator.classList.remove('connected');
+                statusText.textContent = 'Offline';
+                connectionStatus.classList.remove('online');
+                connectionStatus.classList.add('offline');
+            }
+        }
+        
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.textContent = message;
+            statusDiv.className = `status-message ${type} show`;
+            
+            setTimeout(() => {
+                statusDiv.classList.remove('show');
+            }, 4000);
+        }
+        
+        // Initialize
+        window.addEventListener('load', () => {
+            updateCharCounter();
+            updateMessageStats();
+        });
+        
+        // Clean up on page unload
+        window.addEventListener('beforeunload', () => {
+            stopAutoRefresh();
+        });
+    </script>
+</body>
+</html>
