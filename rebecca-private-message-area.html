@@ -425,7 +425,50 @@
             .message-stats { flex-direction: column; gap: 8px; align-items: flex-start; }
             .connection-status { top: 10px; right: 10px; font-size: 0.7rem; padding: 6px 10px; }
         }
-    </style>
+        
+     <!-- Add this CSS to your existing <style> section -->
+    .photo-album-button {
+    background: linear-gradient(135deg, #9C27B0, #E1BEE7);
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: none;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.photo-album-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(156, 39, 176, 0.4);
+}
+
+.photo-album-button::before {
+    content: '12757982';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.15);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.photo-album-button .button-text {
+    position: relative;
+    z-index: 2;
+}
+</style>
 </head>
 <body>
     <div class="starfield" id="starfield"></div>
@@ -489,6 +532,10 @@
                         Refresh Messages
                     </button>
                 </div>
+                <div style="text-align: center;">
+                <a href="rebecca-private-message-area.html" class="photo-album-button">
+                 <span class="button-text">A Special Photo Album Just for Nancy :)</span> </a>
+             </div>
                 
                 <div class="status-message" id="statusMessage"></div>
             </form>
