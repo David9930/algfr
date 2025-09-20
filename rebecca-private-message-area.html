@@ -748,13 +748,21 @@
             }
         }
         
-        function updateMessageStats() {
-            const messageCount = document.getElementById('messageCount');
-            const lastUpdated = document.getElementById('lastUpdated');
-            
-            messageCount.textContent = 'Message system active';
-            lastUpdated.textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
-        }
+      function formatTimestamp(timestamp) {
+    try {
+        if (!timestamp) return 'Unknown time';
+        const date = new Date(timestamp);
+        return date.toLocaleString();
+    } catch (e) {
+        return timestamp || 'Unknown time';
+    }
+
+          function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
         
         // Message sending
         async function handleSubmit(event) {
