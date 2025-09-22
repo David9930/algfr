@@ -3,574 +3,1009 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Warning: Entering The Last Axiom Universe</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>A Letter Guide For Rebecca | Science Fiction Novel by Derek Devon</title>
+    <meta name="description" content="Discover 'A Letter Guide For Rebecca,' a captivating science fiction novel by Derek Devon featuring an alien encounter that will change your perspective on extraterrestrial life.">
+    <meta name="keywords" content="A Letter Guide For Rebecca, Derek Devon, science fiction novel, alien, sci-fi book, extraterrestrial">
+    <meta name="author" content="Derek Devon">
+    
+    <!-- Open Graph / Social Media Tags -->
+    <meta property="og:title" content="A Letter Guide For Rebecca | Sci-Fi Novel">
+    <meta property="og:description" content="An otherworldly adventure that will take you beyond the stars. Available in ebook and print.">
+    <meta property="og:image" content="https://yourdomain.com/images/NewWebCover.jpg">
+    <meta property="og:url" content="https://yourdomain.com">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="A Letter Guide For Rebecca | Sci-Fi Novel">
+    <meta name="twitter:description" content="An otherworldly adventure that will take you beyond the stars. Available in ebook and print.">
+    <meta name="twitter:image" content="https://yourdomain.com/images/NewWebCover.jpg">
+    
+    <!-- Canonical URL -->
+    <meta rel="canonical" href="https://yourdomain.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
+    
     <style>
+        /* CSS Variables for layout consistency */
+        :root {
+            /* LOCKED DIMENSIONS - DO NOT CHANGE */
+            --book-display-width: 500px;
+            --book-display-mobile-width: 90%;
+            --book-container-width: 600px;
+            --content-max-width: 1200px;
+            --slide-height: 750px; /* Fixed height based on your book cover image */
+            --slide-width: 100%; /* Fixed width to match original book cover */
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
-
+        
         body {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            background: linear-gradient(45deg, #0a0a0f 0%, #1a1a2e 25%, #16213e 50%, #1a1a2e 75%, #0a0a0f 100%);
+            background-color: #001530;
+            color: white;
+            background-image: url('./images/BackgroundImageSpace.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             min-height: 100vh;
-            color: #e8e8e8;
-            overflow-x: hidden;
-            position: relative;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            overflow-x: hidden;
         }
-
-        /* Quantum field background effect */
-        .quantum-field {
-            position: fixed;
-            top: 0;
-            left: 0;
+        
+        nav {
             width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 30%, rgba(255, 0, 0, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 80%, rgba(138, 43, 226, 0.1) 0%, transparent 50%);
-            animation: quantum-pulse 20s ease-in-out infinite;
-            z-index: 0;
-        }
-
-        @keyframes quantum-pulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.8; }
-        }
-
-        /* Warning klaxon effect */
-        .warning-flash {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 0, 0, 0.1);
-            opacity: 0;
-            pointer-events: none;
-            z-index: 1;
-            animation: warning-pulse 3s ease-in-out infinite;
-        }
-
-        @keyframes warning-pulse {
-            0%, 90%, 100% { opacity: 0; }
-            5%, 15% { opacity: 0.3; }
-        }
-
-        /* Main content */
-        .warning-container {
-            position: relative;
-            z-index: 10;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .warning-header {
-            background: rgba(255, 0, 0, 0.2);
-            border: 3px solid #ff0000;
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            animation: border-pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes border-pulse {
-            0%, 100% { border-color: #ff0000; }
-            50% { border-color: #ff6b6b; }
-        }
-
-        .warning-title {
-            font-size: clamp(2rem, 6vw, 4rem);
-            font-weight: bold;
-            color: #ff4757;
-            margin-bottom: 1rem;
-            text-shadow: 0 0 20px rgba(255, 71, 87, 0.8);
-            animation: title-glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes title-glow {
-            0% { text-shadow: 0 0 20px rgba(255, 71, 87, 0.8); }
-            100% { text-shadow: 0 0 40px rgba(255, 71, 87, 1), 0 0 60px rgba(255, 71, 87, 0.6); }
-        }
-
-        .warning-subtitle {
-            font-size: 1.3rem;
-            color: #ffd700;
-            font-style: italic;
-            margin-bottom: 2rem;
-            animation: subtitle-flicker 4s ease-in-out infinite;
-        }
-
-        @keyframes subtitle-flicker {
-            0%, 96%, 100% { opacity: 1; }
-            97% { opacity: 0.7; }
-            98% { opacity: 1; }
-            99% { opacity: 0.8; }
-        }
-
-        /* Warning content */
-        .warning-content {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 20px;
-            padding: 3rem;
-            margin-bottom: 2rem;
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .warning-content::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
-            animation: scanner 5s ease-in-out infinite;
-        }
-
-        @keyframes scanner {
-            0% { left: -100%; }
-            50% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .author-warning {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #e8e8e8;
-            margin-bottom: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .highlight {
-            color: #ff6b6b;
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
-        }
-
-        .emphasis {
-            color: #ffd700;
-            font-style: italic;
-        }
-
-        .cosmic-disclaimer {
-            background: rgba(138, 43, 226, 0.15);
-            border: 2px solid rgba(187, 134, 252, 0.4);
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem 0;
-            font-size: 1rem;
-            line-height: 1.6;
-            position: relative;
-        }
-
-        .cosmic-disclaimer::before {
-            content: "⚠️";
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1a1a2e;
-            padding: 0 15px;
-            font-size: 1.5rem;
-        }
-
-        /* IP tracking notice */
-        .privacy-notice {
-            background: rgba(0, 100, 200, 0.1);
-            border: 1px solid rgba(100, 181, 246, 0.3);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            font-size: 0.9rem;
-            color: #b8b8b8;
-        }
-
-        .privacy-notice h4 {
-            color: #64b5f6;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Entry buttons */
-        .entry-buttons {
+            padding: 20px 0;
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin-top: 3rem;
+        }
+        
+        .nav-links {
+            display: flex;
             flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
         }
-
-        .entry-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            padding: 1.5rem 2.5rem;
-            border: 3px solid transparent;
-            border-radius: 15px;
-            color: #e8e8e8;
+        
+        .nav-link {
+            background-color: #5b6da3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
             text-decoration: none;
-            font-size: 1.2rem;
-            font-weight: bold;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(10px);
+            transition: background-color 0.3s;
+        }
+        
+        .nav-link:hover {
+            background-color: #7683b7;
+        }
+        
+        .nav-link.active {
+            background-color: #4a5a86;
+        }
+        
+        .white-link {
+            background-color: white;
+            color: #4a5a86;
+        }
+        
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            width: 100%;
+            max-width: var(--content-max-width);
+            padding: 20px;
+        }
+        
+        /* LOCKED DIMENSIONS: Book display container */
+        .book-container {
             position: relative;
+            width: 100%;
+            max-width: var(--book-container-width);
+            margin: 0 auto;
+        }
+        
+        /* LOCKED DIMENSIONS: Book display */
+        .book-display {
+            position: relative;
+            width: 100%;
+            margin: 0 auto;
+            max-width: var(--book-display-width); /* Fixed width */
+            border-radius: 20px;
+            background-color: white;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            /* Extra style to ensure width consistency */
+            min-width: 490px; /* Minimum width to prevent collapse */
+        }
+        
+        /* LOCKED DIMENSIONS: Book cover container - THIS IS THE KEY CONTAINER */
+        .book-cover-container {
+            position: relative;
+            width: 100%;
+            height: var(--slide-height); /* FIXED HEIGHT */
+            border-radius: 10px;
             overflow: hidden;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            /* Enforce width explicitly */
+            max-width: 460px; /* Exact width to match your screenshot */
+            margin: 0 auto; /* Center in parent container */
+            /* Ensure space background shows through */
+            background-color: transparent;
+            background-image: url('./images/BackgroundImageSpace.jpg');
+            background-size: cover;
+            background-position: center;
         }
-
-        .enter-button {
-            background: linear-gradient(45deg, rgba(255, 71, 87, 0.3), rgba(255, 107, 107, 0.3));
-            border-color: #ff4757;
+        
+        /* Slideshow styles */
+        .slides {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
         }
-
-        .enter-button:hover {
-            background: linear-gradient(45deg, rgba(255, 71, 87, 0.6), rgba(255, 107, 107, 0.6));
-            border-color: #ff6b6b;
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(255, 71, 87, 0.4);
+        
+        /* Slide styles */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease-in-out, visibility 0.8s;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: transparent; /* Ensure all slides are transparent */
         }
-
-        .escape-button {
-            background: linear-gradient(45deg, rgba(100, 100, 100, 0.3), rgba(150, 150, 150, 0.3));
-            border-color: #888;
+        
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 2;
         }
-
-        .escape-button:hover {
-            background: linear-gradient(45deg, rgba(100, 100, 100, 0.6), rgba(150, 150, 150, 0.6));
-            border-color: #aaa;
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(100, 100, 100, 0.4);
+        
+        /* Image slide */
+        .image-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+            /* Ensure image maintains aspect ratio without stretching */
+            object-position: center;
+            min-width: 300px; /* Prevent collapse below minimum width */
         }
-
-        .button-icon {
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
+        
+        /* Text slide */
+        .text-slide {
+            background-color: transparent !important; /* Force transparency */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%; /* Ensure text slide takes full width */
+            min-width: 300px; /* Match minimum width of image */
+            /* Remove any box shadows or borders that might be hiding the background */
+            box-shadow: none;
+            border: none;
         }
-
-        /* Loading state */
-        .entering {
-            pointer-events: none;
-            opacity: 0.7;
+        
+        .slide-content {
+            padding: 40px;
+            text-align: center;
+            max-width: 80%;
+            /* Very light transparent background to ensure text readability */
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
         }
-
-        .entering .enter-button::after {
-            content: '';
+        
+        .slide-text {
+            color: white;
+            font-size: 1.8rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-style: italic;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add text shadow for better readability */
+        }
+        
+        /* LOCKED DIMENSIONS: Badge positioning */
+        .get-some-badge {
+            position: absolute;
+            right: 15px;
+            bottom: 15px; /* Moved further down to match screenshot */
+            width: 70px;
+            height: 70px;
+            z-index: 10;
+        }
+        
+        .availability-container {
+            width: 100%;
+            text-align: center;
+            background-color: white;
+            padding: 10px 0;
+            border-radius: 0 0 15px 15px;
+            margin-top: -5px;
+        }
+        
+        /* Spinning text animation */
+        .availability {
+            text-align: center;
+            font-size: 1.2rem;
+            opacity: 0;
+            transform-origin: center;
+            animation: spinIn 3s ease-out 1s forwards;
+            perspective: 1000px;
+        }
+        
+        .availability a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 8px;
+        }
+        
+        .pagination-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: white;
+            opacity: 0.5;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        
+        .pagination-dot.active {
+            opacity: 1;
+        }
+        
+        .pagination-dot:hover {
+            opacity: 0.8;
+        }
+        
+        /* LOCKED DIMENSIONS: Arrow positioning */
+        .nav-arrows {
             position: absolute;
             top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
-            border: 2px solid transparent;
-            border-top: 2px solid white;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            left: 0;
+            padding: 0 15px;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .arrow {
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            pointer-events: auto;
+            background-color: rgba(0, 0, 0, 0.3);
             border-radius: 50%;
-            animation: button-spin 1s linear infinite;
-            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
         }
-
-        @keyframes button-spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        
+        .arrow:hover {
+            background-color: rgba(0, 0, 0, 0.5);
         }
-
-        /* Fun facts */
-        .author-facts {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
+        
+        footer {
+            margin-top: 20px;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
         }
-
-        .fact-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-left: 4px solid #64b5f6;
-            padding: 1rem;
-            border-radius: 0 10px 10px 0;
-            font-size: 0.95rem;
-            color: #d0d0d0;
-            position: relative;
+        
+        @keyframes spinIn {
+            0% {
+                opacity: 0.3;
+                transform: rotateY(0deg);
+            }
+            20% {
+                opacity: 0.5;
+                transform: rotateY(240deg);
+            }
+            40% {
+                opacity: 0.6;
+                transform: rotateY(480deg);
+            }
+            60% {
+                opacity: 0.7;
+                transform: rotateY(720deg);
+            }
+            80% {
+                opacity: 0.8;
+                transform: rotateY(1080deg);
+            }
+            90% {
+                opacity: 0.9;
+                transform: rotateY(1800deg);
+            }
+            95% {
+                transform: rotateY(2060deg);
+            }
+            98% {
+                transform: rotateY(2150deg);
+            }
+            100% {
+                opacity: 1;
+                transform: rotateY(2160deg); /* 6 full rotations (360 × 6) */
+            }
         }
-
-        .fact-card::before {
-            content: attr(data-icon);
-            position: absolute;
-            top: -8px;
-            left: -8px;
-            background: #1a1a2e;
-            padding: 4px;
-            border-radius: 50%;
-            font-size: 1rem;
-        }
-
-        /* Responsive design */
+        
+        /* MOBILE FIXES - ENHANCED RESPONSIVENESS */
         @media (max-width: 768px) {
-            .warning-container {
-                padding: 1rem;
+            body {
+                overflow-x: hidden; /* Prevent horizontal scrolling */
+                width: 100vw; /* Full viewport width */
+                margin: 0;
+                padding: 0;
             }
             
-            .entry-buttons {
+            .nav-links {
                 flex-direction: column;
                 align-items: center;
-                gap: 1rem;
-            }
-            
-            .entry-button {
                 width: 100%;
-                max-width: 300px;
-                justify-content: center;
+                padding: 0 10px;
             }
             
-            .author-facts {
-                grid-template-columns: 1fr;
+            .nav-link {
+                width: 90%;
+                max-width: 300px;
+                text-align: center;
+                margin: 5px 0;
+            }
+            
+            .content {
+                width: 100%;
+                padding: 10px;
+                margin: 0;
+                overflow-x: hidden;
+            }
+            
+            /* CRITICAL FIX: Book display mobile adjustments */
+            .book-display {
+                max-width: calc(100vw - 20px) !important; /* Override fixed width */
+                min-width: auto !important; /* Remove the 490px minimum */
+                width: 95% !important;
+                margin: 0 auto;
+                padding: 10px;
+            }
+            
+            .book-cover-container {
+                max-width: 100% !important; /* Override 460px max-width */
+                min-width: auto !important;
+                width: 100%;
+                height: 60vh; /* More mobile-friendly height */
+                aspect-ratio: 3/4; /* Maintain book proportions */
+            }
+            
+            .slide {
+                min-width: auto !important; /* Remove minimum width constraints */
+                width: 100%;
+            }
+            
+            .image-slide img {
+                min-width: auto !important; /* Remove 300px minimum */
+                width: 100%;
+                height: 100%;
+                object-fit: contain; /* Ensure full image is visible on mobile */
+            }
+            
+            .text-slide {
+                min-width: auto !important; /* Remove 300px minimum */
+                width: 100%;
+                padding: 10px;
+            }
+            
+            .slide-content {
+                padding: 15px 10px;
+                max-width: 95%;
+                margin: 0 auto;
+            }
+            
+            .slide-text {
+                font-size: 1.2rem;
+                line-height: 1.4;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+            
+            /* Button container adjustments */
+            .button-container {
+                width: 100%;
+                padding: 0 5px;
+                gap: 15px;
+            }
+            
+            .sample-button {
+                width: 100%;
+                max-width: 250px;
+                margin: 0 auto;
+                padding: 12px 15px;
+                font-size: 0.95rem;
+                min-width: auto;
+            }
+            
+            .button-icon {
+                font-size: 1rem;
+                margin-right: 6px;
+            }
+            
+            /* Navigation arrows adjustment */
+            .nav-arrows {
+                padding: 0 5px;
+            }
+            
+            .arrow {
+                width: 30px;
+                height: 30px;
+                font-size: 1.2rem;
+            }
+            
+            /* Badge adjustment */
+            .get-some-badge {
+                width: 40px;
+                height: 40px;
+                right: 8px;
+                bottom: 8px;
+            }
+            
+            /* Pagination dots */
+            .pagination {
+                margin-top: 15px;
+                gap: 6px;
+                justify-content: center;
+                width: 100%;
+                overflow-x: auto;
+                padding: 10px 0;
+            }
+            
+            .pagination-dot {
+                flex-shrink: 0; /* Prevent dots from shrinking */
+                width: 8px;
+                height: 8px;
+            }
+            
+            /* Availability text */
+            .availability {
+                font-size: 1rem;
+                padding: 0 10px;
+            }
+            
+            /* Modal adjustments */
+            .modal-content {
+                width: 95vw;
+                max-width: 95vw;
+                margin: 10px;
+                max-height: 85vh;
+            }
+            
+            .modal-body {
+                padding: 15px;
+                max-height: calc(85vh - 100px);
+            }
+            
+            .pdf-viewer {
+                height: 55vh;
+            }
+        }
+        
+        /* Extra small phones */
+        @media (max-width: 480px) {
+            .book-display {
+                max-width: calc(100vw - 10px) !important;
+                width: 98% !important;
+                padding: 8px;
+            }
+            
+            .book-cover-container {
+                height: 50vh;
+            }
+            
+            .slide-text {
+                font-size: 1.1rem;
+                line-height: 1.3;
+            }
+            
+            .slide-content {
+                padding: 10px 8px;
+            }
+            
+            .sample-button {
+                padding: 10px 12px;
+                font-size: 0.9rem;
+                max-width: 200px;
+            }
+            
+            .arrow {
+                width: 28px;
+                height: 28px;
+                font-size: 1rem;
+            }
+            
+            .get-some-badge {
+                width: 35px;
+                height: 35px;
+                right: 5px;
+                bottom: 5px;
+            }
+        }
+        
+        /* Landscape phone orientation */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .book-cover-container {
+                height: 70vh;
+                max-height: 400px;
+            }
+            
+            .slide-content {
+                padding: 10px 8px;
+            }
+            
+            .slide-text {
+                font-size: 1rem;
+                line-height: 1.2;
+                margin-bottom: 10px;
             }
         }
 
-        /* Easter egg */
-        .konami-activated {
-            animation: reality-shift 0.5s ease-in-out;
-            filter: hue-rotate(180deg) saturate(2);
+        /* Accessibility improvements */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #000;
+            color: white;
+            padding: 8px;
+            z-index: 100;
         }
-
-        @keyframes reality-shift {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            25% { transform: scale(1.05) rotate(-1deg); }
-            75% { transform: scale(0.95) rotate(1deg); }
+        
+        .skip-link:focus {
+            top: 0;
+        }
+        
+        /* Button Styles for Sample Section */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 30px;
+            align-items: center;
+        }
+        
+        .sample-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 35px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            background: linear-gradient(45deg, #4a5a86, #5b6da3);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            min-width: 220px;
+            text-transform: uppercase;
+        }
+        
+        .sample-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(45deg, #5b6da3, #7683b7);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .sample-button:active {
+            transform: translateY(0);
+        }
+        
+        .button-icon {
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+        
+        .download-button {
+            background: linear-gradient(45deg, #2d5a27, #468d3f);
+        }
+        
+        .download-button:hover {
+            background: linear-gradient(45deg, #468d3f, #5ba054);
+        }
+        
+        .read-online-button {
+            background: linear-gradient(45deg, #3d5a8f, #5b7db5);
+        }
+        
+        .read-online-button:hover {
+            background: linear-gradient(45deg, #5b7db5, #7a98c9);
+        }
+        
+        /* Modal Styles for Reading Sample */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            background: linear-gradient(45deg, #4a5a86, #5b6da3);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            max-height: calc(90vh - 120px);
+            background-color: white;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: transform 0.2s;
+        }
+        
+        .close-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .pdf-viewer {
+            width: 100%;
+            height: 70vh;
+            border: none;
+        }
+        
+        .sample-text {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
         }
     </style>
 </head>
 <body>
-    <!-- Background effects -->
-    <div class="quantum-field"></div>
-    <div class="warning-flash"></div>
-
-    <!-- Main warning container -->
-    <div class="warning-container" id="warningContainer">
-        <!-- Warning header -->
-        <div class="warning-header">
-            <h1 class="warning-title">⚠️ REALITY DISTORTION WARNING ⚠️</h1>
-            <p class="warning-subtitle">You are about to enter a universe where the laws of physics are... negotiable</p>
-        </div>
-
-        <!-- Warning content -->
-        <div class="warning-content">
-            <div class="author-warning">
-                <p><strong class="highlight">ATTENTION:</strong> The author Derek Devon is not a normal person.</p>
+    <!-- Accessibility skip link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header>
+        <nav aria-label="Main navigation">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active" aria-current="page">Home</a>
+                <a href="Quiz.html" class="nav-link white-link">Quiz</a>
+                <a href="book-sample.html" class="nav-link white-link">Book Sample</a>
+                <a href="secret-fort.html" class="nav-link white-link">Secret Fort Access</a>
+                <a href="blog.html" class="nav-link white-link">Blog</a>
+                <a href="wheretobuy.html" class="nav-link white-link">Where to Buy</a>
+                <a href="contact.html" class="nav-link white-link">Contact</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main id="main-content">
+        <div class="content">
+            <div class="book-container">
+                <div class="book-display">
+                    <div class="book-cover-container">
+                        <!-- Slideshow container -->
+                        <div class="slides">
+                            <!-- Slide 1: Book Cover (Original image) -->
+                            <div class="slide image-slide active">
+                                <img src="./images/NewWebCover.jpg" alt="A Letter Guide For Rebecca Book Cover featuring an alien with a glowing head">
+                            </div>
+                            
+                            <!-- Slide 2: Time Travel Questions -->
+                            <div class="slide text-slide">
+                                <div class="slide-content" style="background-color: transparent;">
+                                    <p class="slide-text">What if you could transfer all of your memories and experiences into your 12 year old self....</p>
+                                                                    </div>
+                            </div>
+                            
+                            <!-- Slide 3: Update for transparency -->
+                            <div class="slide text-slide">
+                                <div class="slide-content">
+                                    <p class="slide-text">Would you try to prevent 911 ?</p>
+                                    <p class="slide-text">Save Princess Di ?</p>
+                                    <p class="slide-text">Whack a Narcissistic President ?</p>
+                                    <p class="slide-text">Or maybe bet on certain sporting events ?</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Slide 4: Rebecca Question -->
+                            <div class="slide text-slide">
+                                <div class="slide-content">
+                                    <p class="slide-text">Or would you try to win the heart of 'Your High School Dream' girl ?</p>
+                                    <img src="./images/ColourRebeccaHeadwithQuestionmark2.png" alt="High school dream girl" style="width: 150px; height: 150px; border-radius: 50%; margin-top: 20px; object-fit: cover;">
+                                </div>
+                            </div>
+                            
+                            <!-- Slide 5: Alien Friends -->
+                            <div class="slide text-slide">
+                                <div class="slide-content">
+                                    <p class="slide-text">"And what about my new friends that can make it all happen?"</p>
+                                    <img src="./images/AlienHeadshot.png" alt="Alien friend" style="width: 200px; height: 200px; margin-top: 20px; object-fit: contain;">
+                                </div>
+                            </div>
+                            
+                            <!-- Slide 6: Book Sample Options -->
+                            <div class="slide text-slide">
+                                <div class="slide-content">
+                                    <p class="slide-text">If you like what you have read so far, why not sample some of the book!</p>
+                                    <div class="button-container">
+                                        <a href="SampleChapterforwebsite.pdf" download class="sample-button download-button">
+                                            <span class="button-icon">⬇</span>
+                                            Download pdf sample
+                                        </a>
+                                        <a href="#" onclick="openSampleModal(event)" class="sample-button read-online-button">
+                                            <span class="button-icon">📖</span>
+                                            Read on this site
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Slide 7: Placeholder -->
+                            <div class="slide text-slide">
+                                <div class="slide-content">
+                                    <p class="slide-text">Or if you really want to know if you should buy this book, take the Quiz !</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Navigation arrows -->
+                        <div class="nav-arrows" aria-hidden="true">
+                            <div class="arrow prev" role="button" aria-label="Previous slide" onclick="changeSlide(-1)">&#10094;</div>
+                            <div class="arrow next" role="button" aria-label="Next slide" onclick="changeSlide(1)">&#10095;</div>
+                        </div>
+                        
+                        <!-- Award badge - position remains fixed -->
+                        <img src="./images/Star.png" alt="Get Some! Award Badge" class="get-some-badge">
+                    </div>
+                    
+                    <div class="availability-container">
+                        <div class="availability">
+                            <a href="where-to-buy.html">Available in Ebook or Print</a>
+                        </div>
+                    </div>
+                </div>
                 
-                <p>He was raised on a steady diet of <span class="emphasis">Star Trek</span> reruns, 
-                <span class="emphasis">Twilight Zone</span> marathons, and enough <span class="emphasis">Isaac Asimov</span> 
-                to convince him that robots will eventually want to discuss philosophy with us over coffee.</p>
+                <div class="pagination" aria-hidden="true">
+                    <div class="pagination-dot active" onclick="currentSlide(1)"></div>
+                    <div class="pagination-dot" onclick="currentSlide(2)"></div>
+                    <div class="pagination-dot" onclick="currentSlide(3)"></div>
+                    <div class="pagination-dot" onclick="currentSlide(4)"></div>
+                    <div class="pagination-dot" onclick="currentSlide(5)"></div>
+                    <div class="pagination-dot" onclick="currentSlide(6)"></div>
+                    <div class="pagination-dot" onclick="currentSlide(7)"></div>
+                </div>
                 
-                <p>Derek also believes that <span class="highlight">sailing around the world</span> in a 41-foot boat 
-                is a perfectly reasonable way to test whether reality behaves differently when you're completely 
-                surrounded by water. He calls this "research."</p>
-            </div>
-
-            <div class="author-facts">
-                <div class="fact-card" data-icon="🚀">
-                    <strong>Side Effects:</strong> May cause spontaneous questioning of fundamental constants
+                <!-- Hidden but SEO-friendly content -->
+                <div style="display:none">
+                    <h2>About A Letter Guide For Rebecca</h2>
+                    <p>A captivating science fiction novel that explores the encounter between humanity and an alien intelligence. When Rebecca receives a mysterious letter, she's drawn into an adventure beyond her wildest dreams.</p>
+                    <p>This thought-proving story combines elements of mystery, adventure, and philosophical questions about our place in the universe.</p>
                 </div>
-                <div class="fact-card" data-icon="🤖">
-                    <strong>Warning:</strong> Contains AI characters with better social skills than most humans
-                </div>
-                <div class="fact-card" data-icon="⚡">
-                    <strong>Caution:</strong> Physics may behave differently after reading
-                </div>
-                <div class="fact-card" data-icon="💫">
-                    <strong>Note:</strong> Author genuinely believes love might be a cosmic force
-                </div>
-            </div>
-
-            <div class="cosmic-disclaimer">
-                <p><strong>COSMIC DISCLAIMER:</strong> The following website contains 15 interconnected stories where:</p>
-                <ul style="text-align: left; margin: 1rem 0; padding-left: 2rem;">
-                    <li>Professors discover that π might not always equal 3.14159...</li>
-                    <li>Pac-Man becomes humanity's first contact with cosmic intelligence</li>
-                    <li>Golf putts refuse to follow curved spacetime</li>
-                    <li>Nuclear physicists fall in love while the universe gets a software update</li>
-                    <li>Reality itself starts taking suggestions</li>
-                </ul>
-                <p><em>Reader discretion is advised. Side effects may include: existential wonder, 
-                uncontrollable theorizing about consciousness, and the sudden urge to look up at the stars 
-                and wonder if they're looking back.</em></p>
             </div>
         </div>
-
-        <!-- Privacy notice -->
-        <div class="privacy-notice">
-            <h4>🌍 Geographic Analytics Notice</h4>
-            <p>This website collects visitor IP addresses for geographic analytics purposes only. 
-            This helps Derek understand where in the world fellow cosmic travelers are located 
-            (by region/country, not specific addresses). No personal information is stored, 
-            and the data is used solely for understanding the global reach of The Last Axiom series.</p>
-        </div>
-
-        <!-- Entry buttons -->
-        <div class="entry-buttons" id="entryButtons">
-            <a href="index.html" class="entry-button enter-button" id="enterButton" onclick="enterSite(event)">
-                <svg class="button-icon" viewBox="0 0 24 24">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
-                I Accept the Risk
-            </a>
-            <a href="https://www.google.com" class="entry-button escape-button">
-                <svg class="button-icon" viewBox="0 0 24 24">
-                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                </svg>
-                Escape to Safety
-            </a>
+    </main>
+    
+    <!-- Modal for Reading Sample -->
+    <div id="sampleModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                Book Sample - A Letter Guide For Rebecca
+                <button class="close-button" onclick="closeSampleModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Option 1: Display PDF in iframe -->
+                <iframe src="SampleChapterforwebsite.pdf" class="pdf-viewer"></iframe>
+                
+                <!-- Option 2: Display HTML text (commented out by default) -->
+                <!--
+                <div class="sample-text">
+                    <h3>Chapter 1</h3>
+                    <p>Your sample text would go here...</p>
+                </div>
+                -->
+            </div>
         </div>
     </div>
+    
+    <footer>
+        <p style="text-align: center; font-size: 0.8rem; opacity: 0.7;">
+            &copy; <script>document.write(new Date().getFullYear())</script> Derek Devon. All rights reserved.
+        </p>
+    </footer>
 
+    <!-- Structured data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Book",
+      "name": "A Letter Guide For Rebecca",
+      "author": {
+        "@type": "Person",
+        "name": "Derek Devon"
+      },
+      "url": "https://yourdomain.com",
+      "image": "https://yourdomain.com/images/NewWebCover.jpg",
+      "description": "A captivating science fiction novel that explores the encounter between humanity and an alien intelligence.",
+      "genre": "Science Fiction",
+      "offers": {
+        "@type": "Offer",
+        "availability": "https://schema.org/InStock",
+        "price": "",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
+    <!-- Slideshow JavaScript -->
     <script>
-        // Google Apps Script URL for IP tracking
-        const TRACKING_URL = 'https://script.google.com/macros/s/AKfycbx9yDuqREJtjsfzhQWBV1kjMGM4vfxRrbBVjIWPcJZZHC-SwTkgkpLXuN58GQpt9Q9b8w/exec';
+        let slideIndex = 1;
         
-        // Track visitor on page load
+        // Initialize the slideshow
         document.addEventListener('DOMContentLoaded', function() {
-            trackVisitor();
-            setupKonamiCode();
+            // Set fixed dimensions on load to ensure consistency
+            enforceConsistentSizes();
+            showSlides(slideIndex);
         });
-
-        async function trackVisitor() {
-            try {
-                // Get visitor's IP and location info
-                const ipResponse = await fetch('https://ipapi.co/json/');
-                const ipData = await ipResponse.json();
+        
+        // Next/previous controls
+        function changeSlide(n) {
+            showSlides(slideIndex += n);
+        }
+        
+        // Thumbnail image controls
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+        
+        // Function to enforce consistent sizes
+        function enforceConsistentSizes() {
+            // Get original image dimensions from the first slide
+            const firstSlide = document.querySelector('.image-slide img');
+            if (!firstSlide) return;
+            
+            // Get all slides
+            const slides = document.querySelectorAll('.slide');
+            const slideContainer = document.querySelector('.book-cover-container');
+            
+            // Set explicit width based on original image
+            if (slideContainer) {
+                const computedStyle = window.getComputedStyle(firstSlide);
+                // Use the actual width of the first image to set container width
+                slideContainer.style.width = computedStyle.width;
                 
-                const visitorData = {
-                    action: 'trackVisitor',
-                    ip: ipData.ip || 'unknown',
-                    country: ipData.country_name || 'unknown',
-                    region: ipData.region || 'unknown',
-                    city: ipData.city || 'unknown',
-                    timestamp: new Date().toLocaleString(),
-                    userAgent: navigator.userAgent,
-                    referrer: document.referrer || 'direct',
-                    page: 'splash-page'
-                };
-
-                // Send to Google Sheets
-                await fetch(TRACKING_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams({
-                        data: JSON.stringify(visitorData)
-                    })
+                // Set the same width on all slides
+                slides.forEach(slide => {
+                    slide.style.width = computedStyle.width;
                 });
-
-                console.log('Visitor tracked:', visitorData.country, visitorData.region);
-            } catch (error) {
-                console.log('Tracking failed (this is normal):', error.message);
             }
         }
-
-        async function enterSite(event) {
+        
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("slide");
+            let dots = document.getElementsByClassName("pagination-dot");
+            
+            // Handle wrap-around
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            
+            // Hide all slides
+            for (i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+            
+            // Remove active class from all dots
+            for (i = 0; i < dots.length; i++) {
+                dots[i].classList.remove("active");
+            }
+            
+            // Show the current slide and activate the corresponding dot
+            slides[slideIndex-1].classList.add("active");
+            dots[slideIndex-1].classList.add("active");
+            
+            // After showing slide, re-apply consistent sizing
+            enforceConsistentSizes();
+        }
+        
+        // Modal Functions
+        function openSampleModal(event) {
             event.preventDefault();
-            
-            const container = document.getElementById('warningContainer');
-            const buttons = document.getElementById('entryButtons');
-            
-            // Add entering state
-            container.classList.add('entering');
-            
-            // Track entry
-            try {
-                const entryData = {
-                    action: 'trackEntry',
-                    timestamp: new Date().toLocaleString(),
-                    page: 'entered-main-site'
-                };
-
-                await fetch(TRACKING_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams({
-                        data: JSON.stringify(entryData)
-                    })
-                });
-            } catch (error) {
-                // Fail silently
-            }
-
-            // Dramatic pause
+            const modal = document.getElementById('sampleModal');
+            modal.style.display = 'flex';
+            // Trigger reflow before adding active class for animation
+            modal.offsetHeight;
+            modal.classList.add('active');
+        }
+        
+        function closeSampleModal() {
+            const modal = document.getElementById('sampleModal');
+            modal.classList.remove('active');
             setTimeout(() => {
-                window.location.href = 'Main-page.html';
-            }, 2000);
+                modal.style.display = 'none';
+            }, 300);
         }
-
-        // Konami Code Easter Egg
-        function setupKonamiCode() {
-            const konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // ↑↑↓↓←→←→BA
-            let userInput = [];
-            
-            document.addEventListener('keydown', function(e) {
-                userInput.push(e.keyCode);
-                
-                if (userInput.length > konamiCode.length) {
-                    userInput.shift();
-                }
-                
-                if (JSON.stringify(userInput) === JSON.stringify(konamiCode)) {
-                    activateEasterEgg();
-                }
-            });
-        }
-
-        function activateEasterEgg() {
-            const container = document.getElementById('warningContainer');
-            container.classList.add('konami-activated');
-            
-            // Change some text
-            const title = document.querySelector('.warning-title');
-            title.innerHTML = '🌌 COSMIC CONSCIOUSNESS ACTIVATED 🌌';
-            
-            const subtitle = document.querySelector('.warning-subtitle');
-            subtitle.innerHTML = 'The universe acknowledges your dedication to the code';
-            
-            // Add special message
-            const disclaimer = document.querySelector('.cosmic-disclaimer');
-            disclaimer.innerHTML = `
-                <p><strong>🎮 ACHIEVEMENT UNLOCKED:</strong> You've discovered the Konami Code!</p>
-                <p>Derek would be proud. You clearly understand that some things in the universe 
-                follow patterns that transcend normal reality. In The Last Axiom series, 
-                characters discover that the universe itself might be running on code—and 
-                sometimes, if you know the right sequence, reality responds.</p>
-                <p><em>Welcome, fellow pattern-seeker. You're ready for what lies ahead.</em></p>
-            `;
-            
-            setTimeout(() => {
-                container.classList.remove('konami-activated');
-            }, 3000);
-        }
-
-        // Add some random "system glitches"
-        setInterval(() => {
-            if (Math.random() < 0.05) { // 5% chance every interval
-                document.body.style.filter = 'hue-rotate(10deg)';
-                setTimeout(() => {
-                    document.body.style.filter = 'none';
-                }, 200);
+        
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('sampleModal');
+            if (event.target === modal) {
+                closeSampleModal();
             }
-        }, 5000);
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeSampleModal();
+            }
+        });
     </script>
 </body>
 </html>
