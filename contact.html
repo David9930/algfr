@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - A Letter Guide For Rebecca | Derek Devon</title>
+    <meta name="description" content="Get in touch with Derek Devon, author of 'A Letter Guide For Rebecca' - questions, feedback, and inquiries welcome">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #001530;
+            color: white;
+            background-image: url('./images/BackgroundImageSpace.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            width: 100%;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .nav-link {
+            background-color: #5b6da3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-link:hover {
+            background-color: #7683b7;
+        }
+        
+        .nav-link.active {
+            background-color: #4a5a86;
+        }
+        
+        .white-link {
+            background-color: white;
+            color: #4a5a86;
+        }
+        
+        /* Main Content */
+        .main-container {
+            max-width: 1000px;
+            width: 100%;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+        }
+        
+        .hero-section {
+            text-align: center;
+            margin-bottom: 60px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: #b8c8e0;
+            margin-bottom: 30px;
+        }
+        
+        /* Contact Grid */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+        
+        /* Contact Form */
+        .contact-form-section {
+            background: linear-gradient(145deg, rgba(44, 62, 98, 0.9), rgba(75, 90, 134, 0.9));
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-form-section:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .contact-form-section:hover:before {
+            opacity: 1;
+        }
+        
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .form-description {
+            color: #b8c8e0;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-label {
+            color: #b8c8e0;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        .form-input, .form-textarea, .form-select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: #5b6da3;
+            box-shadow: 0 0 20px rgba(91, 109, 163, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: inherit;
+            line-height: 1.5;
+        }
+        
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Fix dropdown option visibility */
+        .form-select option {
+            background: #001530;
+            color: white;
+            padding: 8px;
+        }
+        
+        .form-select option:hover,
+        .form-select option:focus,
+        .form-select option:checked {
+            background: #2c3e62;
+            color: #b8c8e0;
+        }
+        
+        .char-counter {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: right;
+            margin-top: -5px;
+        }
+        
+        .char-counter.warning {
+            color: #ffb347;
+        }
+        
+        .char-counter.danger {
+            color: #ff6b6b;
+        }
+        
+        .submit-button {
+            background: linear-gradient(45deg, #4a5a86, #5b6da3);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(74, 90, 134, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 90, 134, 0.6);
+            background: linear-gradient(45deg, #5b6da3, #7683b7);
+        }
+        
+        .submit-button:disabled {
+            background: rgba(255, 255, 255, 0.3);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .submit-button.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            transform: translate(-50%, -50%);
+        }
+        
+        .submit-button.loading {
+            color: transparent;
+        }
+        
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        /* Contact Info Section */
+        .contact-info-section {
+            background: linear-gradient(145deg, rgba(255, 204, 0, 0.1), rgba(255, 215, 0, 0.05));
+            border: 2px solid rgba(255, 204, 0, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .info-title {
+            font-size: 1.8rem;
+            color: #ffcc00;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .contact-method {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .method-title {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .method-details {
+            color: #b8c8e0;
+            line-height: 1.5;
+        }
+        
+        .method-link {
+            color: #5b6da3;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .method-link:hover {
+            color: #7683b7;
+            text-decoration: underline;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            width: 100%;
+            grid-column: 1 / -1;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+        }
+        
+        .faq-title {
+            font-size: 1.8rem;
+            color: #ffcc00;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .faq-item {
+            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .faq-question {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #fff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .faq-question:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .faq-answer {
+            padding: 20px;
+            color: #b8c8e0;
+            line-height: 1.6;
+            display: none;
+        }
+        
+        .faq-answer.show {
+            display: block;
+        }
+        
+        .status-message {
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-weight: 500;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .status-message.show {
+            opacity: 1;
+        }
+        
+        .status-message.success {
+            background: rgba(46, 213, 115, 0.2);
+            color: #2ed573;
+            border: 1px solid rgba(46, 213, 115, 0.5);
+        }
+        
+        .status-message.error {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.5);
+        }
+        
+        .status-message.info {
+            background: rgba(91, 109, 163, 0.2);
+            color: #7683b7;
+            border: 1px solid rgba(91, 109, 163, 0.5);
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .contact-form-section, .contact-info-section {
+                padding: 30px 20px;
+            }
+            
+            .faq-section {
+                padding: 30px 20px;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .contact-form-section, .contact-info-section {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .contact-info-section {
+            animation-delay: 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav aria-label="Main navigation">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link white-link">Home</a>
+                <a href="Quiz.html" class="nav-link white-link">Quiz</a>
+                <a href="book-sample.html" class="nav-link white-link">Book Sample</a>
+                <a href="secret-fort.html" class="nav-link white-link">Secret Fort Access</a>
+                <a href="blog.html" class="nav-link white-link">Blog</a>
+                <a href="where-to-buy.html" class="nav-link white-link">Where to Buy</a>
+                <a href="contact.html" class="nav-link active" aria-current="page">Contact</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main class="main-container">
+        <section class="hero-section">
+            <h1 class="hero-title">Contact Derek</h1>
+            <p class="hero-subtitle">Questions, feedback, or just want to say hello? I'd love to hear from you</p>
+        </section>
+        
+        <div class="contact-grid">
+            <!-- Contact Form -->
+            <section class="contact-form-section">
+                <h2 class="form-title">Send a Message</h2>
+                <p class="form-description">
+                    Whether you have questions about the book, want to share your thoughts, or discuss potential collaborations, feel free to reach out.
+                </p>
+                
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label class="form-label" for="contactName">Your Name</label>
+                        <input type="text" id="contactName" class="form-input" placeholder="Enter your name" maxlength="50" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="contactEmail">Email Address</label>
+                        <input type="email" id="contactEmail" class="form-input" placeholder="Enter your email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="contactSubject">Subject</label>
+                        <select id="contactSubject" class="form-select" required>
+                            <option value="">Select a subject...</option>
+                            <option value="book-question">Question about the book</option>
+                            <option value="feedback">General feedback</option>
+                            <option value="media-interview">Media/Interview request</option>
+                            <option value="collaboration">Collaboration inquiry</option>
+                            <option value="technical-issue">Website technical issue</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="contactMessage">Your Message</label>
+                        <textarea id="contactMessage" class="form-textarea" placeholder="Share your thoughts, questions, or feedback..." maxlength="1500" required></textarea>
+                        <div class="char-counter" id="charCounter">0 / 1500</div>
+                    </div>
+                    
+                    <button type="submit" class="submit-button" id="submitButton">
+                        Send Message
+                    </button>
+                    
+                    <div class="status-message" id="statusMessage"></div>
+                </form>
+            </section>
+            
+            <!-- Contact Info -->
+            <section class="contact-info-section">
+                <h2 class="info-title">Get In Touch</h2>
+                
+                <div class="contact-method">
+                    <h3 class="method-title">Email</h3>
+                    <div class="method-details">
+                        For general inquiries, feedback, or questions about the book:<br>
+                        <a href="mailto:derekdevon17@gmail.com" class="method-link">derekdevon17@gmail.com</a>
+                    </div>
+                </div>
+                
+                <div class="contact-method">
+                    <h3 class="method-title">Response Time</h3>
+                    <div class="method-details">
+                        I typically respond to messages within 24-48 hours. If you don't hear back within a few days, please feel free to send a follow-up.
+                    </div>
+                </div>
+                
+                <div class="contact-method">
+                    <h3 class="method-title">Media Inquiries</h3>
+                    <div class="method-details">
+                        For interviews, podcasts, or media requests, please use the contact form and select "Media/Interview request" as your subject.
+                    </div>
+                </div>
+                
+                <div class="contact-method">
+                    <h3 class="method-title">Other Works</h3>
+                    <div class="method-details">
+                        Interested in my other projects? Check out:<br>
+                        <a href="http://www.lwtgos.com" class="method-link" target="_blank">Living With The Ghost of Sam</a><br>
+                        <a href="http://www.thelastaxiom.com" class="method-link" target="_blank">The Last Axiom</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    Is Rebecca a real person?
+                </div>
+                <div class="faq-answer">
+                    Yes, Rebecca was a real person from my high school days. However, I've taken great care to protect her privacy throughout the book and this website. The story is based on real experiences but told through the lens of fiction and personal reflection.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    Will there be a sequel or follow-up book?
+                </div>
+                <div class="faq-answer">
+                    I'm currently focused on other writing projects, including "The Last Axiom" series and "Living With The Ghost of Sam." While I don't have immediate plans for a direct sequel, I'm always open to exploring new stories that resonate with readers.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    Can I share my own "Rebecca" story with you?
+                </div>
+                <div class="faq-answer">
+                    Absolutely! I love hearing from readers who connect with the themes in the book. Many people have their own "what if" stories, and I find these deeply moving. Feel free to share through the contact form or in The Fort comments section.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    Are you available for book clubs or speaking events?
+                </div>
+                <div class="faq-answer">
+                    I'm very interested in connecting with book clubs and speaking at events! Please reach out through the contact form with details about your event, and I'll do my best to accommodate. Virtual appearances are often easier to arrange.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    How can I access The Fort section?
+                </div>
+                <div class="faq-answer">
+                    The Fort is a special section for readers who have actually read the book. You'll need Derek and Rebecca's "Special Number" from the story to gain access. If you've read the book, you'll know what this refers to!
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p style="text-align: center; font-size: 0.8rem; opacity: 0.7;">
+            &copy; <script>document.write(new Date().getFullYear())</script> Derek Devon. All rights reserved.
+        </p>
+    </footer>
+    
+    <script>
+        // Configuration - Use your existing Google Apps Script URL
+        const CONTACT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx9yDuqREJtjsfzhQWBV1kjMGM4vfxRrbBVjIWPcJZZHC-SwTkgkpLXuN58GQpt9Q9b8w/exec';
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Character counter
+            document.getElementById('contactMessage').addEventListener('input', updateCharCounter);
+            
+            // Form submission
+            document.getElementById('contactForm').addEventListener('submit', handleContactSubmit);
+            
+            // Initialize character counter
+            updateCharCounter();
+        });
+        
+        function updateCharCounter() {
+            const messageText = document.getElementById('contactMessage');
+            const charCounter = document.getElementById('charCounter');
+            const length = messageText.value.length;
+            const maxLength = 1500;
+            
+            charCounter.textContent = `${length} / ${maxLength}`;
+            
+            if (length > maxLength * 0.9) {
+                charCounter.className = 'char-counter danger';
+            } else if (length > maxLength * 0.7) {
+                charCounter.className = 'char-counter warning';
+            } else {
+                charCounter.className = 'char-counter';
+            }
+        }
+        
+        async function handleContactSubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('contactName').value.trim();
+            const email = document.getElementById('contactEmail').value.trim();
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value.trim();
+            
+            // Validation
+            if (!name || !email || !subject || !message) {
+                showStatus('Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showStatus('Please enter a valid email address', 'error');
+                return;
+            }
+            
+            setFormLoading(true);
+            
+            try {
+                const contactData = {
+                    action: 'addContact',
+                    name: name,
+                    email: email,
+                    subject: subject,
+                    message: message,
+                    timestamp: new Date().toLocaleString()
+                };
+                
+                const success = await sendContactMessage(contactData);
+                
+                if (success) {
+                    showStatus('Message sent successfully! I\'ll get back to you soon.', 'success');
+                    document.getElementById('contactForm').reset();
+                    updateCharCounter();
+                } else {
+                    throw new Error('Failed to send message');
+                }
+                
+            } catch (error) {
+                console.error('Contact submission error:', error);
+                showStatus('Error sending message. Please try again or email me directly.', 'error');
+            } finally {
+                setFormLoading(false);
+            }
+        }
+        
+        async function sendContactMessage(contactData) {
+            try {
+                const formData = new FormData();
+                formData.append('data', JSON.stringify(contactData));
+                
+                const response = await fetch(CONTACT_SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                return result.success;
+                
+            } catch (error) {
+                console.error('Error sending contact message:', error);
+                return false;
+            }
+        }
+        
+        function setFormLoading(loading) {
+            const submitButton = document.getElementById('submitButton');
+            const formInputs = document.querySelectorAll('#contactForm input, #contactForm textarea, #contactForm select');
+            
+            if (loading) {
+                submitButton.disabled = true;
+                submitButton.classList.add('loading');
+                formInputs.forEach(input => input.disabled = true);
+            } else {
+                submitButton.disabled = false;
+                submitButton.classList.remove('loading');
+                formInputs.forEach(input => input.disabled = false);
+            }
+        }
+        
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.textContent = message;
+            statusDiv.className = `status-message ${type} show`;
+            
+            setTimeout(() => {
+                statusDiv.classList.remove('show');
+            }, 5000);
+        }
+        
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const isOpen = answer.classList.contains('show');
+            
+            // Close all FAQ answers
+            document.querySelectorAll('.faq-answer').forEach(ans => {
+                ans.classList.remove('show');
+            });
+            
+            // Open this one if it wasn't already open
+            if (!isOpen) {
+                answer.classList.add('show');
+            }
+        }
+    </script>
+</body>
+</html>
