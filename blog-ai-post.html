@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Was the book written using AI? | Derek Devon Blog</title>
+    <meta name="description" content="Derek Devon discusses his experience with AI tools in writing and how they might shape the future of book creation.">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #001530;
+            color: white;
+            background-image: url('./images/BackgroundImageSpace.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            width: 100%;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .nav-link {
+            background-color: #5b6da3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-link:hover {
+            background-color: #7683b7;
+        }
+        
+        .nav-link.active {
+            background-color: #4a5a86;
+        }
+        
+        .white-link {
+            background-color: white;
+            color: #4a5a86;
+        }
+        
+        /* Main Content */
+        .main-container {
+            max-width: 800px;
+            width: 100%;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+        }
+        
+        /* Back to Blog Link */
+        .back-link {
+            align-self: flex-start;
+            margin-bottom: 30px;
+        }
+        
+        .back-link a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+        
+        .back-link a:hover {
+            color: #ffd700;
+        }
+        
+        /* Article Header */
+        .article-header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+        }
+        
+        .article-date {
+            color: #ffcc00;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .article-category {
+            display: inline-block;
+            background: rgba(255, 204, 0, 0.2);
+            color: #ffcc00;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .article-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #fff;
+            line-height: 1.3;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .article-meta {
+            color: #b8c8e0;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        
+        .reading-time {
+            color: #ffcc00;
+            font-size: 0.9rem;
+        }
+        
+        /* Article Content */
+        .article-content {
+            background: linear-gradient(145deg, rgba(44, 62, 98, 0.9), rgba(75, 90, 134, 0.9));
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .article-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #e8f0ff;
+        }
+        
+        .article-content h2 {
+            font-size: 1.5rem;
+            color: #ffcc00;
+            margin: 30px 0 20px 0;
+            border-bottom: 2px solid rgba(255, 204, 0, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .article-content h3 {
+            font-size: 1.3rem;
+            color: #ffd700;
+            margin: 25px 0 15px 0;
+        }
+        
+        .article-image {
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+            background: linear-gradient(45deg, #2d3748, #4a5568);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px auto;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: #a0aec0;
+            font-style: italic;
+        }
+        
+        .highlight-quote {
+            background: rgba(255, 204, 0, 0.1);
+            border-left: 4px solid #ffcc00;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 10px;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #ffd700;
+        }
+        
+        /* Footer Navigation */
+        .post-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+        
+        .nav-button {
+            background: linear-gradient(45deg, #4a5a86, #5b6da3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .nav-button:hover {
+            background: linear-gradient(45deg, #5b6da3, #7683b7);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 2rem;
+            }
+            
+            .article-content {
+                padding: 25px 20px;
+            }
+            
+            .article-content p {
+                font-size: 1rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .post-navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav aria-label="Main navigation">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link white-link">Home</a>
+                <a href="Quiz.html" class="nav-link white-link">Quiz</a>
+                <a href="book-sample.html" class="nav-link white-link">Book Sample</a>
+                <a href="secret-fort.html" class="nav-link white-link">Secret Fort Access</a>
+                <a href="blog.html" class="nav-link active" aria-current="page">Blog</a>
+                <a href="where-to-buy.html" class="nav-link white-link">Where to Buy</a>
+                <a href="contact.html" class="nav-link white-link">Contact</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main class="main-container">
+        <div class="back-link">
+            <a href="blog.html">← Back to Blog</a>
+        </div>
+        
+        <article class="article-header">
+            <div class="article-date">May 21, 2023</div>
+            <span class="article-category">Writing Process</span>
+            <h1 class="article-title">Was the book written using AI?</h1>
+            <div class="article-meta">
+                <span>By Derek Devon</span> | <span class="reading-time">3 min read</span>
+            </div>
+        </article>
+        
+        <section class="article-content">
+            <p>I am in fact a computer guy and have been actively reviewing, testing and generally playing with AI for over a year. As big of a fan, I am huge supporter of the whole AI movement. It's not yet at the level that I could use efficiently with my book. With the current trend with AI advancements, it won't be long (under two years) before I would be able to utilize AI for a tremendous amount of the tasks associated with writing a book. As an example, most of the locations and places I write about in the book I have personally been to and even did much of what I wrote about if you strip away the obvious made up stuff (wink, wink Rebecca).</p>
+
+            <div class="article-image">
+                <img src="./images/blog-1pic1.jpg" alt="AI and Book Writing" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;" />
+            </div>
+
+            <h2>The Research Revolution</h2>
+            
+            <p>To illustrate what I expect I can do in the not so distance future, let's look at the story in Chapter 71 - 'Task 20 and my friends return'. Task 20 was preventing the Friday February 26th, 1993 Bombing of the world trade centre. This was one of my most favorite chapters to write (well maybe after t-minus 14 days :) ). I have tried throughout the book, is stay true to the actual facts of the events, including in this example street names, highway names and numbers, as well as local identifiable landmarks and vehicle routing.</p>
+
+            <p>As a side note of interest, I actually own two 41 foot sailboats, and one is located in New Jersey not far from the home of Ramzi/Eyad, two of the bombers. This last March, I drove down to the boat and at one point suddenly realized I was on the actual turnpike as described in my book (Highway 9). Now back to the AI stuff. When I had to write this chapter I would have spent better part of a day researching the actual details and recording all the information that I wanted to include, like street names, house numbers, local hotels/motels etc. Once I had assembled all of the real facts, I would then begin the task of writing the chapter.</p>
+
+            <div class="highlight-quote">
+                "With AI in the not so distant future, I will be able to ask it to perform this task for me. Not only will I be able to ask it to perform all of the research, I will be able to ask it to edit my writing to swap out my placeholders that I would define for the AI, and replace it with the AI research."
+            </div>
+
+            <p>For a writer I can see the use of and AI, speeding up the writing process significantly. What would have taken me 10 hours to produce, I will venture a guess would now only take 1 hour.</p>
+
+            <h2>The Hidden AI Helper</h2>
+
+            <p>I think I may have inadvertently mislead you when I said above, I did not use AI. I actually did use a form of AI to help with the editing process. I would use a text-to-voice AI to read the book to me. You would be astonished how someone can read the same passage 10 times and miss and error. Using the voice edit approach, I was able to pick up a ton of mistakes when I could listen to the actual pronunciation. For any current or would be authors, make sure you try this approach.</p>
+
+            <div class="article-image">
+                <img src="./images/blog-1pic2.jpg" alt="AI Movie Technology" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;" />
+            </div>
+
+            <h2>The Future: Book to Movie Revolution</h2>
+
+            <p>At the time of launching the book, I am working with a group that wants to utilize my book as the first book, that would use their AI system, that will convert any book into an animated movie. Currently, there are numerous advancements in the area of AI generated art, AI characters, mapping audio to a AI character's mouth and I could go on an on. My personal prognostication as far as AI goes; it will be the most significant advancement since the gas powered auto.</p>
+
+            <p>What makes this technology so interesting to me, if I was ever lucky enough to get someone like Kevin Feige to make the ebook it into a movie, it would always be challenging how to handle the issue, the main characters age from 12 into their 30's. An AI system that would generate the character, would also be able to age the character exactly how they would have aged in real life. Imagine being able to watch a young Rebecca blossom into a beautiful (hot) yummy mommy.... I certainly understand why AI is a major issue in the current writers strike. I will keep you posted through the blog about the negotiations with the booktomovie.com people.</p>
+
+            <h3>A Word of Warning</h3>
+
+            <p>For those who have not yet stuck their toe in the AI pool, you better go and try it before you find yourself working for one?</p>
+
+            <div class="post-navigation">
+                <a href="blog.html" class="nav-button">← Back to All Posts</a>
+                <a href="#" class="nav-button">Next Post →</a>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p style="text-align: center; font-size: 0.8rem; opacity: 0.7;">
+            &copy; <script>document.write(new Date().getFullYear())</script> Derek Devon. All rights reserved.
+        </p>
+    </footer>
+</body>
+</html>
