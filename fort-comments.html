@@ -301,6 +301,20 @@
             background: rgba(255, 255, 255, 0.15);
         }
         
+        /* Fix dropdown option visibility */
+        .form-select option {
+            background: #2c1810;
+            color: white;
+            padding: 8px;
+        }
+        
+        .form-select option:hover,
+        .form-select option:focus,
+        .form-select option:checked {
+            background: #4a2c1f;
+            color: #ffd700;
+        }
+        
         .form-textarea {
             min-height: 120px;
             resize: vertical;
@@ -849,7 +863,7 @@
     
     <script>
         // Configuration - Update with your Google Apps Script URL for comments
-        const COMMENTS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzZ65Wke9n9vJGTVuxNNNbasny6Tub33DyJzVcZzHmN0mAwqRrKp-3ZV4kOeInV9G9b/exec';
+        const COMMENTS_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_COMMENTS_SCRIPT_URL/exec';
         
         // Global variables
         let commentsData = [];
