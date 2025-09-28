@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comments & Feedback - The Fort | A Letter Guide For Rebecca</title>
+    <meta name="description" content="Share your thoughts and feedback about 'A Letter Guide For Rebecca' with fellow readers">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #2c1810, #3d251a, #4a2c1f);
+            color: #e8e8e8;
+            background-image: url('./images/FortBackground.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-blend-mode: overlay;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        
+        /* Animated Starfield Background */
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            background: #ffd700;
+            border-radius: 50%;
+            animation: twinkle 4s infinite;
+        }
+        
+        .star.small { width: 1px; height: 1px; opacity: 0.6; }
+        .star.medium { width: 2px; height: 2px; opacity: 0.4; }
+        .star.large { width: 3px; height: 3px; opacity: 0.3; }
+        
+        .shooting-star {
+            animation: shoot 8s infinite linear;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        @keyframes shoot {
+            0% { transform: translateX(-100vw) translateY(50vh) rotate(45deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(100vw) translateY(-50vh) rotate(45deg); opacity: 0; }
+        }
+        
+        /* Connection Status */
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .connection-status.online {
+            border: 1px solid rgba(46, 213, 115, 0.5);
+            color: #2ed573;
+        }
+        
+        .connection-status.offline {
+            border: 1px solid rgba(255, 71, 87, 0.5);
+            color: #ff4757;
+        }
+        
+        .status-indicator {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ff4757;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-indicator.connected {
+            background: #2ed573;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Navigation */
+        nav {
+            width: 100%;
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .nav-link {
+            background-color: #5b6da3;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            background-color: #7683b7;
+            transform: translateY(-1px);
+        }
+        
+        .nav-link.active {
+            background-color: #4a5a86;
+        }
+        
+        .white-link {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #4a5a86;
+        }
+        
+        /* Header */
+        .header {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 2px solid rgba(139, 69, 19, 0.5);
+        }
+        
+        .header h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #fff59d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            from { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.3)); }
+            to { filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6)); }
+        }
+        
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .fort-notice {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(160, 82, 45, 0.3));
+            border: 2px solid rgba(205, 133, 63, 0.5);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .fort-notice h3 {
+            color: #deb887;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        /* Main Container */
+        .container {
+            flex: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        /* Comment Form Section */
+        .comment-form-section {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(139, 69, 19, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .comment-form-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 215, 0, 0.05), transparent);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .form-title {
+            font-size: 1.8rem;
+            color: #ffd700;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+        
+        .form-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+        
+        .comment-form {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+        }
+        
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-label {
+            color: #deb887;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        .form-input, .form-textarea, .form-select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(139, 69, 19, 0.5);
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: inherit;
+            line-height: 1.5;
+        }
+        
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .char-counter {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: right;
+            margin-top: -5px;
+        }
+        
+        .char-counter.warning {
+            color: #ffb347;
+        }
+        
+        .char-counter.danger {
+            color: #ff6b6b;
+        }
+        
+        .mood-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .mood-option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(139, 69, 19, 0.5);
+            border-radius: 25px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .mood-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .mood-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #ffd700;
+            color: #ffd700;
+        }
+        
+        .submit-button {
+            background: linear-gradient(135deg, #8b4513, #a0522d, #cd853f);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.6);
+            background: linear-gradient(135deg, #a0522d, #cd853f, #deb887);
+        }
+        
+        .submit-button:disabled {
+            background: rgba(255, 255, 255, 0.3);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .submit-button.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            transform: translate(-50%, -50%);
+        }
+        
+        .submit-button.loading {
+            color: transparent;
+        }
+        
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        /* Comments Display Section */
+        .comments-section {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(139, 69, 19, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(139, 69, 19, 0.3);
+        }
+        
+        .comments-title {
+            font-size: 1.6rem;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+        
+        .comments-stats {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .refresh-button {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .refresh-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+        }
+        
+        .comment-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(139, 69, 19, 0.5);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-button.active {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #ffd700;
+            color: #ffd700;
+        }
+        
+        .filter-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .comment {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(139, 69, 19, 0.3);
+            transition: all 0.3s ease;
+            animation: slideIn 0.5s ease-out;
+            position: relative;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .comment:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(139, 69, 19, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .comment-header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .comment-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .author-name {
+            font-weight: 600;
+            color: #deb887;
+            font-size: 1rem;
+        }
+        
+        .author-badge {
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        
+        .comment-time {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+        }
+        
+        .comment-content {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+        
+        .comment-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .comment-mood {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .comment-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(139, 69, 19, 0.3);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px;
+            text-align: center;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #ffd700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        
+        .no-comments {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+            padding: 40px;
+        }
+        
+        .status-message {
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-weight: 500;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .status-message.show {
+            opacity: 1;
+        }
+        
+        .status-message.success {
+            background: rgba(46, 213, 115, 0.2);
+            color: #2ed573;
+            border: 1px solid rgba(46, 213, 115, 0.5);
+        }
+        
+        .status-message.error {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.5);
+        }
+        
+        .status-message.info {
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .container {
+                padding: 20px 15px;
+                gap: 20px;
+            }
+            
+            .comment-form-section, .comments-section {
+                padding: 20px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .mood-selector {
+                justify-content: flex-start;
+            }
+            
+            .comments-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .comments-stats {
+                flex-direction: column;
+                gap: 8px;
+                align-items: flex-start;
+            }
+            
+            .comment {
+                padding: 15px;
+            }
+            
+            .comment-header-info {
+                flex-direction: column;
+                gap: 8px;
+                align-items: flex-start;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+            }
+        }
+        
+        /* Custom Scrollbar */
+        .comments-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .comments-list::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+        
+        .comments-list::-webkit-scrollbar-thumb {
+            background: rgba(139, 69, 19, 0.5);
+            border-radius: 4px;
+        }
+        
+        .comments-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(139, 69, 19, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="starfield" id="starfield"></div>
+    
+    <div class="connection-status" id="connectionStatus">
+        <div class="status-indicator" id="statusIndicator"></div>
+        <span id="statusText">Connecting...</span>
+    </div>
+    
+    <header>
+        <nav aria-label="Main navigation">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link white-link">Home</a>
+                <a href="Quiz.html" class="nav-link white-link">Quiz</a>
+                <a href="book-sample.html" class="nav-link white-link">Book Sample</a>
+                <a href="the-fort.html" class="nav-link white-link">The Fort</a>
+                <a href="blog.html" class="nav-link white-link">Blog</a>
+                <a href="where-to-buy.html" class="nav-link white-link">Where to Buy</a>
+                <a href="contact.html" class="nav-link white-link">Contact</a>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="header">
+        <h1>The Fort Comments</h1>
+        <p>Share your thoughts with fellow worthy readers</p>
+        
+        <div class="fort-notice">
+            <h3>🏰 Welcome to The Fort Discussion</h3>
+            <p>This space is for readers who've proven themselves worthy. Share insights, theories, and reactions to Derek's journey with Rebecca and beyond.</p>
+        </div>
+    </div>
+    
+    <main class="container">
+        <!-- Comment Form Section -->
+        <section class="comment-form-section">
+            <div class="form-header">
+                <h2 class="form-title">Share Your Thoughts</h2>
+                <p class="form-subtitle">What did you think about the book? Any theories or insights to share?</p>
+            </div>
+            
+            <form class="comment-form" id="commentForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="authorName">Display Name</label>
+                        <input type="text" id="authorName" class="form-input" placeholder="Choose a nickname..." maxlength="30" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="commentType">Comment Type</label>
+                        <select id="commentType" class="form-select" required>
+                            <option value="">Select type...</option>
+                            <option value="review">Book Review</option>
+                            <option value="theory">Theory/Analysis</option>
+                            <option value="reaction">Reaction/Emotion</option>
+                            <option value="question">Question</option>
+                            <option value="discussion">General Discussion</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="commentText">Your Comment</label>
+                    <textarea id="commentText" class="form-textarea" placeholder="Share your thoughts about the book, characters, or story... What resonated with you?" maxlength="1000" required></textarea>
+                    <div class="char-counter" id="charCounter">0 / 1000</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Your Mood About The Book</label>
+                    <div class="mood-selector">
+                        <div class="mood-option" data-mood="loved">❤️ Loved it</div>
+                        <div class="mood-option" data-mood="enjoyed">😊 Enjoyed</div>
+                        <div class="mood-option" data-mood="thoughtful">🤔 Thoughtful</div>
+                        <div class="mood-option" data-mood="emotional">😢 Emotional</div>
+                        <div class="mood-option" data-mood="confused">😕 Confused</div>
+                        <div class="mood-option" data-mood="excited">🚀 Excited</div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-button" id="submitButton">
+                    Post Comment
+                </button>
+                
+                <div class="status-message" id="statusMessage"></div>
+            </form>
+        </section>
+        
+        <!-- Comments Display Section -->
+        <section class="comments-section">
+            <div class="comments-header">
+                <h2 class="comments-title">Community Discussions</h2>
+                <div class="comments-stats">
+                    <span id="commentCount">Loading comments...</span>
+                    <button class="refresh-button" id="refreshButton" onclick="loadComments(true)">🔄 Refresh</button>
+                    <span id="lastUpdated">Last updated: --:--</span>
+                </div>
+            </div>
+            
+            <div class="comment-filters">
+                <button class="filter-button active" data-filter="all">All Comments</button>
+                <button class="filter-button" data-filter="review">Reviews</button>
+                <button class="filter-button" data-filter="theory">Theories</button>
+                <button class="filter-button" data-filter="reaction">Reactions</button>
+                <button class="filter-button" data-filter="question">Questions</button>
+                <button class="filter-button" data-filter="discussion">Discussion</button>
+            </div>
+            
+            <div class="loading-container" id="loadingContainer">
+                <div class="loading-spinner"></div>
+                <div>Loading Fort discussions...</div>
+            </div>
+            
+            <div class="comments-list" id="commentsList" style="display: none;">
+                <!-- Comments will be populated here -->
+            </div>
+            
+            <div class="no-comments" id="noComments" style="display: none;">
+                <h3>🏰 The Fort awaits your voice</h3>
+                <p>Be the first worthy reader to share your thoughts about Derek and Rebecca's story!</p>
+            </div>
+        </section>
+    </main>
+    
+    <script>
+        // Configuration - Update with your Google Apps Script URL for comments
+        const COMMENTS_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_COMMENTS_SCRIPT_URL/exec';
+        
+        // Global variables
+        let commentsData = [];
+        let filteredComments = [];
+        let currentFilter = 'all';
+        let selectedMood = '';
+        let isOnline = navigator.onLine;
+        let autoRefreshInterval = null;
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+        
+        function initializeApp() {
+            createStarfield();
+            setupEventListeners();
+            updateConnectionStatus();
+            loadComments();
+            startAutoRefresh();
+            
+            // Check connection status periodically
+            setInterval(updateConnectionStatus, 10000);
+        }
+        
+        function createStarfield() {
+            const starfield = document.getElementById('starfield');
+            const starCount = 150;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = `star ${['small', 'medium', 'large'][Math.floor(Math.random() * 3)]}`;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 4 + 's';
+                
+                // Add occasional shooting stars
+                if (Math.random() > 0.95) {
+                    star.classList.add('shooting-star');
+                    star.style.animationDelay = Math.random() * 8 + 's';
+                }
+                
+                starfield.appendChild(star);
+            }
+        }
+        
+        function setupEventListeners() {
+            // Form submission
+            document.getElementById('commentForm').addEventListener('submit', handleCommentSubmit);
+            
+            // Character counter
+            document.getElementById('commentText').addEventListener('input', updateCharCounter);
+            
+            // Mood selection
+            document.querySelectorAll('.mood-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.mood-option').forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedMood = this.dataset.mood;
+                });
+            });
+            
+            // Filter buttons
+            document.querySelectorAll('.filter-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    applyCommentFilter();
+                });
+            });
+            
+            // Connection status listeners
+            window.addEventListener('online', () => {
+                isOnline = true;
+                updateConnectionStatus();
+                showStatus('Connection restored! Refreshing comments...', 'success');
+                loadComments(true);
+            });
+            
+            window.addEventListener('offline', () => {
+                isOnline = false;
+                updateConnectionStatus();
+                showStatus('Connection lost. Comments will be queued until reconnected.', 'error');
+            });
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 'Enter' && document.activeElement === document.getElementById('commentText')) {
+                    handleCommentSubmit(e);
+                } else if (e.key === 'F5') {
+                    e.preventDefault();
+                    loadComments(true);
+                }
+            });
+        }
+        
+        async function loadComments(showLoading = false) {
+            try {
+                if (showLoading) {
+                    document.getElementById('loadingContainer').style.display = 'flex';
+                    document.getElementById('commentsList').style.display = 'none';
+                    document.getElementById('noComments').style.display = 'none';
+                }
+                
+                const response = await fetch(`${COMMENTS_SCRIPT_URL}?action=getComments&t=${Date.now()}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    commentsData = result.comments || [];
+                    applyCommentFilter();
+                    updateCommentStats();
+                    updateConnectionStatus(true);
+                    
+                    // Show notification for new comments
+                    if (commentsData.length > 0 && showLoading) {
+                        showStatus(`Loaded ${commentsData.length} comments from The Fort community!`, 'info');
+                        playNotificationSound();
+                    }
+                    
+                } else {
+                    console.error('Failed to load comments:', result.error);
+                    showStatus('Failed to load comments: ' + (result.error || 'Unknown error'), 'error');
+                    updateConnectionStatus(false);
+                    displayFallbackMessage();
+                }
+            } catch (error) {
+                console.error('Error loading comments:', error);
+                showStatus('Network error loading comments. Please check your connection.', 'error');
+                updateConnectionStatus(false);
+                
+                // Show cached comments if available
+                if (commentsData.length > 0) {
+                    applyCommentFilter();
+                    showStatus('Showing cached comments. Connection will retry automatically.', 'info');
+                } else {
+                    displayFallbackMessage();
+                }
+            } finally {
+                document.getElementById('loadingContainer').style.display = 'none';
+            }
+        }
+        
+        function applyCommentFilter() {
+            if (currentFilter === 'all') {
+                filteredComments = [...commentsData];
+            } else {
+                filteredComments = commentsData.filter(comment => 
+                    comment.type && comment.type.toLowerCase() === currentFilter
+                );
+            }
+            displayComments();
+        }
+        
+        function displayComments() {
+            const commentsList = document.getElementById('commentsList');
+            const noComments = document.getElementById('noComments');
+            
+            if (filteredComments.length === 0) {
+                commentsList.style.display = 'none';
+                noComments.style.display = 'block';
+                
+                if (currentFilter === 'all') {
+                    noComments.innerHTML = `
+                        <h3>🏰 The Fort awaits your voice</h3>
+                        <p>Be the first worthy reader to share your thoughts about Derek and Rebecca's story!</p>
+                    `;
+                } else {
+                    noComments.innerHTML = `
+                        <h3>📭 No ${currentFilter} comments yet</h3>
+                        <p>Be the first to share a ${currentFilter} about the book!</p>
+                    `;
+                }
+                return;
+            }
+            
+            noComments.style.display = 'none';
+            commentsList.style.display = 'flex';
+            commentsList.innerHTML = '';
+            
+            // Sort comments by timestamp (newest first)
+            const sortedComments = [...filteredComments].sort((a, b) => {
+                try {
+                    return new Date(b.timestamp) - new Date(a.timestamp);
+                } catch (e) {
+                    return 0;
+                }
+            });
+            
+            sortedComments.forEach((comment, index) => {
+                const commentDiv = document.createElement('div');
+                commentDiv.className = 'comment';
+                commentDiv.style.animationDelay = `${index * 0.1}s`;
+                
+                const moodEmoji = getMoodEmoji(comment.mood);
+                const typeColor = getTypeColor(comment.type);
+                
+                commentDiv.innerHTML = `
+                    <div class="comment-header-info">
+                        <div class="comment-author">
+                            <span class="author-name">${escapeHtml(comment.author || 'Anonymous')}</span>
+                            <span class="author-badge" style="background-color: ${typeColor}20; border-color: ${typeColor}; color: ${typeColor};">
+                                ${(comment.type || 'comment').toUpperCase()}
+                            </span>
+                        </div>
+                        <span class="comment-time">${formatTimestamp(comment.timestamp)}</span>
+                    </div>
+                    <div class="comment-content">${escapeHtml(comment.comment || '')}</div>
+                    <div class="comment-meta">
+                        <div class="comment-mood">
+                            <span>${moodEmoji}</span>
+                            <span>${formatMood(comment.mood)}</span>
+                        </div>
+                        <div class="comment-actions">
+                            <button class="action-btn" onclick="likeComment('${comment.id || index}')">👍 Like</button>
+                            <button class="action-btn" onclick="copyCommentLink('${comment.id || index}')">🔗 Share</button>
+                        </div>
+                    </div>
+                `;
+                
+                commentsList.appendChild(commentDiv);
+            });
+        }
+        
+        function getMoodEmoji(mood) {
+            const moodMap = {
+                'loved': '❤️',
+                'enjoyed': '😊',
+                'thoughtful': '🤔',
+                'emotional': '😢',
+                'confused': '😕',
+                'excited': '🚀'
+            };
+            return moodMap[mood] || '💭';
+        }
+        
+        function getTypeColor(type) {
+            const colorMap = {
+                'review': '#4CAF50',
+                'theory': '#9C27B0',
+                'reaction': '#FF9800',
+                'question': '#2196F3',
+                'discussion': '#607D8B'
+            };
+            return colorMap[type] || '#ffd700';
+        }
+        
+        function formatMood(mood) {
+            if (!mood) return 'Thoughtful';
+            return mood.charAt(0).toUpperCase() + mood.slice(1);
+        }
+        
+        function updateCommentStats() {
+            const commentCount = document.getElementById('commentCount');
+            const lastUpdated = document.getElementById('lastUpdated');
+            
+            if (commentsData.length === 0) {
+                commentCount.textContent = 'No comments yet';
+            } else {
+                const typeStats = {};
+                commentsData.forEach(comment => {
+                    const type = comment.type || 'general';
+                    typeStats[type] = (typeStats[type] || 0) + 1;
+                });
+                
+                commentCount.textContent = `${commentsData.length} total comments`;
+            }
+            
+            lastUpdated.textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
+        }
+        
+        async function handleCommentSubmit(event) {
+            event.preventDefault();
+            
+            const authorName = document.getElementById('authorName').value.trim();
+            const commentText = document.getElementById('commentText').value.trim();
+            const commentType = document.getElementById('commentType').value;
+            
+            // Validation
+            if (!authorName) {
+                showStatus('Please enter a display name', 'error');
+                document.getElementById('authorName').focus();
+                return;
+            }
+            
+            if (!commentText) {
+                showStatus('Please enter your comment', 'error');
+                document.getElementById('commentText').focus();
+                return;
+            }
+            
+            if (!commentType) {
+                showStatus('Please select a comment type', 'error');
+                document.getElementById('commentType').focus();
+                return;
+            }
+            
+            if (!selectedMood) {
+                showStatus('Please select your mood about the book', 'error');
+                return;
+            }
+            
+            if (!isOnline) {
+                showStatus('No internet connection. Please try again when online.', 'error');
+                return;
+            }
+            
+            setFormLoading(true);
+            
+            try {
+                const commentData = {
+                    action: 'addComment',
+                    author: authorName,
+                    comment: commentText,
+                    type: commentType,
+                    mood: selectedMood,
+                    timestamp: new Date().toLocaleString(),
+                    id: generateCommentId()
+                };
+                
+                const success = await sendComment(commentData);
+                
+                if (success) {
+                    showStatus('Comment posted successfully! Derek will be notified.', 'success');
+                    resetForm();
+                    
+                    // Add comment to local display immediately
+                    commentsData.unshift(commentData);
+                    applyCommentFilter();
+                    updateCommentStats();
+                    
+                    // Refresh after delay
+                    setTimeout(() => loadComments(), 2000);
+                    
+                } else {
+                    throw new Error('Failed to post comment');
+                }
+                
+            } catch (error) {
+                console.error('Comment submission error:', error);
+                showStatus('Error posting comment. Please try again.', 'error');
+            } finally {
+                setFormLoading(false);
+            }
+        }
+        
+        async function sendComment(commentData) {
+            try {
+                const formData = new FormData();
+                formData.append('data', JSON.stringify(commentData));
+                
+                const response = await fetch(COMMENTS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                return result.success;
+                
+            } catch (error) {
+                console.error('Error sending comment:', error);
+                return false;
+            }
+        }
+        
+        function resetForm() {
+            document.getElementById('commentForm').reset();
+            document.querySelectorAll('.mood-option').forEach(opt => opt.classList.remove('selected'));
+            selectedMood = '';
+            updateCharCounter();
+        }
+        
+        function setFormLoading(loading) {
+            const submitButton = document.getElementById('submitButton');
+            const formInputs = document.querySelectorAll('#commentForm input, #commentForm textarea, #commentForm select');
+            
+            if (loading) {
+                submitButton.disabled = true;
+                submitButton.classList.add('loading');
+                formInputs.forEach(input => input.disabled = true);
+            } else {
+                submitButton.disabled = false;
+                submitButton.classList.remove('loading');
+                formInputs.forEach(input => input.disabled = false);
+            }
+        }
+        
+        function updateCharCounter() {
+            const commentText = document.getElementById('commentText');
+            const charCounter = document.getElementById('charCounter');
+            const length = commentText.value.length;
+            const maxLength = 1000;
+            
+            charCounter.textContent = `${length} / ${maxLength}`;
+            
+            if (length > maxLength * 0.9) {
+                charCounter.className = 'char-counter danger';
+            } else if (length > maxLength * 0.7) {
+                charCounter.className = 'char-counter warning';
+            } else {
+                charCounter.className = 'char-counter';
+            }
+        }
+        
+        function startAutoRefresh() {
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+            }
+            
+            autoRefreshInterval = setInterval(() => {
+                if (isOnline) {
+                    loadComments();
+                }
+            }, 60000); // Refresh every minute
+        }
+        
+        function updateConnectionStatus(forceOnline = null) {
+            const statusIndicator = document.getElementById('statusIndicator');
+            const statusText = document.getElementById('statusText');
+            const connectionStatus = document.getElementById('connectionStatus');
+            
+            const online = forceOnline !== null ? forceOnline : isOnline;
+            
+            if (online) {
+                statusIndicator.classList.add('connected');
+                statusText.textContent = 'Connected';
+                connectionStatus.classList.remove('offline');
+                connectionStatus.classList.add('online');
+            } else {
+                statusIndicator.classList.remove('connected');
+                statusText.textContent = 'Offline';
+                connectionStatus.classList.remove('online');
+                connectionStatus.classList.add('offline');
+            }
+        }
+        
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.textContent = message;
+            statusDiv.className = `status-message ${type} show`;
+            
+            setTimeout(() => {
+                statusDiv.classList.remove('show');
+            }, 5000);
+        }
+        
+        function formatTimestamp(timestamp) {
+            try {
+                if (!timestamp) return 'Unknown time';
+                const date = new Date(timestamp);
+                return date.toLocaleString();
+            } catch (e) {
+                return timestamp || 'Unknown time';
+            }
+        }
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function generateCommentId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+        
+        function displayFallbackMessage() {
+            document.getElementById('commentsList').style.display = 'flex';
+            document.getElementById('noComments').style.display = 'none';
+            document.getElementById('commentsList').innerHTML = `
+                <div style="text-align: center; padding: 40px; color: rgba(255,255,255,0.7);">
+                    <h3>🏰 The Fort Comments System</h3>
+                    <p style="margin-top: 15px;">Comments are being saved to Google Sheets.</p>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">Posting works, display requires backend setup.</p>
+                </div>
+            `;
+        }
+        
+        function playNotificationSound() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = 800;
+                oscillator.type = 'sine';
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.01);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.3);
+            } catch (e) {
+                // Audio not supported or blocked
+            }
+        }
+        
+        // Comment interaction functions
+        function likeComment(commentId) {
+            showStatus('Like feature coming soon!', 'info');
+        }
+        
+        function copyCommentLink(commentId) {
+            const url = `${window.location.href}#comment-${commentId}`;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(() => {
+                    showStatus('Comment link copied to clipboard!', 'success');
+                });
+            } else {
+                showStatus('Link copying not supported in this browser', 'error');
+            }
+        }
+        
+        // Initialize character counter on load
+        window.addEventListener('load', updateCharCounter);
+        
+        // Clean up on page unload
+        window.addEventListener('beforeunload', () => {
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+            }
+        });
+    </script>
+</body>
+</html>
