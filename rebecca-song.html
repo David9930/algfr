@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rebecca's Song - aka Nancy's Song</title>
+    <meta name="description" content="A love song 37 years in the making">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #0a0e27, #1a1a3e, #2d1b4e);
+            color: #e8e8e8;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* Animated Music Notes Background */
+        .music-notes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .note {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.15);
+            animation: floatNote 15s infinite linear;
+        }
+        
+        @keyframes floatNote {
+            0% { 
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { 
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(255, 215, 155, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .main-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            background: linear-gradient(120deg, #ffd89b, #ff6b9d, #c471ed, #ffd89b);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientFlow 8s ease-in-out infinite;
+            margin-bottom: 15px;
+            font-weight: 400;
+            letter-spacing: 3px;
+        }
+        
+        .subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+            color: rgba(255, 255, 255, 0.8);
+            font-style: italic;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+        
+        .aka-text {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: rgba(255, 184, 184, 0.9);
+            font-weight: 300;
+        }
+        
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        /* Main Content */
+        .content-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Album & Info Section */
+        .album-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 80px;
+            align-items: center;
+        }
+        
+        .album-cover-container {
+            position: relative;
+            perspective: 1000px;
+        }
+        
+        .album-cover {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            border-radius: 20px;
+            box-shadow: 
+                0 30px 90px rgba(0, 0, 0, 0.6),
+                0 0 50px rgba(255, 107, 157, 0.3);
+            transition: transform 0.6s ease;
+            display: block;
+            animation: albumGlow 4s ease-in-out infinite;
+        }
+        
+        .album-cover:hover {
+            transform: rotateY(10deg) rotateX(5deg) scale(1.05);
+        }
+        
+        @keyframes albumGlow {
+            0%, 100% {
+                box-shadow: 
+                    0 30px 90px rgba(0, 0, 0, 0.6),
+                    0 0 50px rgba(255, 107, 157, 0.3);
+            }
+            50% {
+                box-shadow: 
+                    0 35px 100px rgba(0, 0, 0, 0.7),
+                    0 0 70px rgba(255, 107, 157, 0.5);
+            }
+        }
+        
+        .song-info {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            border-radius: 25px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+        
+        .info-title {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            color: #ffd89b;
+            margin-bottom: 25px;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+        
+        .info-text {
+            font-size: clamp(1.05rem, 2vw, 1.25rem);
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+        }
+        
+        /* Audio Player Styles */
+        .audio-player-section {
+            margin-top: 35px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 155, 0.3);
+        }
+        
+        .audio-player-title {
+            font-size: 1.2rem;
+            color: #ffd89b;
+            margin-bottom: 15px;
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        .audio-control {
+            width: 100%;
+            height: 45px;
+            margin-bottom: 10px;
+            border-radius: 25px;
+        }
+        
+        .audio-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .duration {
+            font-weight: 600;
+            color: #ffd89b;
+        }
+        
+        .streaming-links {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .streaming-title {
+            font-size: 1.1rem;
+            color: #c471ed;
+            margin-bottom: 15px;
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        .stream-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .stream-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.3), rgba(196, 113, 237, 0.3));
+            border: 2px solid rgba(255, 107, 157, 0.5);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .stream-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.5);
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.5), rgba(196, 113, 237, 0.5));
+        }
+        
+        /* Lyrics Section */
+        .lyrics-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+            border-radius: 30px;
+            padding: 60px;
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .lyrics-section::before {
+            content: '♪';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 150px;
+            color: rgba(255, 215, 155, 0.08);
+            pointer-events: none;
+        }
+        
+        .lyrics-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            text-align: center;
+            color: #ffd89b;
+            margin-bottom: 50px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            position: relative;
+        }
+        
+        .lyrics-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ffd89b, transparent);
+            margin: 20px auto 0;
+        }
+        
+        .lyrics-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .verse, .chorus {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            border-left: 4px solid rgba(255, 215, 155, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .verse:hover, .chorus:hover {
+            background: rgba(0, 0, 0, 0.3);
+            border-left-color: #ffd89b;
+            transform: translateX(5px);
+        }
+        
+        .verse-label, .chorus-label {
+            font-size: 0.9rem;
+            color: #ff6b9d;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .chorus-label {
+            color: #c471ed;
+        }
+        
+        .verse-text, .chorus-text {
+            font-size: clamp(1.05rem, 2vw, 1.2rem);
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+        }
+        
+        .chorus {
+            background: rgba(196, 113, 237, 0.15);
+            border-left-color: #c471ed;
+        }
+        
+        /* Navigation Button */
+        .nav-section {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            padding: 18px 45px;
+            background: linear-gradient(135deg, rgba(255, 215, 155, 0.3), rgba(255, 107, 157, 0.3));
+            border: 2px solid rgba(255, 215, 155, 0.5);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 30px rgba(255, 215, 155, 0.3);
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 215, 155, 0.5);
+            background: linear-gradient(135deg, rgba(255, 215, 155, 0.5), rgba(255, 107, 157, 0.5));
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .album-section {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .album-cover {
+                max-width: 400px;
+            }
+            
+            .lyrics-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .lyrics-section {
+                padding: 40px 25px;
+            }
+            
+            .song-info {
+                padding: 30px 25px;
+            }
+            
+            .stream-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .stream-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .audio-player-section {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 40px 15px 30px;
+            }
+            
+            .lyrics-section {
+                padding: 30px 20px;
+            }
+            
+            .verse, .chorus {
+                padding: 20px;
+            }
+        }
+        
+        /* Fade-in animations */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+        
+        .fade-in-delay-1 {
+            opacity: 0;
+            animation: fadeIn 1.2s ease-out 0.3s forwards;
+        }
+        
+        .fade-in-delay-2 {
+            opacity: 0;
+            animation: fadeIn 1.2s ease-out 0.6s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="music-notes" id="musicNotes"></div>
+    
+    <header class="header fade-in">
+        <h1 class="main-title">Rebecca's Song</h1>
+        <p class="subtitle">A Love Song 37 Years in the Making</p>
+        <p class="aka-text">(aka Nancy's Song)</p>
+    </header>
+    
+    <main class="content-wrapper">
+        <section class="album-section fade-in-delay-1">
+            <div class="album-cover-container">
+                <img src="./images/rebecca-song-cover.jpg" alt="Rebecca's Song Album Cover" class="album-cover">
+            </div>
+            
+            <div class="song-info">
+                <h2 class="info-title">About the Song</h2>
+                <p class="info-text">
+                    Some loves leave an imprint on your heart that time can never erase. This song is a testament to that truth—a melody born from memories of first dances, stolen kisses, and a love that has endured through decades of distance and silence.
+                </p>
+                <p class="info-text">
+                    Written and performed as a tribute to the girl who became the "It Girl"—the one against whom all others would be measured. Through simple verses and heartfelt chorus, this song captures the bittersweet beauty of a love that never faded, even when life took us in different directions.
+                </p>
+                
+                <div class="streaming-links">
+                    <h3 class="streaming-title">Listen Now</h3>
+                    <div class="stream-buttons">
+                        <a href="https://open.spotify.com/search/Rebecca's%20Song" target="_blank" class="stream-btn">
+                            <span>♪</span> Spotify
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=Rebecca%27s+Song" target="_blank" class="stream-btn">
+                            <span>▶</span> YouTube
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="lyrics-section fade-in-delay-2">
+            <h2 class="lyrics-title">Lyrics</h2>
+            
+            <div class="lyrics-container">
+                <div class="lyrics-column-1">
+                    <div class="verse">
+                        <div class="verse-label">Verse 1</div>
+                        <div class="verse-text">
+                            I remember our first dance at the Collins,<br>
+                            and our first kiss on your porch.<br>
+                            I remember your cute dimples smiled,<br>
+                            Even though it was so very long ago.
+                        </div>
+                    </div>
+                    
+                    <div class="verse">
+                        <div class="verse-label">Verse 2</div>
+                        <div class="verse-text">
+                            It still feels like it was yesterday,<br>
+                            I don't know what you did to me.<br>
+                            But girl I knew back then,<br>
+                            there'd be no one else for me.
+                        </div>
+                    </div>
+                    
+                    <div class="chorus">
+                        <div class="chorus-label">Chorus</div>
+                        <div class="chorus-text">
+                            Because you're my 'it girl',<br>
+                            There would never be another 'it girl',<br>
+                            Regardless of time or life moving on,<br>
+                            You will always be my 'it girl'
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lyrics-column-2">
+                    <div class="verse">
+                        <div class="verse-label">Verse 3</div>
+                        <div class="verse-text">
+                            I remember that rainy day you told me that it was over,<br>
+                            With tears and a broken heart, I knew it was to be.<br>
+                            We would travel different lives, but I knew there would be no one else for me.
+                        </div>
+                    </div>
+                    
+                    <div class="verse">
+                        <div class="verse-label">Verse 4</div>
+                        <div class="verse-text">
+                            As my hair has started to grey and kids have all grown up,<br>
+                            I wanted to remember that time, when life was simple and pure.<br>
+                            So I wrote my only story about that special girl, my it girl.
+                        </div>
+                    </div>
+                    
+                    <div class="chorus">
+                        <div class="chorus-label">Chorus (Reprise)</div>
+                        <div class="chorus-text">
+                            Because you're my 'it girl',<br>
+                            There would never be another 'it girl',<br>
+                            Regardless of time or life moving on,<br>
+                            You will always be my 'it girl'.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <nav class="nav-section">
+            <a href="fort.html" class="back-btn">Back to Fort Page</a>
+        </nav>
+    </main>
+    
+    <script>
+        // Create floating music notes
+        function createMusicNotes() {
+            const musicNotes = document.getElementById('musicNotes');
+            const notes = ['♪', '♫', '♬', '♩'];
+            
+            for (let i = 0; i < 25; i++) {
+                const note = document.createElement('div');
+                note.className = 'note';
+                note.innerHTML = notes[Math.floor(Math.random() * notes.length)];
+                note.style.left = Math.random() * 100 + '%';
+                note.style.animationDelay = Math.random() * 15 + 's';
+                note.style.animationDuration = (12 + Math.random() * 8) + 's';
+                note.style.fontSize = (20 + Math.random() * 15) + 'px';
+                musicNotes.appendChild(note);
+            }
+        }
+        
+        // Audio Player Enhancement
+        function setupAudioPlayer() {
+            const audio = document.querySelector('.audio-control');
+            
+            if (audio) {
+                // Add loading event listener
+                audio.addEventListener('loadedmetadata', function() {
+                    console.log('Rebecca\'s Song loaded successfully');
+                });
+                
+                // Add error handling
+                audio.addEventListener('error', function() {
+                    console.log('Audio failed to load');
+                    const audioInfo = document.querySelector('.audio-info');
+                    if (audioInfo) {
+                        audioInfo.innerHTML = '<span style="color: #ff6b6b;">Unable to load audio. Please try streaming links below.</span>';
+                    }
+                });
+                
+                // Add play event
+                audio.addEventListener('play', function() {
+                    console.log('Now playing: Rebecca\'s Song');
+                });
+                
+                // Add pause event
+                audio.addEventListener('pause', function() {
+                    console.log('Audio paused');
+                });
+                
+                // Update duration display when metadata loads
+                audio.addEventListener('loadedmetadata', function() {
+                    const duration = Math.floor(audio.duration);
+                    const minutes = Math.floor(duration / 60);
+                    const seconds = duration % 60;
+                    const durationElement = document.querySelector('.duration');
+                    if (durationElement && !isNaN(duration)) {
+                        durationElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                    }
+                });
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createMusicNotes();
+            setupAudioPlayer();
+            
+            // Add smooth fade-in
+            const sections = document.querySelectorAll('.fade-in, .fade-in-delay-1, .fade-in-delay-2');
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                setTimeout(() => {
+                    section.style.transition = 'opacity 1.2s ease-out';
+                    section.style.opacity = '1';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
