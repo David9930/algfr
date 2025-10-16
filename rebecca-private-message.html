@@ -573,11 +573,74 @@
         let musicStarted = false;
         let backgroundMusic = null;
         
+        // Google Apps Script URL for notifications
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx9yDuqREJtjsfzhQWBV1kjMGM4vfxRrbBVjIWPcJZZHC-SwTkgkpLXuN58GQpt9Q9b8w/exec';
+        
         function initializeBackgroundMusic() {
             backgroundMusic = new Audio('./audio/nancy-background-music.mp3');
             backgroundMusic.loop = true;
-            backgroundMusic.volume = 0.15; // 35% volume
+            backgroundMusic.volume = 0.35; // 35% volume
             backgroundMusic.preload = 'auto';
+        }
+        
+        function sendPageAccessNotification() {
+            // Check if we've already sent a notification for this session
+            const notificationSent = sessionStorage.getItem('nancy-page-notification-sent');
+            if (notificationSent) {
+                return; // Already sent this session
+            }
+            
+            try {
+                const notificationData = {
+                    type: 'page_access',
+                    page: 'rebecca-private-message.html',
+                    message: 'Someone accessed Nancy\'s private message page',
+                    sender: 'Page Access Monitor',
+                    timestamp: new Date().toLocaleString(),
+                    userAgent: navigator.userAgent.substring(0, 100), // Browser info (limited)
+                    referrer: document.referrer || 'Direct access'
+                };
+                
+                // Send notification using the same method as messages
+                const form = document.createElement('form');
+                form.action = APPS_SCRIPT_URL;
+                form.method = 'POST';
+                form.target = 'notificationFrame';
+                form.style.display = 'none';
+                
+                const dataField = document.createElement('input');
+                dataField.type = 'hidden';
+                dataField.name = 'data';
+                dataField.value = JSON.stringify(notificationData);
+                form.appendChild(dataField);
+                
+                // Create hidden iframe for the notification
+                let iframe = document.getElementById('notificationFrame');
+                if (!iframe) {
+                    iframe = document.createElement('iframe');
+                    iframe.id = 'notificationFrame';
+                    iframe.name = 'notificationFrame';
+                    iframe.style.display = 'none';
+                    document.body.appendChild(iframe);
+                }
+                
+                document.body.appendChild(form);
+                form.submit();
+                
+                // Clean up the form
+                setTimeout(() => {
+                    if (form.parentNode) {
+                        document.body.removeChild(form);
+                    }
+                }, 1000);
+                
+                // Mark notification as sent for this session
+                sessionStorage.setItem('nancy-page-notification-sent', 'true');
+                console.log('Page access notification sent');
+                
+            } catch (error) {
+                console.log('Failed to send page access notification:', error);
+            }
         }
         
         function startBackgroundMusic() {
@@ -654,6 +717,9 @@
             // Initialize all functionality
             initializeBackgroundMusic();
             createParticles();
+            
+            // Send page access notification
+            sendPageAccessNotification();
             
             // Start floating hearts
             setInterval(() => {
