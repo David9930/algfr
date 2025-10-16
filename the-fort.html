@@ -153,6 +153,38 @@
             color: #0000cd;
         }
         
+        .mystery-button {
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.95), rgba(255, 105, 180, 0.95));
+            color: #8b0000;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mystery-button::before {
+            content: '✨';
+            position: absolute;
+            left: 20px;
+            animation: sparkle 2s infinite;
+        }
+        
+        .mystery-button::after {
+            content: '✨';
+            position: absolute;
+            right: 20px;
+            animation: sparkle 2s infinite 1s;
+        }
+        
+        .mystery-button:hover {
+            background: linear-gradient(135deg, rgba(255, 182, 193, 1), rgba(255, 105, 180, 1));
+            color: #660000;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
         /* Footer */
         footer {
             margin-top: auto;
@@ -212,6 +244,11 @@
                 padding: 10px 25px;
                 font-size: 0.9rem;
             }
+            
+            .mystery-button::before,
+            .mystery-button::after {
+                display: none;
+            }
         }
         
         /* Animation */
@@ -265,6 +302,7 @@
                 <a href="fort-comments.html" class="fort-button">Thoughts & Comments about the book</a>
                 <a href="index.html" class="fort-button home-button">Click HERE to go to home</a>
                 <a href="rebecca-message.html" class="fort-button">A Private Message to the 'Real Rebecca'</a>
+                <a href="rebecca-song.html" class="fort-button mystery-button">A Mystery Awaits Here</a>
             </div>
         </section>
     </main>
