@@ -84,6 +84,56 @@
             50% { background-position: 100% 50%; }
         }
         
+        /* Music prompt box */
+        .music-prompt-container {
+            max-width: 1000px;
+            margin: 40px auto 20px;
+            padding: 0 20px;
+        }
+        
+        .music-prompt-box {
+            background: linear-gradient(135deg, rgba(255, 217, 155, 0.15), rgba(168, 216, 234, 0.15));
+            border: 2px solid rgba(255, 217, 155, 0.4);
+            border-radius: 15px;
+            padding: 15px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .music-prompt-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 217, 155, 0.3);
+            border-color: rgba(255, 217, 155, 0.6);
+            background: linear-gradient(135deg, rgba(255, 217, 155, 0.2), rgba(168, 216, 234, 0.2));
+        }
+        
+        .music-prompt-box p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0;
+            line-height: 1.6;
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+        
+        .music-prompt-box .music-note {
+            font-size: 1.5rem;
+            color: #ffd89b;
+            margin-top: 10px;
+            animation: musicNote 2s ease-in-out infinite;
+        }
+        
+        .music-prompt-container.hidden {
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+            transition: all 0.5s ease;
+        }
+        
         /* Letter Container */
         .content-container {
             max-width: 1000px;
@@ -455,6 +505,14 @@
         <p class="subtitle">A Message 37 Years in the Making</p>
     </header>
     
+    <!-- Music prompt box -->
+    <div class="music-prompt-container fade-in-delay" id="musicPromptContainer">
+        <div class="music-prompt-box" onclick="startMusicFromPrompt()">
+            <p>I selected a very special song for some background music while you read the letter, click here to start the music</p>
+            <div class="music-note">♪</div>
+        </div>
+    </div>
+    
     <main class="content-container">
         <div class="letter-wrapper fade-in-delay">
             <div class="letter-content">
@@ -530,9 +588,24 @@
                 showMusicIndicator();
                 console.log('Background music started for Nancy');
             }).catch(error => {
-                console.log('Music autoplay blocked or failed:', error);
-                // Music was blocked, but this is normal behavior
+                console.log('Music failed to start:', error);
             });
+        }
+        
+        function startMusicFromPrompt() {
+            // Hide the prompt box with animation
+            const promptContainer = document.getElementById('musicPromptContainer');
+            promptContainer.classList.add('hidden');
+            
+            // Start the music
+            startBackgroundMusic();
+            
+            // Remove the prompt from DOM after animation completes
+            setTimeout(() => {
+                if (promptContainer.parentNode) {
+                    promptContainer.parentNode.removeChild(promptContainer);
+                }
+            }, 500);
         }
         
         function showMusicIndicator() {
@@ -543,18 +616,6 @@
             setTimeout(() => {
                 indicator.classList.remove('show');
             }, 4000);
-        }
-        
-        function setupMusicTriggers() {
-            // Multiple trigger events for maximum compatibility
-            const triggerEvents = ['mousemove', 'click', 'keydown', 'touchstart', 'scroll'];
-            
-            triggerEvents.forEach(eventType => {
-                document.addEventListener(eventType, startBackgroundMusic, { 
-                    once: true, 
-                    passive: true 
-                });
-            });
         }
         
         function createParticles() {
@@ -592,7 +653,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize all functionality
             initializeBackgroundMusic();
-            setupMusicTriggers();
             createParticles();
             
             // Start floating hearts
