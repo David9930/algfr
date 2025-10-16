@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Famous Hermitage History | Derek Devon Blog</title>
+    <meta name="description" content="Discover the haunting legend of William Black and the rich history of The Hermitage, a location featured in Derek Devon's book.">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #001530;
+            color: white;
+            background-image: url('./images/BackgroundImageSpace.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            width: 100%;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .nav-link {
+            background-color: #5b6da3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-link:hover {
+            background-color: #7683b7;
+        }
+        
+        .nav-link.active {
+            background-color: #4a5a86;
+        }
+        
+        .white-link {
+            background-color: white;
+            color: #4a5a86;
+        }
+        
+        /* Main Content */
+        .main-container {
+            max-width: 800px;
+            width: 100%;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+        }
+        
+        /* Back to Blog Link */
+        .back-link {
+            align-self: flex-start;
+            margin-bottom: 30px;
+        }
+        
+        .back-link a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+        
+        .back-link a:hover {
+            color: #ffd700;
+        }
+        
+        /* Article Header */
+        .article-header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+        }
+        
+        .article-date {
+            color: #ffcc00;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .article-category {
+            display: inline-block;
+            background: rgba(255, 204, 0, 0.2);
+            color: #ffcc00;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .article-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #fff;
+            line-height: 1.3;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .article-meta {
+            color: #b8c8e0;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        
+        .reading-time {
+            color: #ffcc00;
+            font-size: 0.9rem;
+        }
+        
+        /* Article Content */
+        .article-content {
+            background: linear-gradient(145deg, rgba(44, 62, 98, 0.9), rgba(75, 90, 134, 0.9));
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .article-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #e8f0ff;
+        }
+        
+        .article-content h2 {
+            font-size: 1.5rem;
+            color: #ffcc00;
+            margin: 30px 0 20px 0;
+            border-bottom: 2px solid rgba(255, 204, 0, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .article-content h3 {
+            font-size: 1.3rem;
+            color: #ffd700;
+            margin: 25px 0 15px 0;
+        }
+        
+        .article-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 15px;
+            margin: 30px auto;
+            display: block;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .highlight-quote {
+            background: rgba(255, 204, 0, 0.1);
+            border-left: 4px solid #ffcc00;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 10px;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #ffd700;
+        }
+        
+        .resource-link {
+            background: rgba(91, 109, 163, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border-left: 4px solid #5b6da3;
+        }
+        
+        .resource-link h3 {
+            color: #7683b7;
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+        }
+        
+        .resource-link a {
+            color: #b8c8e0;
+            text-decoration: none;
+            word-break: break-all;
+            transition: color 0.3s ease;
+        }
+        
+        .resource-link a:hover {
+            color: #ffcc00;
+            text-decoration: underline;
+        }
+        
+        /* Footer Navigation */
+        .post-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+        
+        .nav-button {
+            background: linear-gradient(45deg, #4a5a86, #5b6da3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .nav-button:hover {
+            background: linear-gradient(45deg, #5b6da3, #7683b7);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 2rem;
+            }
+            
+            .article-content {
+                padding: 25px 20px;
+            }
+            
+            .article-content p {
+                font-size: 1rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .post-navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav aria-label="Main navigation">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link white-link">Home</a>
+                <a href="Quiz.html" class="nav-link white-link">Quiz</a>
+                <a href="book-sample.html" class="nav-link white-link">Book Sample</a>
+                <a href="secret-fort.html" class="nav-link white-link">Secret Fort Access</a>
+                <a href="blog.html" class="nav-link active" aria-current="page">Blog</a>
+                <a href="where-to-buy.html" class="nav-link white-link">Where to Buy</a>
+                <a href="contact.html" class="nav-link white-link">Contact</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main class="main-container">
+        <div class="back-link">
+            <a href="blog.html">← Back to Blog</a>
+        </div>
+        
+        <article class="article-header">
+            <div class="article-date">September 10, 2022</div>
+            <span class="article-category">Behind the Scenes</span>
+            <h1 class="article-title">The Famous Hermitage History</h1>
+            <div class="article-meta">
+                <span>By Derek Devon</span> | <span class="reading-time">1 min read</span>
+            </div>
+        </article>
+        
+        <section class="article-content">
+            <div class="highlight-quote">
+                "There is a legend that the Ives' coachman, William Black, fell in love with Angelica and they began an affair..."
+            </div>
+            
+            <p>When William Black asked Ives for permission to marry her, he was refused. The next morning, Black did not appear with the carriage and was later found hanging from the stable rafters. A suicide could not be buried in a churchyard, so he was buried at a crossroads where Sulphur Springs Road joins Lover's Lane - the road named after the tragedy.</p>
+
+            <p>On moonlit nights, some say that Black can be heard crying for his lost love and seen wandering the Hermitage grounds.</p>
+
+            <img src="./images/Hermitage circa 1890 - Imgur.jpg" alt="The Hermitage circa 1890" class="article-image" />
+
+            <h2>The Rich History</h2>
+            
+            <p>There is a rich and interesting history and most people would not know that the William Black ghost and haunting story predated the actual current Hermitage structure that remains as ruins today.</p>
+
+            <p>If you want to know a bit more about the history of the Hermitage, here are some excellent resources:</p>
+
+            <div class="resource-link">
+                <h3>Hamilton Region Conservation Authority</h3>
+                <p>Detailed history and information about The Hermitage:</p>
+                <a href="https://conservationhamilton.ca/blog/the-hermitage-history/" target="_blank">https://conservationhamilton.ca/blog/the-hermitage-history/</a>
+            </div>
+
+            <div class="resource-link">
+                <h3>Hermitage Brochure (PDF)</h3>
+                <p>An excellent booklet with comprehensive information:</p>
+                <a href="https://conservationhamilton.ca/images/PDFs/Parks/Hermitage/HermitageBrochure.pdf" target="_blank">Download the Hermitage Brochure</a>
+            </div>
+
+            <h2>My Personal Connection</h2>
+
+            <p>I worked at the Gatehouse Museum as the Curator for one summer in the mid 70's and that is why I know so much about its rich history. The Hermitage holds a special place in my heart and features prominently in "A Letter Guide For Rebecca" - not just as a setting, but as a location steeped in the kind of romantic tragedy and enduring legend that echoes through time.</p>
+
+            <p>The story of William Black and his lost love Angelica resonates with themes of forbidden love, sacrifice, and the eternal question of "what if" - themes that run throughout my novel. When you visit the Hermitage ruins today, you can still feel the weight of that history, the whispers of stories that refuse to be forgotten.</p>
+
+            <div class="post-navigation">
+                <a href="blog.html" class="nav-button">← Back to All Posts</a>
+                <a href="./blog-stories/blog-wedge-post.html" class="nav-button">Next Post →</a>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p style="text-align: center; font-size: 0.8rem; opacity: 0.7;">
+            &copy; <script>document.write(new Date().getFullYear())</script> Derek Devon. All rights reserved.
+        </p>
+    </footer>
+</body>
+</html>
