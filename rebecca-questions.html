@@ -396,54 +396,69 @@
     </main>
     
    <script>
-// Questions with encrypted answers using ROT13 + Base64
+// Questions with obfuscated answers using XOR + Hex encoding
 const questions = [
     {
         question: "What was the name of your dog I loved?",
-        answer: "WmhxcXlyZg==", // "Muddles" encrypted
+        p1: '3f10060',
+        p2: '10f0612',
         note: "(First letter is a capital, 7 characters)"
     },
     {
         question: "What was the name of the Island you and Louise rented Mopeds for the day?",
-        answer: "UGJlc2g=", // "Corfu" encrypted
+        p1: '310a1',
+        p2: '00316',
         note: "(Need a cap, 5 characters)"
     },
     {
         question: "What was the first name of our mothers?",
-        answer: "V2JuYQ==", // "Joan" encrypted  
+        p1: '380a',
+        p2: '030b',
         note: "(Need cap, 4 characters)"
     },
     {
         question: "What was the first name of \"The Boy\" who's wallet your dad found under your bedroom window....?",
-        answer: "WHJhZw==", // "Kent" encrypted
+        p1: '3900',
+        p2: '0c11',
         note: "(First letter a cap, 4 characters)"
     },
     {
         question: "When I was at University, you sent me a postcard that contained 216 X's and O's.... What was the name of the resort your family went to?",
-        answer: "RmFianpuZmY=", // "Snowmass" encrypted
+        p1: '210b0d12',
+        p2: '0e021201',
         note: "(Hint: 8 characters, First letter a cap)"
     }
 ];
+
+// Obfuscation key
+const k = 'rebecca';
 
 let currentQuestion = 0;
 let currentAttempt = 1;
 const maxAttempts = 3;
 
-// Decryption functions
-function rot13(str) {
-    return str.replace(/[a-zA-Z]/g, function(c) {
-        return String.fromCharCode((c <= 'Z' ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26);
-    });
+// Obfuscation functions - same as fort page
+function d(e) {
+    let r = '';
+    for(let i = 0; i < e.length; i += 2) {
+        r += String.fromCharCode(parseInt(e.substr(i, 2), 16));
+    }
+    return r;
 }
 
-function decrypt(encryptedText) {
-    try {
-        const base64Decoded = atob(encryptedText);
-        const rot13Decoded = rot13(base64Decoded);
-        return rot13Decoded;
-    } catch (e) {
-        return "Decryption Error";
+function x(s, k) {
+    let o = '';
+    for(let i = 0; i < s.length; i++) {
+        o += String.fromCharCode(s.charCodeAt(i) ^ k.charCodeAt(i % k.length));
     }
+    return o;
+}
+
+// Get decrypted answer for a question
+function getAnswer(questionIndex) {
+    const question = questions[questionIndex];
+    const combined = d(question.p1 + question.p2);
+    return x(combined, k);
 }
 
 // Create starfield
@@ -504,7 +519,7 @@ function updateAttemptsCounter() {
 
 function submitAnswer() {
     const userAnswer = document.getElementById('answerInput').value.trim();
-    const correctAnswer = decrypt(questions[currentQuestion].answer);
+    const correctAnswer = getAnswer(currentQuestion);
     const feedback = document.getElementById('feedback');
     
     if (userAnswer === correctAnswer) {
