@@ -60,7 +60,7 @@
             font-size: 24px;
             color: #ff6b9d;
             pointer-events: none;
-            z-index: 1;
+            z-index: 999;
             animation: floatHeart 12s linear forwards;
             text-shadow: 0 0 10px rgba(255, 107, 157, 0.5);
         }
@@ -90,7 +90,7 @@
         .heart-explosion {
             position: fixed;
             pointer-events: none;
-            z-index: 2;
+            z-index: 1000;
         }
         
         .heart-particle {
@@ -688,6 +688,7 @@
             heart.style.animationDuration = duration + 's';
             
             document.body.appendChild(heart);
+            console.log('Heart created at', startX + '%'); // Debug log
             
             // 20% chance of explosion
             const shouldExplode = Math.random() < 0.2;
