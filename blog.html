@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Childhood Wedge Bike | Derek Devon Blog</title>
-    <meta name="description" content="A nostalgic look back at Derek Devon's beloved childhood Wedge bike, complete with hockey card modifications and Bobby Orr rookie card memories.">
+    <title>Blog - A Letter Guide For Rebecca | Derek Devon</title>
+    <meta name="description" content="Follow Derek Devon's writing journey, book updates, and thoughts about 'A Letter Guide For Rebecca'">
     
     <style>
         * {
@@ -70,7 +70,7 @@
         
         /* Main Content */
         .main-container {
-            max-width: 800px;
+            max-width: 1000px;
             width: 100%;
             padding: 40px 20px;
             display: flex;
@@ -79,39 +79,106 @@
             flex-grow: 1;
         }
         
-        /* Back to Blog Link */
-        .back-link {
-            align-self: flex-start;
-            margin-bottom: 30px;
-        }
-        
-        .back-link a {
-            color: #ffcc00;
-            text-decoration: none;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s ease;
-        }
-        
-        .back-link a:hover {
-            color: #ffd700;
-        }
-        
-        /* Article Header */
-        .article-header {
+        .hero-section {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
             background: rgba(0, 0, 0, 0.6);
             padding: 40px;
             border-radius: 20px;
             backdrop-filter: blur(10px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: #b8c8e0;
+            margin-bottom: 30px;
+        }
+        
+        /* Blog Categories */
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .category-button {
+            background: linear-gradient(45deg, #4a5a86, #5b6da3);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .category-button:hover {
+            background: linear-gradient(45deg, #5b6da3, #7683b7);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .category-button.active {
+            background: linear-gradient(45deg, #ffcc00, #ffd700);
+            color: #001530;
+            border-color: #ffd700;
+        }
+        
+        /* Blog Posts */
+        .blog-posts {
+            display: grid;
+            gap: 40px;
             width: 100%;
         }
         
-        .article-date {
+        .blog-post {
+            background: linear-gradient(145deg, rgba(44, 62, 98, 0.9), rgba(75, 90, 134, 0.9));
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .blog-post:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .blog-post:hover:before {
+            opacity: 1;
+        }
+        
+        .blog-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .post-header {
+            margin-bottom: 20px;
+        }
+        
+        .post-date {
             color: #ffcc00;
             font-size: 0.9rem;
             font-weight: 600;
@@ -120,7 +187,7 @@
             letter-spacing: 1px;
         }
         
-        .article-category {
+        .post-category {
             display: inline-block;
             background: rgba(255, 204, 0, 0.2);
             color: #ffcc00;
@@ -128,122 +195,112 @@
             border-radius: 15px;
             font-size: 0.8rem;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
-        .article-title {
-            font-size: 2.5rem;
+        .post-title {
+            font-size: 1.8rem;
             font-weight: bold;
             margin-bottom: 15px;
             color: #fff;
             line-height: 1.3;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
         
-        .article-meta {
-            color: #b8c8e0;
-            font-size: 1rem;
-            margin-bottom: 20px;
-        }
-        
-        .reading-time {
-            color: #ffcc00;
-            font-size: 0.9rem;
-        }
-        
-        /* Article Content */
-        .article-content {
-            background: linear-gradient(145deg, rgba(44, 62, 98, 0.9), rgba(75, 90, 134, 0.9));
-            border-radius: 20px;
-            padding: 40px;
-            width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-        
-        .article-content p {
+        .post-excerpt {
             font-size: 1.1rem;
-            line-height: 1.8;
+            color: #b8c8e0;
+            line-height: 1.6;
             margin-bottom: 25px;
-            color: #e8f0ff;
         }
         
-        .article-content h2 {
-            font-size: 1.5rem;
-            color: #ffcc00;
-            margin: 30px 0 20px 0;
-            border-bottom: 2px solid rgba(255, 204, 0, 0.3);
-            padding-bottom: 10px;
-        }
-        
-        .article-content h3 {
-            font-size: 1.3rem;
-            color: #ffd700;
-            margin: 25px 0 15px 0;
-        }
-        
-        .article-image {
-            width: 100%;
-            max-width: 600px;
-            height: auto;
-            border-radius: 15px;
-            margin: 30px auto;
-            display: block;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .highlight-quote {
-            background: rgba(255, 204, 0, 0.1);
-            border-left: 4px solid #ffcc00;
-            padding: 20px;
-            margin: 30px 0;
-            border-radius: 10px;
-            font-style: italic;
-            font-size: 1.2rem;
-            color: #ffd700;
-        }
-        
-        .fun-fact {
-            background: rgba(91, 109, 163, 0.3);
-            padding: 20px;
-            border-radius: 15px;
-            margin: 25px 0;
-            border-left: 4px solid #5b6da3;
-        }
-        
-        .fun-fact h3 {
-            color: #7683b7;
-            margin: 0 0 10px 0;
-            font-size: 1.2rem;
-        }
-        
-        /* Footer Navigation */
-        .post-navigation {
-            display: flex;
-            justify-content: space-between;
+        .read-more {
+            display: inline-flex;
             align-items: center;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 2px solid rgba(255, 255, 255, 0.1);
-            width: 100%;
-        }
-        
-        .nav-button {
-            background: linear-gradient(45deg, #4a5a86, #5b6da3);
+            gap: 8px;
+            background: linear-gradient(45deg, #2d5a27, #468d3f);
             color: white;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 25px;
             text-decoration: none;
+            font-size: 0.95rem;
             font-weight: bold;
             transition: all 0.3s ease;
             border: 2px solid rgba(255, 255, 255, 0.3);
         }
         
-        .nav-button:hover {
-            background: linear-gradient(45deg, #5b6da3, #7683b7);
+        .read-more:hover {
+            background: linear-gradient(45deg, #468d3f, #5ba054);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Newsletter Signup */
+        .newsletter-section {
+            background: linear-gradient(145deg, rgba(255, 204, 0, 0.1), rgba(255, 215, 0, 0.05));
+            border: 2px solid rgba(255, 204, 0, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-top: 60px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .newsletter-title {
+            font-size: 1.8rem;
+            color: #ffcc00;
+            margin-bottom: 15px;
+        }
+        
+        .newsletter-description {
+            color: #b8c8e0;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .newsletter-input {
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: 2px solid rgba(255, 204, 0, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            min-width: 250px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .newsletter-input:focus {
+            outline: none;
+            border-color: #ffcc00;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
+        }
+        
+        .newsletter-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .newsletter-button {
+            padding: 12px 30px;
+            border-radius: 25px;
+            border: none;
+            background: linear-gradient(45deg, #ffcc00, #ffd700);
+            color: #001530;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-button:hover {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 204, 0, 0.4);
         }
         
         /* Footer */
@@ -258,27 +315,70 @@
         
         /* Responsive Design */
         @media (max-width: 768px) {
-            .article-title {
-                font-size: 2rem;
+            .hero-title {
+                font-size: 2.5rem;
             }
             
-            .article-content {
+            .categories {
+                gap: 10px;
+            }
+            
+            .category-button {
+                padding: 6px 15px;
+                font-size: 0.8rem;
+            }
+            
+            .blog-post {
                 padding: 25px 20px;
             }
             
-            .article-content p {
-                font-size: 1rem;
+            .post-title {
+                font-size: 1.5rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .newsletter-input {
+                min-width: auto;
+                width: 100%;
+                max-width: 300px;
             }
             
             .nav-links {
                 flex-direction: column;
                 align-items: center;
             }
-            
-            .post-navigation {
-                flex-direction: column;
-                gap: 15px;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .blog-post {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .blog-post:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .blog-post:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        .blog-post:nth-child(4) {
+            animation-delay: 0.6s;
         }
     </style>
 </head>
@@ -298,55 +398,59 @@
     </header>
     
     <main class="main-container">
-        <div class="back-link">
-            <a href="blog.html">← Back to Blog</a>
-        </div>
+        <section class="hero-section">
+            <h1 class="hero-title">Author's Blog</h1>
+            <p class="hero-subtitle">Behind the scenes of "A Letter Guide For Rebecca" and my writing journey</p>
+        </section>
         
-        <article class="article-header">
-            <div class="article-date">Coming Soon</div>
-            <span class="article-category">Personal Stories</span>
-            <h1 class="article-title">My Childhood Wedge Bike</h1>
-            <div class="article-meta">
-                <span>By Derek Devon</span> | <span class="reading-time">2 min read</span>
-            </div>
-        </article>
+        <section class="categories">
+            <a href="#" class="category-button active">All Posts</a>
+            <a href="#" class="category-button">Behind the Scenes</a>
+            <a href="#" class="category-button">Personal Stories</a>
+            <a href="#" class="category-button">Book Updates</a>
+        </section>
         
-        <section class="article-content">
-            <p>When I got the bike I was the envy of the neighborhood and I recall owning it for about 3 years before I got a new 10 speed (Thanks Mom and Dad). As I grew, the leg to pedal angle became more and more impractical.</p>
-
-            <img src="./images/Wedge.jpg" alt="My childhood Wedge bike" class="article-image" />
-
-            <h2>The Modifications</h2>
+        <section class="blog-posts">
+            <article class="blog-post">
+                <header class="post-header">
+                    <div class="post-date">September 10, 2022</div>
+                    <span class="post-category">Behind the Scenes</span>
+                    <h2 class="post-title">The Famous Hermitage History</h2>
+                </header>
+                <p class="post-excerpt">
+                    There is a legend that the Ives' coachman, William Black, fell in love with Angelica and they began an affair. When William Black asked Ives for permission to marry her, he was refused. The next morning, Black did not appear with the carriage and was later found hanging from the stable rafters. Discover the rich history of this haunted location that appears in my book, and why I know so much about its fascinating past...
+                </p>
+                <a href="blog-hermitage-post.html" class="read-more">
+                    Read Full Post
+                    <span>→</span>
+                </a>
+            </article>
             
-            <p>I made a number of modifications and for a brief period, it also enjoyed a few hockey cards attached to the frame by a clothes peg or two for the famous clicking sound as the spokes flapped the cards.</p>
-
-            <div class="highlight-quote">
-                "I do recall once using a Bobby Orr Rookie card because it was new and still stiff which produced the best sound."
-            </div>
-
-            <p>Hate to think how many playing cards I destroyed this way and what they would be worth today as trading cards. At least I was not alone doing this, my pretend friend Smerk did it also :)</p>
-
-            <div class="fun-fact">
-                <h3>The Hockey Card Sound</h3>
-                <p>For those who grew up in this era, you'll remember that distinctive clicking sound that made your bike sound like a motorcycle. The stiffer the card, the better the sound. Using a brand new Bobby Orr rookie card might have been sacrilege to collectors, but to a kid in the neighborhood, it was the perfect choice for maximum clicking effect!</p>
-            </div>
-
-            <h2>A Symbol of Childhood Freedom</h2>
-
-            <p>That Wedge bike represented more than just transportation - it was freedom, adventure, and the envy of every kid on the block. Those three years of ownership were filled with countless rides around the neighborhood, jumps over makeshift ramps, and the pride of having something that made you stand out.</p>
-
-            <p>Looking back now, I can laugh at destroying what might have been valuable hockey cards. But those memories of racing down the street with that clicking sound, feeling like the coolest kid around, are priceless in their own right.</p>
-
-            <h2>The Transition</h2>
-
-            <p>Eventually, like all childhood treasures, the Wedge had to give way to something more practical. A 10-speed bike suited my growing frame better, but it never quite had the same personality or made me feel as cool as that Wedge did.</p>
-
-            <p>Some things from childhood stay with you forever, not just as memories but as defining moments of who you were becoming. That Wedge bike, with its impractical angles and hockey card modifications, was one of those things for me.</p>
-
-            <div class="post-navigation">
-                <a href="blog-hermitage-post.html" class="nav-button">← Previous Post</a>
-                <a href="blog.html" class="nav-button">Back to All Posts</a>
-            </div>
+            <article class="blog-post">
+                <header class="post-header">
+                    <div class="post-date">Coming Soon</div>
+                    <span class="post-category">Personal Stories</span>
+                    <h2 class="post-title">My Childhood Wedge Bike</h2>
+                </header>
+                <p class="post-excerpt">
+                    When I got the bike I was the envy of the neighborhood. I recall owning it for about 3 years before I got a new 10 speed. As I grew, the leg to pedal angle became more and more impractical. I made a number of modifications including the famous hockey card clicking sound with clothes pegs. I even used a Bobby Orr rookie card once because it was stiff and produced the best sound. A nostalgic look back at one of my most treasured childhood possessions...
+                </p>
+                <a href="blog-wedge-post.html" class="read-more">
+                    Read Full Post
+                    <span>→</span>
+                </a>
+            </article>
+        </section>
+        
+        <section class="newsletter-section">
+            <h3 class="newsletter-title">Stay Updated</h3>
+            <p class="newsletter-description">
+                Get notified about new blog posts, book updates, and exclusive content from Derek Devon
+            </p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                <button type="submit" class="newsletter-button">Subscribe</button>
+            </form>
         </section>
     </main>
     
@@ -355,5 +459,37 @@
             &copy; <script>document.write(new Date().getFullYear())</script> Derek Devon. All rights reserved.
         </p>
     </footer>
+    
+    <script>
+        // Simple category filtering (for future enhancement)
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryButtons = document.querySelectorAll('.category-button');
+            
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all buttons
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Here you could add filtering logic for different categories
+                    console.log('Category selected:', this.textContent);
+                });
+            });
+            
+            // Newsletter form submission
+            document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = this.querySelector('.newsletter-input').value;
+                
+                // You can integrate this with your Google Apps Script later
+                alert('Thank you for subscribing! (Newsletter integration coming soon)');
+                this.reset();
+            });
+        });
+    </script>
 </body>
 </html>
