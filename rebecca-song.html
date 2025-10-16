@@ -81,42 +81,43 @@
             }
         }
         
-        /* Heart Explosion Effect */
-        .heart-explosion {
+        /* Broken Heart Effect */
+        .broken-heart {
             position: fixed;
             pointer-events: none;
             z-index: 1000;
-        }
-        
-        .heart-particle {
-            position: absolute;
-            font-size: 16px;
+            font-size: 24px;
             color: #ff6b9d;
-            animation: explodeParticle 1s ease-out forwards;
+            text-shadow: 0 0 10px rgba(255, 107, 157, 0.8);
         }
         
-        @keyframes explodeParticle {
+        .heart-half-left {
+            animation: brokenHeartLeft 4s ease-out forwards;
+        }
+        
+        .heart-half-right {
+            animation: brokenHeartRight 4s ease-out forwards;
+        }
+        
+        @keyframes brokenHeartLeft {
             0% {
-                transform: translate(0, 0) scale(1);
+                transform: translateX(0) translateY(0) rotate(0deg);
                 opacity: 1;
             }
             100% {
-                transform: translate(var(--tx), var(--ty)) scale(0);
+                transform: translateX(-60px) translateY(-200px) rotate(-25deg);
                 opacity: 0;
             }
         }
         
-        .heart-pulse {
-            animation: heartPulse 0.3s ease-out;
-        }
-        
-        @keyframes heartPulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(2.5);
+        @keyframes brokenHeartRight {
+            0% {
+                transform: translateX(0) translateY(0) rotate(0deg);
                 opacity: 1;
+            }
+            100% {
+                transform: translateX(60px) translateY(-200px) rotate(25deg);
+                opacity: 0;
             }
         }
         
@@ -524,8 +525,6 @@
         <h1 class="main-title">Rebecca's Song</h1>
         <p class="subtitle">A Love Song 37 Years in the Making</p>
         <p class="aka-text">(aka Nancy's Song)</p>
-        <!-- Debug button - remove after testing -->
-        <button onclick="createFloatingHeart()" style="position: fixed; top: 10px; right: 10px; z-index: 9999; padding: 10px; background: red; color: white; border: none; cursor: pointer;">Test Heart</button>
     </header>
     
     <main class="content-wrapper">
@@ -706,56 +705,38 @@
             }
         }
         
-        // Create heart explosion effect
+        // Create broken heart effect
         function createHeartExplosion(heartElement) {
             const rect = heartElement.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
             
-            // Create explosion container
-            const explosion = document.createElement('div');
-            explosion.className = 'heart-explosion';
-            explosion.style.left = centerX + 'px';
-            explosion.style.top = centerY + 'px';
+            console.log('Heart breaking!'); // Debug
             
-            // Create particles
-            const particleCount = 8 + Math.floor(Math.random() * 8);
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'heart-particle';
-                particle.innerHTML = '💕';
-                
-                // Random direction
-                const angle = (Math.PI * 2 * i) / particleCount + (Math.random() - 0.5);
-                const distance = 50 + Math.random() * 100;
-                const tx = Math.cos(angle) * distance;
-                const ty = Math.sin(angle) * distance;
-                
-                particle.style.setProperty('--tx', tx + 'px');
-                particle.style.setProperty('--ty', ty + 'px');
-                
-                // Random size for particles
-                const particleSize = 12 + Math.random() * 8;
-                particle.style.fontSize = particleSize + 'px';
-                
-                explosion.appendChild(particle);
-            }
+            // Create left half of broken heart
+            const leftHalf = document.createElement('div');
+            leftHalf.className = 'broken-heart heart-half-left';
+            leftHalf.innerHTML = '💔';
+            leftHalf.style.left = centerX + 'px';
+            leftHalf.style.top = centerY + 'px';
+            leftHalf.style.fontSize = heartElement.style.fontSize;
             
-            // Add pulse effect to center
-            const pulseHeart = document.createElement('div');
-            pulseHeart.className = 'heart-particle heart-pulse';
-            pulseHeart.innerHTML = '💖';
-            pulseHeart.style.fontSize = '32px';
-            explosion.appendChild(pulseHeart);
+            // Create right half of broken heart
+            const rightHalf = document.createElement('div');
+            rightHalf.className = 'broken-heart heart-half-right';
+            rightHalf.innerHTML = '💔';
+            rightHalf.style.left = centerX + 'px';
+            rightHalf.style.top = centerY + 'px';
+            rightHalf.style.fontSize = heartElement.style.fontSize;
             
-            document.body.appendChild(explosion);
+            document.body.appendChild(leftHalf);
+            document.body.appendChild(rightHalf);
             
-            // Remove explosion after animation
+            // Remove broken pieces after animation
             setTimeout(() => {
-                if (explosion.parentNode) {
-                    explosion.remove();
-                }
-            }, 1500);
+                if (leftHalf.parentNode) leftHalf.remove();
+                if (rightHalf.parentNode) rightHalf.remove();
+            }, 4000);
         }
         
         // Start heart generation
