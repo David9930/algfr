@@ -96,6 +96,39 @@
             padding: 20px;
             text-align: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        
+        /* NEW: Back Button Styles */
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #FF7043, #FF8A65);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-50%) translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 112, 67, 0.4);
+            background: linear-gradient(135deg, #FF8A65, #FFAB91);
+        }
+        
+        .back-button::before {
+            content: '← ';
+            margin-right: 5px;
         }
         
         .header h1 {
@@ -466,6 +499,25 @@
             .action-button { width: 100%; }
             .message-stats { flex-direction: column; gap: 8px; align-items: flex-start; }
             .connection-status { top: 10px; right: 10px; font-size: 0.7rem; padding: 6px 10px; }
+            
+            /* NEW: Mobile back button adjustment */
+            .back-button {
+                position: static;
+                transform: none;
+                margin-bottom: 15px;
+                display: block;
+                width: fit-content;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .back-button:hover {
+                transform: translateY(-2px);
+            }
+            
+            .header {
+                padding: 15px;
+            }
         }
     </style>
 </head>
@@ -478,6 +530,7 @@
     </div>
     
     <header class="header">
+        <a href="rebecca-private-message.html" class="back-button">Back</a>
         <h1>Private Messages</h1>
         <p>Nancy & Derek's secure messaging system</p>
     </header>
