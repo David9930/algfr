@@ -396,7 +396,7 @@
     </main>
     
    <script>
-// Questions with obfuscated answers using XOR + Hex encoding
+
 const questions = [
     {
         question: "What was the name of your dog I loved?",
@@ -430,14 +430,14 @@ const questions = [
     }
 ];
 
-// Obfuscation key
+
 const k = 'rebecca';
 
 let currentQuestion = 0;
 let currentAttempt = 1;
 const maxAttempts = 3;
 
-// Obfuscation functions - same as fort page
+
 function d(e) {
     let r = '';
     for(let i = 0; i < e.length; i += 2) {
@@ -454,7 +454,7 @@ function x(s, k) {
     return o;
 }
 
-// Get decrypted answer for a question
+
 function getAnswer(questionIndex) {
     const question = questions[questionIndex];
     const combined = d(question.p1 + question.p2);
