@@ -598,6 +598,862 @@
     </main>
     
     <script>
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Message Across Time - A Letter Guide For Rebecca</title>
+    <meta name="description" content="A private message 35 years in the making">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #e8e8e8;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* Animated Background */
+        .particle-field {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 50px 20px 40px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .main-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            background: linear-gradient(120deg, #ffd89b, #19547b, #ffd89b);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 10s ease-in-out infinite;
+            margin-bottom: 15px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: rgba(255, 255, 255, 0.75);
+            font-style: italic;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        /* Music prompt box */
+        .music-prompt-container {
+            max-width: 1000px;
+            margin: 40px auto 20px;
+            padding: 0 20px;
+        }
+        
+        .music-prompt-box {
+            background: linear-gradient(135deg, rgba(255, 217, 155, 0.15), rgba(168, 216, 234, 0.15));
+            border: 2px solid rgba(255, 217, 155, 0.4);
+            border-radius: 15px;
+            padding: 15px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .music-prompt-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 217, 155, 0.3);
+            border-color: rgba(255, 217, 155, 0.6);
+            background: linear-gradient(135deg, rgba(255, 217, 155, 0.2), rgba(168, 216, 234, 0.2));
+        }
+        
+        .music-prompt-box p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0;
+            line-height: 1.6;
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+        
+        .music-prompt-box .music-note {
+            font-size: 1.5rem;
+            color: #ffd89b;
+            margin-top: 10px;
+            animation: musicNote 2s ease-in-out infinite;
+        }
+        
+        .music-prompt-container.hidden {
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+            transition: all 0.5s ease;
+        }
+        
+        /* Letter Container */
+        .content-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            position: relative;
+        }
+        
+        .letter-wrapper {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            border-radius: 30px;
+            padding: 50px;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 
+                0 30px 90px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Elegant corner decorations */
+        .letter-wrapper::before,
+        .letter-wrapper::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 2px solid rgba(255, 215, 155, 0.3);
+        }
+        
+        .letter-wrapper::before {
+            top: 20px;
+            left: 20px;
+            border-right: none;
+            border-bottom: none;
+        }
+        
+        .letter-wrapper::after {
+            bottom: 20px;
+            right: 20px;
+            border-left: none;
+            border-top: none;
+        }
+        
+        /* Letter Content */
+        .letter-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .letter-greeting {
+            font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+            color: #ffd89b;
+            margin-bottom: 35px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            text-align: left;
+        }
+        
+        .letter-body p {
+            font-size: clamp(1.05rem, 2vw, 1.18rem);
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.92);
+            margin-bottom: 28px;
+            text-align: justify;
+            hyphens: auto;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .letter-body p:first-of-type::first-letter {
+            font-size: 3.5em;
+            line-height: 0.8;
+            float: left;
+            margin: 10px 12px 0 0;
+            color: #ffd89b;
+            font-weight: 500;
+        }
+        
+        /* Indented paragraphs for classic letter feel */
+        .letter-body p {
+            text-indent: 2em;
+        }
+        
+        .letter-body p:first-of-type {
+            text-indent: 0;
+        }
+        
+        /* Special emphasis styles */
+        .emotional-text {
+            color: #a8d8ea;
+            font-style: italic;
+            position: relative;
+            padding: 0 4px;
+        }
+        
+        .highlight-text {
+            color: #ffd89b;
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .gentle-emphasis {
+            color: #ffb8b8;
+            font-weight: 400;
+        }
+        
+        /* Letter signature */
+        .letter-signature {
+            margin-top: 50px;
+            text-align: right;
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: rgba(255, 255, 255, 0.85);
+            font-style: italic;
+        }
+        
+        .letter-signature .name {
+            font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+            color: #ffd89b;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+        
+        .letter-signature .code {
+            font-size: 0.95em;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 5px;
+        }
+        
+        /* Button Section */
+        .button-section {
+            text-align: center;
+            margin-top: 60px;
+            padding: 40px 20px;
+        }
+        
+        .button-intro {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 35px;
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+        
+        .butt-button {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(255, 184, 184, 0.3), rgba(255, 217, 155, 0.3)), url('./images/perfection.jpg') !important;
+            background-size: cover, cover !important;
+            background-position: center, center !important;
+            background-blend-mode: overlay !important;
+            border: 2px solid rgba(255, 215, 155, 0.5) !important;
+            border-radius: 50px;
+            padding: 108px 90px !important;
+            min-width: 500px !important;
+            min-height: 324px !important;
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            font-weight: 600;
+            color: white !important;
+            text-decoration: none;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 45px rgba(255, 215, 155, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7) !important;
+        }
+        
+        .butt-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.7s;
+        }
+        
+        .butt-button:hover::before {
+            left: 100%;
+        }
+        
+        .butt-button:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(255, 215, 155, 0.5);
+            border-color: rgba(255, 215, 155, 0.7) !important;
+        }
+        
+        .escape-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #c94b4b, #4b134f) !important;
+            border: 2px solid rgba(201, 75, 75, 0.6) !important;
+            border-radius: 50px;
+            padding: 108px 90px !important;
+            min-width: 500px !important;
+            min-height: 324px !important;
+            font-size: clamp(1.1rem, 2.8vw, 1.4rem);
+            font-weight: 600;
+            color: white !important;
+            text-decoration: none;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 45px rgba(201, 75, 75, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7) !important;
+            margin-top: 30px;
+        }
+        
+        .escape-button:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(201, 75, 75, 0.5);
+        }
+        
+        .button-joke {
+            margin: 25px 0;
+            font-size: clamp(0.95rem, 2vw, 1.15rem);
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+        }
+        
+        /* Floating hearts */
+        .floating-heart {
+            position: fixed;
+            color: #ffb8b8;
+            font-size: 22px;
+            animation: floatHeart 15s infinite linear;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.7;
+        }
+        
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+        
+        /* Music indicator */
+        .music-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .music-indicator.show {
+            opacity: 1;
+        }
+        
+        .music-indicator .note {
+            display: inline-block;
+            animation: musicNote 2s ease-in-out infinite;
+        }
+        
+        @keyframes musicNote {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .letter-wrapper {
+                padding: 35px 25px;
+                border-radius: 20px;
+            }
+            
+            .letter-wrapper::before,
+            .letter-wrapper::after {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .letter-body p {
+                text-indent: 1.5em;
+                margin-bottom: 24px;
+            }
+            
+            .butt-button, .escape-button {
+                padding: 70px 60px !important;
+                min-width: 350px !important;
+                min-height: 210px !important;
+            }
+            
+            .music-indicator {
+                bottom: 10px;
+                right: 10px;
+                font-size: 0.7rem;
+                padding: 6px 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .letter-wrapper {
+                padding: 25px 20px;
+            }
+            
+            .letter-wrapper::before,
+            .letter-wrapper::after {
+                display: none;
+            }
+            
+            .letter-body p:first-of-type::first-letter {
+                font-size: 2.5em;
+                margin: 5px 8px 0 0;
+            }
+            
+            .butt-button, .escape-button {
+                padding: 50px 40px !important;
+                min-width: 280px !important;
+                min-height: 160px !important;
+            }
+        }
+        
+        /* Fade-in animations */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+        
+        .fade-in-delay {
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 0.6s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="particle-field" id="particleField"></div>
+    
+    <!-- Music indicator -->
+    <div class="music-indicator" id="musicIndicator">
+        <span class="note">♪</span> Background music playing
+    </div>
+    
+    <header class="header fade-in">
+        <h1 class="main-title">You Made It, Nancy!</h1>
+        <p class="subtitle">A Message 37 Years in the Making</p>
+    </header>
+    
+    <!-- Music prompt box -->
+    <div class="music-prompt-container fade-in-delay" id="musicPromptContainer">
+        <div class="music-prompt-box" onclick="startMusicFromPrompt()">
+            <p>I selected a very special song for some background music while you read the letter, click here to start the music</p>
+            <div class="music-note">♪</div>
+        </div>
+    </div>
+    
+    <main class="content-container">
+        <div class="letter-wrapper fade-in-delay">
+            <div class="letter-content">
+                <div class="letter-greeting">Dear Nancy,</div>
+                
+                <div class="letter-body">
+                    <p>If you're here reading this, then I lost a bet to Greg. I told him I highly doubted you would ever bother to visit the website—even if you found out I wrote a book that contained some stories from the time we had dated. I tried to explain to him that "you were not wired that way" (yes, one of my favorite expressions, if you ever did read any of my writings).</p>
+                    
+                    <p>When we were a couple, you were always the optimist and forward thinker, while I was Mr. Analysis. I am even worse at that than when you knew me. But just on the off chance I was wrong and you are actually reading this, then I will try to keep it on topic, so to speak.</p>
+                    
+                    <p>I suspect that you have always either known or suspected—at a few points in your life, mostly a long time ago, or around the time I sent you that text—that I had never gotten over you. If you didn't, well... maybe you should read the book <span class="gentle-emphasis">"A Letter Guide For Rebecca,"</span> because it would support my position that I have never gotten over you. In fact, it would most likely support a much worse condition than that.</p>
+                    
+                    <p><span class="emotional-text">You see, that infamous day you drove to my place in the Gremlin and proceeded to tell me you wanted to break up because you wanted to go to University single... Yes, that day... Well, something I would like you to know is it was not just a simple high school girlfriend and boyfriend break-up for me. It was emotionally devastating.</span> What I did not disclose to you when I returned from Miami was that, for me, I had come to the personal and emotional view that I wanted to spend the rest of my life with you. Yup, I had fallen all the way! Not only was I madly in love with you, I wanted to marry you in the near future. The problem, though—I knew I couldn't tell you then, out of fear it may send you packing (scare you on some level). Truth be told, I know you said before I left for school, "I think I am falling in love with you." I was waiting for a new sign that that was true... Thus my dilemma.</p>
+                    
+                    <p>Now, before I get any further with this past truth, I want you to know that what I am about to tell you—you did nothing wrong. You were a young woman (girl) who had a high school boyfriend and was trying to figure out what you wanted to do with your life. <span class="highlight-text">You never misled me or would want to intentionally hurt me; that, I know in my heart.</span> But as you had come to a different point in your life regarding me, I was all in on you. And that day you broke up with me broke me. I was devastated beyond words. I was also not capable of accepting or dealing with the emotional trauma. That was something I never understood back then. I was a very smart and capable person, and because I lacked the ability to deal with the emotional trauma, my brain kicked in and did what it was good at—it decided to counter the enormous pain I was experiencing. My solution was simply to figure out how to win you back.</p>
+                    
+                    <p>I know you knew on some level how I felt, even after the break-up. If our trip to London to your new house just before your first year at Western didn't tip you off, there were many other signs. It eventually consumed not only all my mental processing but also all my own personal ambition and desires. Believe me, looking back, I so wished I could have simply licked my emotional wounds and moved on. Maybe I would be married to Maureen Hanmer today (a joke, if you didn't read any of my writings).</p>
+                    
+                    <p>There were a few other moments involving you that added to my emotional instability over the dumping that I know you have no idea of. The first—and I would say the moment that pushed me over the edge of my own sanity—was running into you and Jeff Teal at your house. Not sure if you even remember that encounter. I had just stopped by to say hello to your folks (still trying to keep one foot in the door...), and as I was leaving, you guys drove into your driveway.</p>
+                    
+                    <p><span class="emotional-text">Seeing you with him was more than I could take.</span> I learned how to put on a good face, and that time, I think, was worthy of at least an Oscar nod. For the next couple of weeks, I found myself spiraling into the deepest depression I have—and had—ever experienced. I hid it from everyone. Greg was away at school, so I couldn't talk to him. And you would have been the only other person I could have opened up to. At the lowest point, I started planning my own suicide—and you know it was not just going to be a quiet and simple one with me. No... I was going to make it a spectacular offing. I was going to hang myself at the Hermitage, along with a love note that I was hoping would devastate you, hurt you, believing you needed to experience, if only for a moment, what I was experiencing consantly at that time.</p>
+                    
+                    <p>But what I didn't expect to discover about myself was twofold. First, I was concerned that people may try to call me a coward for taking the easy way out of the pain I was in. And then the other thing that saved me was also going to be somewhat of a curse... <span class="highlight-text">I could never hurt you. Especially that way.</span> So, I finally made a decision that I needed to get out of Dodge! I needed to get far away and try to figure it out in a way that didn't include me killing myself. So that became my new plan. Unfortunately for me, I was also broke and didn't have the money to flee to emotional safety. And now we come full circle to my other curse... I was a very smart and capable guy!</p>
+                    
+                    <p>Okay, maybe not as smart as I thought... And that, my former love of my life (from my perspective), is something I have always wanted to confess to you but never got the opportunity till now. Only two people know about this now—me and you. Greg doesn't even know.</p>
+                    
+                    <p>After my release and eventual return to Toronto and my job at Matrix Financial, there was one more major event that had a tremendous impact on me. It was the day you called me at my office and tried to pitch me on some new share offering your company was promoting. Yup, I was now simply a stock potential chump customer! I guess you could actually view this as the moment I came to grips that I was not the one. I handled it much better than the other major emotional blow you delivered and ended up spending a lot of time at the gym lifting weights! But even that was not free from an eventual negative side effect. Turns out I compressed my lower spine a lot, and today I enjoy some good old-fashioned arthritis pain...</p>
+                    
+                    <p>After that call, you would not have noticed (you're not wired that way), but I never did contact you again. For me, I was relegated to trying to find the second-best girl in the world for me... And that, my wonderfully gifted backside, love of my life, is a story that may have to find itself into a future book. Although, a lot of my life is woven into <span class="gentle-emphasis">"A Letter Guide For Rebecca."</span> It was my first attempt at writing, and at the time I decided to write the book, it was more about being able to tell (document) my story on some level than trying to be some great writer. That being said, what I did come to realize: <span class="highlight-text">I actually enjoyed the writing process a great deal, and I think my writing is constantly improving.</span> I wrote a TV series called <span class="gentle-emphasis">"Living With the Ghost of Sam,"</span> which I eventually converted into a 10-book novella series. In my latest effort (as of 2025), I wrote a science fiction/love story series called <span class="gentle-emphasis">"The Last Axiom."</span> It is a 16-book series.</p>
+                    
+                    <p>Who knew I was so creatively inclined? I also expressed my old musical desires and wrote a song for Michael Smerconish's POTUS Radio show called <span class="gentle-emphasis">"The Mingle Effect."</span> They use it on the show when he talks about his "Mingle Project" crusade. And there was no way I would write a book called <span class="gentle-emphasis">"A Letter Guide For Nancy"</span> without writing the future theme song for the eventual movie they will make (you better be smiling at this). The original version was called "Nancy's Song," but I changed it when I decided to protect your privacy and changed it to "Rebecca's Song" (aka Nancy's Song). Both songs are on the respective websites of the same name and available on Spotify or YouTube. So, if you ever decide to claim the title as being Rebecca 1.0, you can tell your kids that someone wrote a song about you! That Aka Nancy is actually you.</p>
+                    
+                    <p>That's it, Nancy. I know you reached your limit, and I will once again prognosticate that you will quickly digest this and move on with your life! However, also being a computer genius, I did leave you a private message system should you ever need to yell at me or want to tell me to leave you alone! You already know that is not happening. But I would encourage you to go to the message system (link below) and take a look at a special photo album I put together. It's been 37 years since we last saw each other, so I think you can handle a short trip down memory lane along with a couple of funny pics.</p>
+                    
+                    <p>I leave for my 3-year circumnavigation on my boat <span class="gentle-emphasis">"It-Girl"</span> (yes, named after you) starting January 2026. I highly doubt we will ever see each other before my death (hopefully not too soon), and I was able to confirm through Greg and Jeff's recent birthday wish that your cell phone number is still active (I would bet you figured out I was behind that). I stopped sending you your annual birthday wish, figuring it was now your turn to send one to me. I think we both know you're not wired that way (now you better be laughing), but I was worried you had me on call blocking and didn't get my annual birthday wish...</p>
+                    
+                    <p><span class="emotional-text">So, I will end this here by simply telling you that I think about you almost every day. You were the one for me, the absolute love of my life, and the almost three years we were together are, by far, the greatest three years of my life—and that will never change.</span> I am sure you will, in some form or another, continue to be a part of my writings should I continue to write, and I sincerely wish you a happy, healthy, and wonderful life. I just won't call you Granny!</p>
+                </div>
+                
+                <div class="letter-signature">
+                    <div>With all my heart,</div>
+                    <div class="name">Dave/Derek</div>
+                    <div class="code">12757982 🙂</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="button-section fade-in-delay">
+            <p class="button-intro">Press the "Butt-on" to enter the message area</p>
+            <a href="#" class="butt-button" onclick="accessMessageArea()">Enter Message Area</a>
+            <p class="button-joke">You better have laughed at my choice of button... :)</p>
+            <a href="index.html" class="escape-button">Oh my God, get me the hell out of here!</a>
+        </div>
+    </main>
+    
+    <script>
+        // ============================================================================
+        // AUTHENTICATION CHECK - Must be at the top of the script!
+        // ============================================================================
+
+(function() {
+    // Check if user has valid authentication token
+    const hasAccess = sessionStorage.getItem('rebeccaAccess');
+    const accessTime = sessionStorage.getItem('accessTime');
+    
+    // If no valid token, show the "busted" screen
+    if (hasAccess !== 'authenticated') {
+        // Prevent the rest of the page from loading
+        document.addEventListener('DOMContentLoaded', function() {
+            showBustedScreen();
+        });
+        
+        // Show the busted screen immediately
+        if (document.body) {
+            showBustedScreen();
+        }
+    }
+    
+    function showBustedScreen() {
+        // Create overlay that covers everything
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 50%, #16213e 100%);
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            font-family: 'Georgia', serif;
+        `;
+        
+        // Create the content
+        overlay.innerHTML = `
+            <div style="max-width: 600px; background: rgba(255, 255, 255, 0.1); 
+                        border: 3px solid rgba(255, 69, 0, 0.8); border-radius: 20px; 
+                        padding: 40px; backdrop-filter: blur(10px);
+                        box-shadow: 0 0 50px rgba(255, 69, 0, 0.5);">
+                
+                <div style="font-size: 80px; margin-bottom: 20px;">🚫</div>
+                
+                <h1 style="color: #ff4500; font-size: 3rem; margin-bottom: 20px; 
+                           text-shadow: 0 0 20px rgba(255, 69, 0, 0.8);">
+                    NICE TRY!
+                </h1>
+                
+                <p style="color: white; font-size: 1.5rem; line-height: 1.8; margin-bottom: 20px;">
+                    Well, well, well... look who tried to bookmark a private page! 🕵️
+                </p>
+                
+                <p style="color: #ffd700; font-size: 1.3rem; line-height: 1.6; margin-bottom: 25px;">
+                    You have to actually <strong>answer the questions</strong> like everyone else, buddy.<br>
+                    No shortcuts here!
+                </p>
+                
+                <p style="color: rgba(255, 255, 255, 0.8); font-size: 1.1rem; margin-bottom: 15px;">
+                    (Yes, Luke/Greg, we're looking at you 😏)
+                </p>
+                
+                <div style="margin-top: 30px; padding: 20px; background: rgba(255, 0, 0, 0.2); 
+                            border-radius: 10px; border: 2px solid rgba(255, 69, 0, 0.6);">
+                    <p style="color: white; font-size: 1.2rem; margin-bottom: 10px;">
+                        Redirecting you back to the homepage in:
+                    </p>
+                    <div id="countdown" style="font-size: 4rem; color: #ff4500; 
+                                               font-weight: bold; text-shadow: 0 0 30px rgba(255, 69, 0, 1);">
+                        20
+                    </div>
+                    <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; margin-top: 10px;">
+                        Enjoy the view while it lasts! 😂
+                    </p>
+                </div>
+            </div>
+        `;
+        
+        // Clear the body and add overlay
+        document.body.innerHTML = '';
+        document.body.appendChild(overlay);
+        
+        // Countdown timer
+        let timeLeft = 20;
+        const countdownElement = document.getElementById('countdown');
+        
+        const countdownInterval = setInterval(() => {
+            timeLeft--;
+            countdownElement.textContent = timeLeft;
+            
+            // Add some fun effects as time runs down
+            if (timeLeft <= 5) {
+                countdownElement.style.color = '#ff0000';
+                countdownElement.style.transform = 'scale(1.2)';
+                countdownElement.style.transition = 'all 0.3s';
+            }
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdownInterval);
+                window.location.href = 'index.html';
+            }
+        }, 1000);
+    }
+})();
+
+// ============================================================================
+// Rest of your page's normal JavaScript goes below this line
+// ============================================================================
+        // Background music functionality
+        let musicStarted = false;
+        let backgroundMusic = null;
+        
+        // Google Apps Script URL for notifications
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwM428b1zI_i0O5NVcIYDCcSXP2i2l-UjAoyx689k0W5LjSSW0JOaCPLZSKAwTg6iv8XA/exec';
+        
+        function initializeBackgroundMusic() {
+            backgroundMusic = new Audio('./audio/nancy-background-music.mp3');
+            backgroundMusic.loop = true;
+            backgroundMusic.volume = 0.35; // 35% volume
+            backgroundMusic.preload = 'auto';
+        }
+        
+        function sendPageAccessNotification() {
+            // Check if we've already sent a notification for this session
+            const notificationSent = sessionStorage.getItem('nancy-page-notification-sent');
+            if (notificationSent) {
+                return; // Already sent this session
+            }
+            
+            try {
+                const notificationData = {
+                    type: 'page_access',
+                    page: 'rebecca-private-message.html',
+                    message: 'Someone accessed Nancy\'s private message page',
+                    sender: 'Page Access Monitor',
+                    timestamp: new Date().toLocaleString(),
+                    userAgent: navigator.userAgent.substring(0, 100), // Browser info (limited)
+                    referrer: document.referrer || 'Direct access'
+                };
+                
+                // Send notification using the same method as messages
+                const form = document.createElement('form');
+                form.action = APPS_SCRIPT_URL;
+                form.method = 'POST';
+                form.target = 'notificationFrame';
+                form.style.display = 'none';
+                
+                const dataField = document.createElement('input');
+                dataField.type = 'hidden';
+                dataField.name = 'data';
+                dataField.value = JSON.stringify(notificationData);
+                form.appendChild(dataField);
+                
+                // Create hidden iframe for the notification
+                let iframe = document.getElementById('notificationFrame');
+                if (!iframe) {
+                    iframe = document.createElement('iframe');
+                    iframe.id = 'notificationFrame';
+                    iframe.name = 'notificationFrame';
+                    iframe.style.display = 'none';
+                    document.body.appendChild(iframe);
+                }
+                
+                document.body.appendChild(form);
+                form.submit();
+                
+                // Clean up the form
+                setTimeout(() => {
+                    if (form.parentNode) {
+                        document.body.removeChild(form);
+                    }
+                }, 1000);
+                
+                // Mark notification as sent for this session
+                sessionStorage.setItem('nancy-page-notification-sent', 'true');
+                console.log('Page access notification sent');
+                
+            } catch (error) {
+                console.log('Failed to send page access notification:', error);
+            }
+        }
+        
+        function startBackgroundMusic() {
+            if (musicStarted || !backgroundMusic) return;
+            
+            backgroundMusic.play().then(() => {
+                musicStarted = true;
+                showMusicIndicator();
+                console.log('Background music started for Nancy');
+            }).catch(error => {
+                console.log('Music failed to start:', error);
+            });
+        }
+        
+        function startMusicFromPrompt() {
+            // Hide the prompt box with animation
+            const promptContainer = document.getElementById('musicPromptContainer');
+            promptContainer.classList.add('hidden');
+            
+            // Start the music
+            startBackgroundMusic();
+            
+            // Remove the prompt from DOM after animation completes
+            setTimeout(() => {
+                if (promptContainer.parentNode) {
+                    promptContainer.parentNode.removeChild(promptContainer);
+                }
+            }, 500);
+        }
+        
+        function showMusicIndicator() {
+            const indicator = document.getElementById('musicIndicator');
+            indicator.classList.add('show');
+            
+            // Hide the indicator after 4 seconds
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 4000);
+        }
+        
+        function createParticles() {
+            const particleField = document.getElementById('particleField');
+            
+            for (let i = 0; i < 60; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particleField.appendChild(particle);
+            }
+        }
+        
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.innerHTML = '♥';
+            heart.style.left = Math.random() * 90 + '%';
+            heart.style.animationDuration = (12 + Math.random() * 8) + 's';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                if (heart.parentNode) {
+                    heart.parentNode.removeChild(heart);
+                }
+            }, 20000);
+        }
+        
+        function accessMessageArea() {
+            window.location.href = 'rebecca-private-message-area.html';
+        }
+           
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize all functionality
+            initializeBackgroundMusic();
+            createParticles();
+            
+            // Send page access notification
+            sendPageAccessNotification();
+            
+            // Start floating hearts
+            setInterval(() => {
+                if (Math.random() < 0.6) {
+                    createFloatingHeart();
+                }
+            }, 9000 + Math.random() * 6000);
+        });
+        
+        // Clean up when leaving the page
+        window.addEventListener('beforeunload', function() {
+            if (backgroundMusic && !backgroundMusic.paused) {
+                backgroundMusic.pause();
+            }
+        });
+    </script>
+</body>
+</html>
+
         // Your existing Apps Script URL
        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwM428b1zI_i0O5NVcIYDCcSXP2i2l-UjAoyx689k0W5LjSSW0JOaCPLZSKAwTg6iv8XA/exec';
                 
