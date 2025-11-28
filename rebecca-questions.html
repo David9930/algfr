@@ -566,6 +566,10 @@ function showFeedback(message, type) {
 }
 
 function showCompletionScreen() {
+    // *** SET SESSION TOKEN FOR AUTHENTICATED ACCESS ***
+    sessionStorage.setItem('rebeccaAccess', 'authenticated');
+    sessionStorage.setItem('accessTime', Date.now());
+    
     document.getElementById('questionScreen').style.display = 'none';
     document.getElementById('completionScreen').style.display = 'block';
 }
