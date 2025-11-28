@@ -569,6 +569,121 @@
     </main>
     
     <script>
+        // ============================================================================
+// AUTHENTICATION CHECK - Must be at the top of the script!
+// ============================================================================
+
+(function() {
+    // Check if user has valid authentication token
+    const hasAccess = sessionStorage.getItem('rebeccaAccess');
+    const accessTime = sessionStorage.getItem('accessTime');
+    
+    // If no valid token, show the "busted" screen
+    if (hasAccess !== 'authenticated') {
+        // Prevent the rest of the page from loading
+        document.addEventListener('DOMContentLoaded', function() {
+            showBustedScreen();
+        });
+        
+        // Show the busted screen immediately
+        if (document.body) {
+            showBustedScreen();
+        }
+    }
+    
+    function showBustedScreen() {
+        // Create overlay that covers everything
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 50%, #16213e 100%);
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            font-family: 'Georgia', serif;
+        `;
+        
+        // Create the content
+        overlay.innerHTML = `
+            <div style="max-width: 600px; background: rgba(255, 255, 255, 0.1); 
+                        border: 3px solid rgba(255, 69, 0, 0.8); border-radius: 20px; 
+                        padding: 40px; backdrop-filter: blur(10px);
+                        box-shadow: 0 0 50px rgba(255, 69, 0, 0.5);">
+                
+                <div style="font-size: 80px; margin-bottom: 20px;">🚫</div>
+                
+                <h1 style="color: #ff4500; font-size: 3rem; margin-bottom: 20px; 
+                           text-shadow: 0 0 20px rgba(255, 69, 0, 0.8);">
+                    NICE TRY!
+                </h1>
+                
+                <p style="color: white; font-size: 1.5rem; line-height: 1.8; margin-bottom: 20px;">
+                    Well, well, well... look who tried to bookmark a private page! 🕵️
+                </p>
+                
+                <p style="color: #ffd700; font-size: 1.3rem; line-height: 1.6; margin-bottom: 25px;">
+                    You have to actually <strong>answer the questions</strong> like everyone else, buddy.<br>
+                    No shortcuts here!
+                </p>
+                
+                <p style="color: rgba(255, 255, 255, 0.8); font-size: 1.1rem; margin-bottom: 15px;">
+                    (Yes, Luke/Greg, we're looking at you 😏)
+                </p>
+                
+                <div style="margin-top: 30px; padding: 20px; background: rgba(255, 0, 0, 0.2); 
+                            border-radius: 10px; border: 2px solid rgba(255, 69, 0, 0.6);">
+                    <p style="color: white; font-size: 1.2rem; margin-bottom: 10px;">
+                        Redirecting you back to the homepage in:
+                    </p>
+                    <div id="countdown" style="font-size: 4rem; color: #ff4500; 
+                                               font-weight: bold; text-shadow: 0 0 30px rgba(255, 69, 0, 1);">
+                        20
+                    </div>
+                    <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; margin-top: 10px;">
+                        Enjoy the view while it lasts! 😂
+                    </p>
+                </div>
+            </div>
+        `;
+        
+        // Clear the body and add overlay
+        document.body.innerHTML = '';
+        document.body.appendChild(overlay);
+        
+        // Countdown timer
+        let timeLeft = 20;
+        const countdownElement = document.getElementById('countdown');
+        
+        const countdownInterval = setInterval(() => {
+            timeLeft--;
+            countdownElement.textContent = timeLeft;
+            
+            // Add some fun effects as time runs down
+            if (timeLeft <= 5) {
+                countdownElement.style.color = '#ff0000';
+                countdownElement.style.transform = 'scale(1.2)';
+                countdownElement.style.transition = 'all 0.3s';
+            }
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdownInterval);
+                window.location.href = 'index.html';
+            }
+        }, 1000);
+    }
+})();
+
+// ============================================================================
+// Rest of your page's normal JavaScript goes below this line
+// ============================================================================
         // Background music functionality
         let musicStarted = false;
         let backgroundMusic = null;
