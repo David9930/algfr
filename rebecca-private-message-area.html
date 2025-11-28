@@ -702,9 +702,68 @@
             
             if (timeLeft <= 0) {
                 clearInterval(countdownInterval);
+                clearInterval(bounceInterval);
                 window.location.href = 'index.html';
             }
         }, 1000);
+        
+        // ============================================
+        // ERRATIC BOUNCING PICTURE (Like Sam's Ghost!)
+        // ============================================
+        const bouncingImg = document.createElement('img');
+        bouncingImg.src = './Luke-Loves-Donna.jpg';
+        bouncingImg.style.cssText = `
+            position: fixed;
+            width: 150px;
+            height: auto;
+            z-index: 1000000;
+            pointer-events: none;
+            opacity: 0.9;
+        `;
+        document.body.appendChild(bouncingImg);
+        
+        // Random starting position
+        let x = Math.random() * (window.innerWidth - 150);
+        let y = Math.random() * (window.innerHeight - 150);
+        let dx = (Math.random() - 0.5) * 8; // Random horizontal speed
+        let dy = (Math.random() - 0.5) * 8; // Random vertical speed
+        let rotation = 0;
+        let rotationSpeed = (Math.random() - 0.5) * 10;
+        
+        const bounceInterval = setInterval(() => {
+            // Update position
+            x += dx;
+            y += dy;
+            rotation += rotationSpeed;
+            
+            // Bounce off edges with random direction change
+            if (x <= 0 || x >= window.innerWidth - 150) {
+                dx = -dx * (0.8 + Math.random() * 0.4); // Add some randomness
+                dx += (Math.random() - 0.5) * 2; // Extra chaos
+                rotationSpeed = (Math.random() - 0.5) * 10;
+            }
+            if (y <= 0 || y >= window.innerHeight - 150) {
+                dy = -dy * (0.8 + Math.random() * 0.4); // Add some randomness
+                dy += (Math.random() - 0.5) * 2; // Extra chaos
+                rotationSpeed = (Math.random() - 0.5) * 10;
+            }
+            
+            // Random direction changes (Sam-style erratic movement)
+            if (Math.random() < 0.02) {
+                dx += (Math.random() - 0.5) * 4;
+                dy += (Math.random() - 0.5) * 4;
+                rotationSpeed = (Math.random() - 0.5) * 15;
+            }
+            
+            // Keep speed reasonable
+            dx = Math.max(-12, Math.min(12, dx));
+            dy = Math.max(-12, Math.min(12, dy));
+            
+            // Apply position and rotation
+            bouncingImg.style.left = x + 'px';
+            bouncingImg.style.top = y + 'px';
+            bouncingImg.style.transform = `rotate(${rotation}deg)`;
+        }, 20);
     }
 })();
 
