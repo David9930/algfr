@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<!--
+========================================
+FILE TRACKING INFORMATION
+========================================
+Name of file: where-to-buy.html
+Date/Time Created: February 04, 2026 - 14:30 UTC
+Date/Time of last Modification: February 04, 2026 - 14:30 UTC
+How did the work: Fixed Chrome 134+ blinking/flickering issue by implementing GPU optimization:
+                  - Added transform: translateZ(0) to force GPU layer isolation
+                  - Added contain: layout style paint to .purchase-card for rendering containment
+                  - Applied will-change: transform, opacity strategically to hover-interactive elements only
+                  - Removed conflicting JavaScript transform manipulations
+                  - Added -webkit-backface-visibility: hidden for cross-browser compatibility
+File Location: Root directory
+Last Modified By: Claude & Derek Devon
+Version: 1.1 (Chrome Fix)
+========================================
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Where to Buy - A Letter Guide For Rebecca</title>
+    <meta name="description" content="Purchase 'A Letter Guide For Rebecca' by Derek Devon - Available in ebook and print formats worldwide">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #001530;
+            color: white;
+            background-image: url('./images/Librarypic.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation - same as other pages */
+        nav {
+            width: 100%;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .nav-link {
+            background-color: #5b6da3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-link:hover {
+            background-color: #7683b7;
+        }
+        
+        .nav-link.active {
+            background-color: #4a5a86;
+        }
+        
+        .white-link {
+            background-color: white;
+            color: #4a5a86;
+        }
+        
+        /* Main Content */
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+        }
+        
+        .hero-section {
+            text-align: center;
+            margin-bottom: 60px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: #b8c8e0;
+            margin-bottom: 30px;
+        }
+        
+        .platform-title {
+            font-size: 2.2rem;
+            color: #ffcc00;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+            text-align: center;
+        }
+        
+        /* Purchase Options Container */
+        .purchase-options {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        /* CHROME FIX #1: Add transform: translateZ(0) to force GPU layer */
+        /* CHROME FIX #2: Add contain property to isolate rendering */
+        .purchase-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 0.95));
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 2px solid rgba(91, 109, 163, 0.3);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            /* GPU optimization for Chrome 134+ */
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            contain: layout style paint;
+        }
+        
+        .purchase-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(91, 109, 163, 0.1), transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            /* GPU optimization for pseudo-element */
+            transform: translateZ(0);
+        }
+        
+        .purchase-card:hover {
+            transform: translateY(-5px) translateZ(0);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            border-color: #5b6da3;
+        }
+        
+        .purchase-card:hover:before {
+            opacity: 1;
+        }
+        
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e62;
+        }
+        
+        .card-description {
+            font-size: 1.1rem;
+            color: #5a6c7d;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .purchase-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        /* CHROME FIX #3: Add will-change ONLY to hover-interactive elements */
+        .purchase-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            min-width: 200px;
+            position: relative;
+            overflow: hidden;
+            /* GPU optimization for buttons */
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            /* will-change for hover elements only */
+            will-change: transform, opacity;
+        }
+        
+        .purchase-button:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transition: all 0.4s ease;
+            /* GPU optimization for ripple effect */
+            transform: translate(-50%, -50%) translateZ(0);
+        }
+        
+        .purchase-button:hover:before {
+            width: 300%;
+            height: 300%;
+        }
+        
+        .purchase-button:hover {
+            transform: translateY(-3px) scale(1.02) translateZ(0);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .button-icon {
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+        
+        /* Button Variants */
+        .ebook-button {
+            background: linear-gradient(45deg, #4a5a86, #5b6da3);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .ebook-button:hover {
+            background: linear-gradient(45deg, #5b6da3, #7683b7);
+        }
+        
+        .paperback-button {
+            background: linear-gradient(45deg, #d4a574, #c49563);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .paperback-button:hover {
+            background: linear-gradient(45deg, #e0b685, #d4a574);
+        }
+        
+        .amazon-search-button {
+            background: linear-gradient(45deg, #ff9900, #ffad33);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .amazon-search-button:hover {
+            background: linear-gradient(45deg, #ffad33, #ffbf66);
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .platform-title {
+                font-size: 1.8rem;
+            }
+            
+            .purchase-card {
+                padding: 30px 20px;
+            }
+            
+            .purchase-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .purchase-button {
+                min-width: auto;
+                width: 100%;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        /* Animations */
+        /* CHROME FIX: Added translateZ(0) to animation keyframes */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) translateZ(0);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) translateZ(0);
+            }
+        }
+        
+        .purchase-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .purchase-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .purchase-card:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        .purchase-card:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav aria-label="Main navigation">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link white-link">Home</a>
+                <a href="Quiz.html" class="nav-link white-link">Quiz</a>
+                <a href="book-sample.html" class="nav-link white-link">Book Sample</a>
+                <a href="secret-fort.html" class="nav-link white-link">Secret Fort Access</a>
+                <a href="blog.html" class="nav-link white-link">Blog</a>
+                <a href="where-to-buy.html" class="nav-link active" aria-current="page">Where to Buy</a>
+                <a href="contact.html" class="nav-link white-link">Contact</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main class="main-container">
+        <section class="hero-section">
+            <h1 class="hero-title">Where to Buy</h1>
+            <p class="hero-subtitle">Get your copy of "A Letter Guide For Rebecca" in digital or print format</p>
+        </section>
+        
+        <h2 class="platform-title">Amazon KDP</h2>
+        
+        <section class="purchase-options">
+            <!-- Canadian Options -->
+            <div class="purchase-card">
+                <h3 class="card-title">🇨🇦 Canada</h3>
+                <p class="card-description">Available in both digital and physical formats for Canadian readers</p>
+                <div class="purchase-buttons">
+                    <a href="https://www.amazon.ca/Letter-Guide-Rebecca-1-ebook/dp/B0C7H7RSX2/ref=tmm_kin_swatch_0?_encoding=UTF8&dib_tag=se&dib=eyJ2IjoiMSJ9.HJBl2yXHEvKepMZwBvhokOf-dYgPx3ailMgMf0M-zfw.NU90X8m7_BlLt2MNl86-NKpmgHOk7aT5sPSAauBm6mY&qid=1757781803&sr=8-1" class="purchase-button ebook-button" target="_blank" rel="noopener">
+                        <span class="button-icon">📱</span>
+                        Canadian Ebook
+                    </a>
+                    <a href="https://www.amazon.ca/Letter-Guide-Rebecca-1-ebook/dp/B0C7H7RSX2/ref=sr_1_1?crid=3KPCB553TA3XZ&dib=eyJ2IjoiMSJ9.HJBl2yXHEvKepMZwBvhokOf-dYgPx3ailMgMf0M-zfw.NU90X8m7_BlLt2MNl86-NKpmgHOk7aT5sPSAauBm6mY&dib_tag=se&keywords=a+letter+guide+for+rebecca&qid=1757781803&sprefix=a+letter+guide+for+rebecca%2Caps%2C122&sr=8-1" class="purchase-button paperback-button" target="_blank" rel="noopener">
+                        <span class="button-icon">📖</span>
+                        Canadian Paperback
+                    </a>
+                </div>
+            </div>
+            
+            <!-- USA Options -->
+            <div class="purchase-card">
+                <h3 class="card-title">🇺🇸 United States</h3>
+                <p class="card-description">Digital and print versions available for US customers</p>
+                <div class="purchase-buttons">
+                    <a href="https://www.amazon.com/Letter-Guide-Rebecca-1-ebook/dp/B0C7H7RSX2/ref=sr_1_1?crid=1BTYN5W6IOTAR&dib=eyJ2IjoiMSJ9.HJBl2yXHEvKepMZwBvhokMcj6o5rn7ndGRysMb9T_vPn8EtgBZw8tInCaCTWDMYnwa8dwdCap-OVQB7Fn1o7pEUrdU9CkMYvBBY3XUXtQUNbzjxFHAyFsiYbRHUFj5SPZDQnKdnBm0sA8lWL_-2fevONIa1GQC10myz1zdLT3upUakWlvga1XHOwn7cb7IgLawVzgJKid-7eq5JWGhIrq1_28O1NiiQUu9i304R3Tf8.FaXHGpIOm0q3t-KXl0Oh_GSvvs9Th2OeY-CYjeX6EBM&dib_tag=se&keywords=a+letter+guide+for+rebecca&qid=1757783516&sprefix=a+letter+guide+for+rebecca%2Caps%2C177&sr=8-1" class="purchase-button ebook-button" target="_blank" rel="noopener">
+                        <span class="button-icon">📱</span>
+                        USA Ebook
+                    </a>
+                    <a href="https://www.amazon.com/Letter-Guide-Rebecca-1/dp/1738651908/ref=tmm_pap_swatch_0?_encoding=UTF8&dib_tag=se&dib=eyJ2IjoiMSJ9.HJBl2yXHEvKepMZwBvhokMcj6o5rn7ndGRysMb9T_vPn8EtgBZw8tInCaCTWDMYnwa8dwdCap-OVQB7Fn1o7pEUrdU9CkMYvBBY3XUXtQUNbzjxFHAyFsiYbRHUFj5SPZDQnKdnBm0sA8lWL_-2fevONIa1GQC10myz1zdLT3upUakWlvga1XHOwn7cb7IgLawVzgJKid-7eq5JWGhIrq1_28O1NiiQUu9i304R3Tf8.FaXHGpIOm0q3t-KXl0Oh_GSvvs9Th2OeY-CYjeX6EBM&qid=1757783516&sr=8-1" class="purchase-button paperback-button" target="_blank" rel="noopener">
+                        <span class="button-icon">📖</span>
+                        USA Paperback
+                    </a>
+                </div>
+            </div>
+            
+            <!-- UK Options -->
+            <div class="purchase-card">
+                <h3 class="card-title">🇬🇧 United Kingdom</h3>
+                <p class="card-description">Both ebook and paperback formats available for UK readers</p>
+                <div class="purchase-buttons">
+                    <a href="https://www.amazon.co.uk/Letter-Guide-Rebecca-1-ebook/dp/B0C7H7RSX2/ref=sr_1_1?crid=3D7JSSO281X5B&dib=eyJ2IjoiMSJ9.ZlOfusB6RDqJts9YkRncn4glolBma9BZ9twsN3fClxq1_4E3A2HJazbE2ZwR3ZqqBtT1fBOOZ-qgrMy7RHoFxXfklHJlEQImpjh_9Nn_Kc4.6F6qlkDHaLn-wAvCimDjHbV1rnoHQMT0yqBS_DsMs28&dib_tag=se&keywords=a+letter+guide+for+rebecca&qid=1757783694&sprefix=a+letter+guide+for+rebecca%2Caps%2C329&sr=8-1" class="purchase-button ebook-button" target="_blank" rel="noopener">
+                        <span class="button-icon">📱</span>
+                        UK Ebook
+                    </a>
+                    <a href="https://www.amazon.co.uk/Letter-Guide-Rebecca-1/dp/1738651908/ref=tmm_pap_swatch_0?_encoding=UTF8&dib_tag=se&dib=eyJ2IjoiMSJ9.ZlOfusB6RDqJts9YkRncn4glolBma9BZ9twsN3fClxq1_4E3A2HJazbE2ZwR3ZqqBtT1fBOOZ-qgrMy7RHoFxXfklHJlEQImpjh_9Nn_Kc4.6F6qlkDHaLn-wAvCimDjHbV1rnoHQMT0yqBS_DsMs28&qid=1757783694&sr=8-1" class="purchase-button paperback-button" target="_blank" rel="noopener">
+                        <span class="button-icon">📖</span>
+                        UK Paperback
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Other Countries -->
+            <div class="purchase-card other-countries-card">
+                <h3 class="card-title">🌍 Other Countries</h3>
+                <p class="card-description">For all other countries, please visit your local Amazon website and search for the book title</p>
+                <div class="purchase-buttons">
+                    <a href="https://amazon.com/s?k=A+Letter+Guide+For+Rebecca+Derek+Devon" class="purchase-button amazon-search-button" target="_blank" rel="noopener">
+                        <span class="button-icon">🔍</span>
+                        Search on Amazon
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <section style="text-align: center; margin-top: 60px; background: rgba(0, 0, 0, 0.6); padding: 30px; border-radius: 15px; backdrop-filter: blur(10px);">
+            <p style="font-size: 1.2rem; color: #b8c8e0; margin-bottom: 20px;">Want to read a sample before purchasing?</p>
+            <a href="book-sample.html" style="display: inline-block; padding: 15px 35px; background: linear-gradient(45deg, #4a5a86, #5b6da3); color: white; text-decoration: none; border-radius: 25px; font-weight: bold; transition: all 0.3s ease;">
+                📖 Read Sample Chapter
+            </a>
+        </section>
+    </main>
+    
+    <footer>
+        <p style="text-align: center; font-size: 0.8rem; opacity: 0.7;">
+            &copy; <script>document.write(new Date().getFullYear())</script> Derek Devon. All rights reserved.
+        </p>
+    </footer>
+    
+    <script>
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // CHROME FIX: Removed transform manipulation from JavaScript
+            // The CSS will handle all transforms via GPU-optimized properties
+            
+            const buttons = document.querySelectorAll('.purchase-button');
+            
+            // Add click tracking (you can connect this to analytics)
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const buttonType = this.textContent.trim();
+                    console.log(`Purchase button clicked: ${buttonType}`);
+                    // Add your analytics tracking here
+                });
+            });
+        });
+    </script>
+</body>
+</html>
